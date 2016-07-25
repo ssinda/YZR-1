@@ -92,7 +92,7 @@ public class YzrController {
 			// 기본추천영화
 			List<MovieVO> rec_basic = movie_service.basicMovie();
 			
-			List<String> basic_title = new ArrayList();
+			List<String> basic_title = new ArrayList<String>();
 			
 			basic_title.add("No.1");
 			basic_title.add("No.2");
@@ -114,14 +114,14 @@ public class YzrController {
 				rec_actor = movie_service.actorMovie(member_id);
 				rec_director = movie_service.directorMovie(member_id);
 				
-				List<MovieVO> rec_movie = new ArrayList();
+				List<MovieVO> rec_movie = new ArrayList<MovieVO>();
 				rec_movie.add(rec_genre.get(0));
 				rec_movie.add(rec_actor.get(0));
 				rec_movie.add(rec_director.get(0));
 			
 				model.addAttribute("rec_movie", rec_movie);
 				
-				List<String> rec_title = new ArrayList();
+				List<String> rec_title = new ArrayList<String>();
 				
 				rec_title.add("No.1");
 				rec_title.add("No.2");
@@ -131,7 +131,7 @@ public class YzrController {
 				
 			}else{
 				// 추천영화가 예매 내역에 있는지 확인하기 위한 movie_id 배열
-				List list_movieId = new ArrayList();
+				List<String> list_movieId = new ArrayList<String>();
 				
 				for(int i=0; i<list.size(); i++){
 					list_movieId.add(list.get(i).getMovie_id());
@@ -178,7 +178,7 @@ public class YzrController {
 				String director = director_service.getMovie_director(rec_director_movie.getMovie_id());
 			
 				// 카테고리별 추천영화 리스트 담기
-				List<MovieVO> rec_movie = new ArrayList();
+				List<MovieVO> rec_movie = new ArrayList<MovieVO>();
 				rec_movie.add(rec_genre_movie);
 				rec_movie.add(rec_actor_movie);
 				rec_movie.add(rec_director_movie);
@@ -186,7 +186,7 @@ public class YzrController {
 				model.addAttribute("rec_movie", rec_movie);
 				
 				// 추천영화별 타이틀
-				List<String> rec_title = new ArrayList();
+				List<String> rec_title = new ArrayList<String>();
 				
 				rec_title.add("장르&nbsp<&nbsp" + genre + "&nbsp>");
 				rec_title.add("배우&nbsp<&nbsp" + actor + "&nbsp>");
@@ -208,7 +208,7 @@ public class YzrController {
 		ResponseEntity<List<String>> entity = null;
 		
 		try{
-			List<String> list = new ArrayList();
+			List<String> list = new ArrayList<String>();
 			
 			if(category.equals(1)){
 				list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
