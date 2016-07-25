@@ -73,22 +73,23 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		// 抗寇贸府备埃
 		
-		CriteriaQuery<ReservationVO> resQuery = cb.createQuery(ReservationVO.class);
-		Root<ReservationVO> resSubQuery = resQuery.from(ReservationVO.class);
-		resQuery.select(subQueryRoot.get("movie_id"));
-		resQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
+		CriteriaQuery<String> resQuery = cb.createQuery(String.class);
+		Root<ReservationVO> resRootQuery = resQuery.from(ReservationVO.class);
+		resQuery.select(resRootQuery.get("movie_id"));
+		resQuery.where(cb.equal(resRootQuery.get("member_id"), member_id));
 		
-		TypedQuery<ReservationVO> restq = entityManager.createQuery(resQuery);
-		List<ReservationVO> res_movie_id = restq.getResultList();
+		TypedQuery<String> restq = entityManager.createQuery(resQuery);
+		List<String> res_movie_id = restq.getResultList();
 		
 		List<MovieVO> genre_movie = null;
-		if(res_movie_id == null){
+		if(res_movie_id.isEmpty()){
 			CriteriaQuery<MovieVO> Query = cb.createQuery(MovieVO.class);
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
+			Query.where(cb.equal(Root.get("status"), "play"));
 			Query.orderBy(cb.desc(Root.get("open_date")));
 			
-			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query);
+			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(0).setMaxResults(1);
 			genre_movie = movie_tq.getResultList();
 		// 抗寇贸府 场
 		}else{
@@ -152,24 +153,25 @@ public class MovieDAOImpl implements MovieDAO {
 		subQuery.select(subQueryRoot.get("movie_id"));
 		subQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		CriteriaQuery<ReservationVO> resQuery = cb.createQuery(ReservationVO.class);
-		Root<ReservationVO> resSubQuery = resQuery.from(ReservationVO.class);
-		resQuery.select(subQueryRoot.get("movie_id"));
-		resQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
+		CriteriaQuery<String> resQuery = cb.createQuery(String.class);
+		Root<ReservationVO> resRootQuery = resQuery.from(ReservationVO.class);
+		resQuery.select(resRootQuery.get("movie_id"));
+		resQuery.where(cb.equal(resRootQuery.get("member_id"), member_id));
 		
-		TypedQuery<ReservationVO> restq = entityManager.createQuery(resQuery);
-		List<ReservationVO> res_movie_id = restq.getResultList();
+		TypedQuery<String> restq = entityManager.createQuery(resQuery);
+		List<String> res_movie_id = restq.getResultList();
 		
 		// 抗寇贸府 备埃
 		
 		List<MovieVO> actor_movie = null;
-		if(res_movie_id == null){
+		if(res_movie_id.isEmpty()){
 			CriteriaQuery<MovieVO> Query = cb.createQuery(MovieVO.class);
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
+			Query.where(cb.equal(Root.get("status"), "play"));
 			Query.orderBy(cb.desc(Root.get("open_date")));
 			
-			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query);
+			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(1).setMaxResults(1);
 			actor_movie = movie_tq.getResultList();
 		
 			// 抗寇贸府 场
@@ -234,24 +236,25 @@ public class MovieDAOImpl implements MovieDAO {
 		subQuery.select(subQueryRoot.get("movie_id"));
 		subQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		CriteriaQuery<ReservationVO> resQuery = cb.createQuery(ReservationVO.class);
-		Root<ReservationVO> resSubQuery = resQuery.from(ReservationVO.class);
-		resQuery.select(subQueryRoot.get("movie_id"));
-		resQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
+		CriteriaQuery<String> resQuery = cb.createQuery(String.class);
+		Root<ReservationVO> resRootQuery = resQuery.from(ReservationVO.class);
+		resQuery.select(resRootQuery.get("movie_id"));
+		resQuery.where(cb.equal(resRootQuery.get("member_id"), member_id));
 		
-		TypedQuery<ReservationVO> restq = entityManager.createQuery(resQuery);
-		List<ReservationVO> res_movie_id = restq.getResultList();
+		TypedQuery<String> restq = entityManager.createQuery(resQuery);
+		List<String> res_movie_id = restq.getResultList();
 		
 		// 抗寇贸府 备埃
 		
 		List<MovieVO> director_movie = null;
-		if(res_movie_id == null){
+		if(res_movie_id.isEmpty()){
 			CriteriaQuery<MovieVO> Query = cb.createQuery(MovieVO.class);
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
+			Query.where(cb.equal(Root.get("status"), "play"));
 			Query.orderBy(cb.desc(Root.get("open_date")));
 			
-			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query);
+			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(2).setMaxResults(1);
 			director_movie = movie_tq.getResultList();
 		
 			// 抗寇贸府 场
