@@ -1,7 +1,9 @@
 package net.nigne.yzrproject.persistence;
 
 import java.util.List;
+
 import net.nigne.yzrproject.domain.Criteria;
+import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.MovieVO;
 
 public interface AdminMovieDAO {
@@ -11,5 +13,6 @@ public interface AdminMovieDAO {
 	public void persist(MovieVO vo);
 	public List<MovieVO> getSearchMovieList(Criteria cri, String keyword, String search);
 	public Long getMovieSearchCount(String keyword, String search);
+	void persistGenre(GenreVO gvo);
 
 }

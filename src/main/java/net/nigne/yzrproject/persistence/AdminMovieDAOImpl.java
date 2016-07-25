@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import net.nigne.yzrproject.domain.Criteria;
+import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.MovieVO;
 
 @Repository
@@ -96,5 +97,10 @@ public class AdminMovieDAOImpl implements AdminMovieDAO {
 	public void persist(MovieVO vo) {
 		// TODO Auto-generated method stub
 		entityManager.persist(vo);
+	}
+	@Override
+	public void persistGenre(GenreVO gvo) {
+		// TODO Auto-generated method stub
+		entityManager.persist(gvo);
 	}
 }

@@ -30,7 +30,7 @@
 		</div><br><br><br>
 		<label class="col-sm-1">영화ID</label>
 		<div class="col-md-3">
-			<select id="movie_id" name="movie_id">
+			<select id="movie_id" name="movie_id" style="width: 193px;">
 				<c:forEach items="${ moviename_list }" var="list">
 					<option value="${ list.movie_id }">${ list.title }</option>
 				</c:forEach>

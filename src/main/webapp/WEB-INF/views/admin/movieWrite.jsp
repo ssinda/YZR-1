@@ -36,6 +36,10 @@
 		<div class="col-md-5">
 			<input type="text" id="site" name="site" class="form-control" placeholder="Enter Site" />
 		</div><br><br><br>
+		<label class="col-sm-1">장르</label>
+		<div class="col-md-3">
+			<input type="text" id="movie_genre" name="movie_genre" class="form-control" placeholder="Enter Genre" />
+		</div><br><br><br>
 		<label class="col-sm-1">줄거리</label>
 		<div class="col-md-9" style="margin-bottom: 30px;">
 			<textarea id="story" name="story" rows="10" class="form-control" placeholder="Enter Story"></textarea>

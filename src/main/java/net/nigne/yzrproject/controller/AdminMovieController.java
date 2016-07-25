@@ -1,9 +1,10 @@
 package net.nigne.yzrproject.controller;
 
-import java.io.*;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import net.nigne.yzrproject.domain.Criteria;
+import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.PageMaker;
 import net.nigne.yzrproject.service.AdminMovieService;
@@ -92,7 +95,8 @@ public class AdminMovieController {
 	@RequestMapping(value = "/admin/movie/new", method = RequestMethod.POST)
 	public ModelAndView adminMovieWrite(MultipartFile file, @RequestParam("movie_id") String movie_id,
 			@RequestParam("title") String title, @RequestParam("open_date") String open_date, @RequestParam("runtime") Integer runtime,
-			@RequestParam("rating") String rating, @RequestParam("site") String site, @RequestParam("story") String story) throws Exception {
+			@RequestParam("rating") String rating, @RequestParam("site") String site, @RequestParam("story") String story,
+			@RequestParam("movie_genre") String movie_genre) throws Exception {
 		
 		String fileName = movie_id + ".jpg";
 		File target = new File(uploadPath + "\\poster", fileName);
@@ -107,7 +111,12 @@ public class AdminMovieController {
 		vo.setSite(site);
 		vo.setStory(story);
 		vo.setPoster(fileName);
-		service.persist(vo);
+		
+		GenreVO gvo=new GenreVO();
+		gvo.setMovie_id(movie_id);
+		gvo.setMovie_genre(movie_genre);
+		
+		service.persist(vo, gvo);
 		
 		ModelAndView view=new ModelAndView();
 		view.setViewName("admin/movie");
