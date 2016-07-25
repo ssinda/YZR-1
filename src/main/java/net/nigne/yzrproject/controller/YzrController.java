@@ -106,6 +106,25 @@ public class YzrController {
 		}else{
 			List<ReservationVO> list = reservation_service.getReservation_list(member_id);	// 예매내역
 			
+			List<MovieVO> rec_genre = null;			// 추천장르목록
+			List<MovieVO> rec_actor = null;			// 추천배우목록
+			List<MovieVO> rec_director = null;		// 추천감독목록
+			
+			
+			if(list == null){
+				rec_genre = movie_service.genreMovie(member_id);
+				rec_actor = movie_service.actorMovie(member_id);
+				rec_director = movie_service.directorMovie(member_id);
+				
+				List<String> rec_title = new ArrayList();
+				
+				rec_title.add("No.1");
+				rec_title.add("No.2");
+				rec_title.add("No.3");
+		
+				model.addAttribute("rec_title", rec_title);
+				
+			}else{
 			// 추천영화가 예매 내역에 있는지 확인하기 위한 movie_id 배열
 			List list_movieId = new ArrayList();
 			
@@ -113,9 +132,9 @@ public class YzrController {
 				list_movieId.add(list.get(i).getMovie_id());
 			}
 			
-			List<MovieVO> rec_genre = movie_service.genreMovie(member_id);			// 추천장르목록
-			List<MovieVO> rec_actor = movie_service.actorMovie(member_id);			// 추천배우목록
-			List<MovieVO> rec_director = movie_service.directorMovie(member_id);	// 추천감독목록
+			rec_genre = movie_service.genreMovie(member_id);			// 추천장르목록
+			rec_actor = movie_service.actorMovie(member_id);			// 추천배우목록
+			rec_director = movie_service.directorMovie(member_id);		// 추천감독목록
 			
 			
 			// movie_id 배열에 추천장르영화 movie_id가 있는지 확인
@@ -159,12 +178,21 @@ public class YzrController {
 			
 			String director = director_service.getMovie_director(rec_director_movie.getMovie_id());
 			
+		
+			List<MovieVO> rec_basic = movie_service.basicMovie();
+			
 			// 카테고리별 추천영화 리스트 담기
 			List<MovieVO> rec_movie = new ArrayList();
 			rec_movie.add(rec_genre_movie);
 			rec_movie.add(rec_actor_movie);
 			rec_movie.add(rec_director_movie);
 			
+			if(rec_movie == null){
+				rec_movie.add(rec_basic.get(0));
+				rec_movie.add(rec_basic.get(1));
+				rec_movie.add(rec_basic.get(2));
+			}
+		
 			model.addAttribute("rec_movie", rec_movie);
 			
 			// 추천영화별 타이틀
@@ -173,9 +201,9 @@ public class YzrController {
 			rec_title.add("장르 <" + genre + ">");
 			rec_title.add("배우 <" + actor + ">");
 			rec_title.add("감독 <" + director + ">");
-
+	
 			model.addAttribute("rec_title", rec_title);
-			
+			}	
 		}
 		
 		List<NoticeVO> notice_list = notice_service.getNotice();
