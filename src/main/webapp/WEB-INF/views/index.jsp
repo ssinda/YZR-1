@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@include file="./include/header.jsp"%>
 <div id="wrap_content" style="min-height: 100%; position: relative;">
 	<div id="content" style="padding-bottom: 50px;">
@@ -19,7 +18,7 @@
 								<i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
 								&nbsp [${notice.getNotice_category()}]
 								&nbsp <a href=""> ${notice.getNotice_title()} </a>
-								<span style="float:right;"> ${fn:substring(notice.getNotice_date(), 0, 11)} </span>
+								<span style="float:right;"> ${notice.getNotice_date()} </span>
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -27,7 +26,7 @@
 								<i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
 								&nbsp [${notice.getNotice_category()}]
 								&nbsp <a href=""> ${notice.getNotice_title()} </a>
-								<span style="float:right;"> ${fn:substring(notice.getNotice_date(), 0, 11)} </span>
+								<span style="float:right;"> ${notice.getNotice_date()} </span>
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -58,7 +57,7 @@
 					<div id="rec_movie_title" style="border:2px solid #000; width:250px; height:28px; padding-top:2px; background-color:#ff3636; text-align:center;">
 						<c:choose>
 							<c:when test="${member_id !=null}">
-								<span style="font-weight:bold; font-size:15px; letter-spacing:10px;">
+								<span style="font-weight:bold; font-size:15px;">
 							</c:when>
 							<c:otherwise>
 								<span style="font-weight:bold; font-size:15px;">
@@ -76,11 +75,11 @@
 						</span>
 					</div>
 					<div id="rec_movie" style="border:0px solid #000; width:250px; height:380px; text-align:left; margin-top:5px;">
-						<img src="${chart.poster}" style="width:249px; height:300px;"/>
+						<img src="/resources/poster/${chart.poster}" style="width:249px; height:300px;"/>
 						제목 : ${chart.title} <br/>
 						관람등급 : ${chart.rating} <br/>
 						예매율 : ${chart.reservation_rate}%<br/>
-						개봉날짜 : ${fn:substring(chart.open_date, 0, 11)} <br/>
+						개봉날짜 : ${chart.open_date} <br/>
 						<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
 					</div>
 				</div>
