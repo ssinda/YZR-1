@@ -71,48 +71,70 @@ public class MovieDAOImpl implements MovieDAO {
 		subQuery.select(subQueryRoot.get("movie_id"));
 		subQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		genreQuery.select(genreRoot.get("movie_genre"));
-		genreQuery.where(genreRoot.get("movie_id").in(subQuery));
-		genreQuery.groupBy(genreRoot.get("movie_genre"));
-		genreQuery.orderBy(cb.desc(cb.count(genreRoot.get("movie_genre"))));
+		// 예외처리구간
 		
-		TypedQuery<GenreVO> tq = entityManager.createQuery(genreQuery);
+		CriteriaQuery<ReservationVO> resQuery = cb.createQuery(ReservationVO.class);
+		Root<ReservationVO> resSubQuery = resQuery.from(ReservationVO.class);
+		resQuery.select(subQueryRoot.get("movie_id"));
+		resQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		List<GenreVO> genre_list = tq.getResultList();
+		TypedQuery<ReservationVO> restq = entityManager.createQuery(resQuery);
+		List<ReservationVO> res_movie_id = restq.getResultList();
 		
-		// 가장 많이본 장르에 해당하는 영화들의 개봉날짜를 기준으로 최신 영화를 뽑아낸다
+		List<MovieVO> genre_movie = null;
+		if(res_movie_id == null){
+			CriteriaQuery<MovieVO> Query = cb.createQuery(MovieVO.class);
+			Root<MovieVO> Root = Query.from(MovieVO.class);
+			
+			Query.orderBy(cb.desc(Root.get("open_date")));
+			
+			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query);
+			genre_movie = movie_tq.getResultList();
+		// 예외처리 끝
+		}else{
 		
-		CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
-		Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
+			genreQuery.select(genreRoot.get("movie_genre"));
+			genreQuery.where(genreRoot.get("movie_id").in(subQuery));
+			genreQuery.groupBy(genreRoot.get("movie_genre"));
+			genreQuery.orderBy(cb.desc(cb.count(genreRoot.get("movie_genre"))));
+			
+			TypedQuery<GenreVO> tq = entityManager.createQuery(genreQuery);
+			
+			List<GenreVO> genre_list = tq.getResultList();
+			
+			// 가장 많이본 장르에 해당하는 영화들의 개봉날짜를 기준으로 최신 영화를 뽑아낸다
+			
+			CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
+			Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
+			
+			Subquery<GenreVO> genreSubQuery = movieQuery.subquery(GenreVO.class);
+			Root<GenreVO> genreSubQueryRoot = genreSubQuery.from(GenreVO.class);
+			
+			genreSubQuery.select(genreSubQueryRoot.get("movie_id"));
+			genreSubQuery.where(cb.equal(genreSubQueryRoot.get("movie_genre"), genre_list.get(0)));
+			
+			movieQuery.where(cb.and(movieRoot.get("movie_id").in(genreSubQuery), cb.equal(movieRoot.get("status"), "play")));
+			movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
+			
+			TypedQuery<MovieVO> mtq = entityManager.createQuery(movieQuery);
+			genre_movie = mtq.getResultList();
 		
-		Subquery<GenreVO> genreSubQuery = movieQuery.subquery(GenreVO.class);
-		Root<GenreVO> genreSubQueryRoot = genreSubQuery.from(GenreVO.class);
-		
-		genreSubQuery.select(genreSubQueryRoot.get("movie_id"));
-		genreSubQuery.where(cb.equal(genreSubQueryRoot.get("movie_genre"), genre_list.get(0)));
-		
-		movieQuery.where(cb.and(movieRoot.get("movie_id").in(genreSubQuery), cb.equal(movieRoot.get("status"), "play")));
-		movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
-		
-		TypedQuery<MovieVO> mtq = entityManager.createQuery(movieQuery);
-		List<MovieVO> genre_movie = mtq.getResultList();
-		
-		if(genre_movie.isEmpty()){
-			for(int g=0; g<genre_list.size(); g++){
-				genreSubQuery.select(genreSubQueryRoot.get("movie_id"));
-				genreSubQuery.where(cb.equal(genreSubQueryRoot.get("movie_genre"), genre_list.get(g)));
-				
-				movieQuery.where(cb.and(movieRoot.get("movie_id").in(genreSubQuery), cb.equal(movieRoot.get("status"), "play")));
-				movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
-				
-				mtq = entityManager.createQuery(movieQuery);
-				genre_movie = mtq.getResultList();
-				if(!genre_movie.isEmpty()){
-					break;
+			if(genre_movie.isEmpty()){
+				for(int g=0; g<genre_list.size(); g++){
+					genreSubQuery.select(genreSubQueryRoot.get("movie_id"));
+					genreSubQuery.where(cb.equal(genreSubQueryRoot.get("movie_genre"), genre_list.get(g)));
+					
+					movieQuery.where(cb.and(movieRoot.get("movie_id").in(genreSubQuery), cb.equal(movieRoot.get("status"), "play")));
+					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
+					
+					mtq = entityManager.createQuery(movieQuery);
+					genre_movie = mtq.getResultList();
+					if(!genre_movie.isEmpty()){
+						break;
+					}
 				}
 			}
 		}
-		
 		return genre_movie;
 	}
 
@@ -130,48 +152,71 @@ public class MovieDAOImpl implements MovieDAO {
 		subQuery.select(subQueryRoot.get("movie_id"));
 		subQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		actorQuery.select(actorRoot.get("actor_name"));
-		actorQuery.where(actorRoot.get("movie_id").in(subQuery));
-		actorQuery.groupBy(actorRoot.get("actor_name"));
-		actorQuery.orderBy(cb.desc(cb.count(actorRoot.get("actor_name"))));
+		CriteriaQuery<ReservationVO> resQuery = cb.createQuery(ReservationVO.class);
+		Root<ReservationVO> resSubQuery = resQuery.from(ReservationVO.class);
+		resQuery.select(subQueryRoot.get("movie_id"));
+		resQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		TypedQuery<ActorVO> tq = entityManager.createQuery(actorQuery);
+		TypedQuery<ReservationVO> restq = entityManager.createQuery(resQuery);
+		List<ReservationVO> res_movie_id = restq.getResultList();
 		
-		List<ActorVO> actor_list = tq.getResultList();
+		// 예외처리 구간
 		
-		// 가장 많이본 배우에 해당하는 영화들의 개봉날짜를 기준으로 최신 영화를 뽑아낸다
+		List<MovieVO> actor_movie = null;
+		if(res_movie_id == null){
+			CriteriaQuery<MovieVO> Query = cb.createQuery(MovieVO.class);
+			Root<MovieVO> Root = Query.from(MovieVO.class);
+			
+			Query.orderBy(cb.desc(Root.get("open_date")));
+			
+			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query);
+			actor_movie = movie_tq.getResultList();
 		
-		CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
-		Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
-		
-		Subquery<ActorVO> actorSubQuery = movieQuery.subquery(ActorVO.class);
-		Root<ActorVO> actorSubQueryRoot = actorSubQuery.from(ActorVO.class);
-		
-		actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
-		actorSubQuery.where(cb.equal(actorSubQueryRoot.get("actor_name"), actor_list.get(0)));
-		
-		movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
-		movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
-		
-		TypedQuery<MovieVO> mtq = entityManager.createQuery(movieQuery);
-		List<MovieVO> actor_movie = mtq.getResultList();
-		
-		if(actor_movie.isEmpty()){
-			for(int a=0; a<actor_list.size(); a++){
-				actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
-				actorSubQuery.where(cb.equal(actorSubQueryRoot.get("movie_genre"), actor_list.get(a)));
-				
-				movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
-				movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
-				
-				mtq = entityManager.createQuery(movieQuery);
-				actor_movie = mtq.getResultList();
-				if(!actor_movie.isEmpty()){
-					break;
+			// 예외처리 끝
+			
+		}else{
+			actorQuery.select(actorRoot.get("actor_name"));
+			actorQuery.where(actorRoot.get("movie_id").in(subQuery));
+			actorQuery.groupBy(actorRoot.get("actor_name"));
+			actorQuery.orderBy(cb.desc(cb.count(actorRoot.get("actor_name"))));
+			
+			TypedQuery<ActorVO> tq = entityManager.createQuery(actorQuery);
+			
+			List<ActorVO> actor_list = tq.getResultList();
+			
+			// 가장 많이본 배우에 해당하는 영화들의 개봉날짜를 기준으로 최신 영화를 뽑아낸다
+			
+			CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
+			Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
+			
+			Subquery<ActorVO> actorSubQuery = movieQuery.subquery(ActorVO.class);
+			Root<ActorVO> actorSubQueryRoot = actorSubQuery.from(ActorVO.class);
+			
+			actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
+			actorSubQuery.where(cb.equal(actorSubQueryRoot.get("actor_name"), actor_list.get(0)));
+			
+			movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
+			movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
+			
+			TypedQuery<MovieVO> mtq = entityManager.createQuery(movieQuery);
+			actor_movie = mtq.getResultList();
+			
+			if(actor_movie.isEmpty()){
+				for(int a=0; a<actor_list.size(); a++){
+					actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
+					actorSubQuery.where(cb.equal(actorSubQueryRoot.get("movie_genre"), actor_list.get(a)));
+					
+					movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
+					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
+					
+					mtq = entityManager.createQuery(movieQuery);
+					actor_movie = mtq.getResultList();
+					if(!actor_movie.isEmpty()){
+						break;
+					}
 				}
 			}
 		}
-		
 		return actor_movie;
 	}
 
@@ -189,48 +234,72 @@ public class MovieDAOImpl implements MovieDAO {
 		subQuery.select(subQueryRoot.get("movie_id"));
 		subQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		directorQuery.select(directorRoot.get("director_name"));
-		directorQuery.where(directorRoot.get("movie_id").in(subQuery));
-		directorQuery.groupBy(directorRoot.get("director_name"));
-		directorQuery.orderBy(cb.desc(cb.count(directorRoot.get("director_name"))));
+		CriteriaQuery<ReservationVO> resQuery = cb.createQuery(ReservationVO.class);
+		Root<ReservationVO> resSubQuery = resQuery.from(ReservationVO.class);
+		resQuery.select(subQueryRoot.get("movie_id"));
+		resQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
-		TypedQuery<DirectorVO> tq = entityManager.createQuery(directorQuery);
+		TypedQuery<ReservationVO> restq = entityManager.createQuery(resQuery);
+		List<ReservationVO> res_movie_id = restq.getResultList();
 		
-		List<DirectorVO> director_list = tq.getResultList();
+		// 예외처리 구간
 		
-		// 가장 많이본 감독에 해당하는 영화들의 개봉날짜를 기준으로 최신 영화를 뽑아낸다
+		List<MovieVO> director_movie = null;
+		if(res_movie_id == null){
+			CriteriaQuery<MovieVO> Query = cb.createQuery(MovieVO.class);
+			Root<MovieVO> Root = Query.from(MovieVO.class);
+			
+			Query.orderBy(cb.desc(Root.get("open_date")));
+			
+			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query);
+			director_movie = movie_tq.getResultList();
 		
-		CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
-		Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
+			// 예외처리 끝
+			
+		}else{
+			
+			directorQuery.select(directorRoot.get("director_name"));
+			directorQuery.where(directorRoot.get("movie_id").in(subQuery));
+			directorQuery.groupBy(directorRoot.get("director_name"));
+			directorQuery.orderBy(cb.desc(cb.count(directorRoot.get("director_name"))));
+			
+			TypedQuery<DirectorVO> tq = entityManager.createQuery(directorQuery);
+			
+			List<DirectorVO> director_list = tq.getResultList();
+			
+			// 가장 많이본 감독에 해당하는 영화들의 개봉날짜를 기준으로 최신 영화를 뽑아낸다
+			
+			CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
+			Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
+			
+			Subquery<DirectorVO> directorSubQuery = movieQuery.subquery(DirectorVO.class);
+			Root<DirectorVO> directorSubQueryRoot = directorSubQuery.from(DirectorVO.class);
+			
+			directorSubQuery.select(directorSubQueryRoot.get("movie_id"));
+			directorSubQuery.where(cb.equal(directorSubQueryRoot.get("director_name"), director_list.get(0)));
+			
+			movieQuery.where(cb.and(movieRoot.get("movie_id").in(directorSubQuery), cb.equal(movieRoot.get("status"), "play")));
+			movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
+			
+			TypedQuery<MovieVO> mtq = entityManager.createQuery(movieQuery);
+			director_movie = mtq.getResultList();
 		
-		Subquery<DirectorVO> directorSubQuery = movieQuery.subquery(DirectorVO.class);
-		Root<DirectorVO> directorSubQueryRoot = directorSubQuery.from(DirectorVO.class);
-		
-		directorSubQuery.select(directorSubQueryRoot.get("movie_id"));
-		directorSubQuery.where(cb.equal(directorSubQueryRoot.get("director_name"), director_list.get(0)));
-		
-		movieQuery.where(cb.and(movieRoot.get("movie_id").in(directorSubQuery), cb.equal(movieRoot.get("status"), "play")));
-		movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
-		
-		TypedQuery<MovieVO> mtq = entityManager.createQuery(movieQuery);
-		List<MovieVO> director_movie = mtq.getResultList();
-		
-		if(director_movie.isEmpty()){
-			for(int d=0; d<director_list.size(); d++){
-				directorSubQuery.select(directorSubQueryRoot.get("movie_id"));
-				directorSubQuery.where(cb.equal(directorSubQueryRoot.get("movie_genre"), director_list.get(d)));
-				
-				movieQuery.where(cb.and(movieRoot.get("movie_id").in(directorSubQuery), cb.equal(movieRoot.get("status"), "play")));
-				movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
-				
-				mtq = entityManager.createQuery(movieQuery);
-				director_movie = mtq.getResultList();
-				if(!director_movie.isEmpty()){
-					break;
+			if(director_movie.isEmpty()){
+				for(int d=0; d<director_list.size(); d++){
+					directorSubQuery.select(directorSubQueryRoot.get("movie_id"));
+					directorSubQuery.where(cb.equal(directorSubQueryRoot.get("movie_genre"), director_list.get(d)));
+					
+					movieQuery.where(cb.and(movieRoot.get("movie_id").in(directorSubQuery), cb.equal(movieRoot.get("status"), "play")));
+					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
+					
+					mtq = entityManager.createQuery(movieQuery);
+					director_movie = mtq.getResultList();
+					if(!director_movie.isEmpty()){
+						break;
+					}
 				}
 			}
 		}
-		
 		return director_movie;
 	}
 
