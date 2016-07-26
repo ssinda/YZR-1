@@ -4,6 +4,6 @@
 <%@include file="../include/header.jsp"%>
 <%@include file="./sidebar.jsp"%>
 <div class="content" style="margin-left: 250px;">
-12312123
+	<img src="C:/images/poster/4235.jpg">
 </div>
 <%@include file="../include/footer.jsp"%>
