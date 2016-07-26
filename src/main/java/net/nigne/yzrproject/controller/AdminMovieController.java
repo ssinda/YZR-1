@@ -99,7 +99,7 @@ public class AdminMovieController {
 			@RequestParam("movie_genre") String movie_genre) throws Exception {
 		
 		String fileName = movie_id + ".jpg";
-		File target = new File(uploadPath + "\\poster", fileName);
+		File target = new File(uploadPath + "poster\\", fileName);
 		FileCopyUtils.copy(file.getBytes(), target);
 		
 		MovieVO vo=new MovieVO();

@@ -2,7 +2,7 @@
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="./include/header.jsp"%>
-<div id="wrap_content" style="min-height: 100%; position: relative;">
+<div id="wrap_content">
 	<div id="content" style="padding-bottom: 50px;">
 		<div id="notice" style="border-bottom:2px solid #000; margin-top:10px;" class="carousel up" data-ride="carousel" data-interval="3000">
 			<c:forEach begin="0" end="4" varStatus="n">
