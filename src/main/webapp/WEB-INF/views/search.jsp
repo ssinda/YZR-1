@@ -63,7 +63,7 @@
 			<div style="text-align: left; padding-left: 10px; padding-top: 9px; font-weight: bolder; font-size: 15px;"><a href="javascript:getMovieList(1)">영화(${movieList.size()}건)<span class="glyphicon glyphicon-plus-sign"></span></a></div>
 			<c:forEach items="${movieList}" var="ml" begin="0" end="3" step="1">
 				<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">
-					<span style="width: 264px; height: 358px; text-align: center;"><img src="${ml.poster}" style="width: 100%; max-height: 100%; vertical-align: middle;"></span>
+					<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/${ml.poster}" style="width: 100%; max-height: 100%; vertical-align: middle;"></span>
 					<span style="font-weight: bold; font-size: 16px;">${ml.title}</span>
 					<span>등급 : ${ml.rating}</span>
 					<span>장르 : 
