@@ -54,7 +54,6 @@ public class YzrController {
 	
 	}
 	
-	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String userPage(Locale locale, Model model) throws Exception {
 
