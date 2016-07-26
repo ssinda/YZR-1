@@ -47,7 +47,7 @@
 					<input id="serach" class="form-control" name="search" type="text" placeholder="검색어를 입력하세요.">
 				</div>
 				<div class="col-sm-2">
-					<input type="submit" class="btn btn-default" value="검색">
+					<input type="submit" class="btn btn-danger" value="검색" style="width: 100%;">
 				</div>
 			</div>	
 		</form>
