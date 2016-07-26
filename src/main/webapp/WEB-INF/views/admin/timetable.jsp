@@ -14,6 +14,7 @@ th, td{
 	</script>
 </c:if>
 <div class="content" style="margin-left: 250px;">
+<<<<<<< HEAD
 	<h2>상영 시간표</h2>
 	<table class="table">
 		<thead>
@@ -38,5 +39,8 @@ th, td{
 		</select> <input type="text" class="form-control" id="search" name="search">
 		<input type="submit" class="btn btn-default" value="검색" onclick="getNoticeList(1);">
 	</div>
+=======
+	<img src="C:/images/poster/4235.jpg">
+>>>>>>> refs/remotes/origin/master
 </div>
 <%@include file="../include/footer.jsp"%>
