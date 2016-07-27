@@ -54,6 +54,7 @@ public class YzrController {
 	
 	}
 	
+	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String userPage(Locale locale, Model model) throws Exception {
 
@@ -90,15 +91,22 @@ public class YzrController {
 		if(member_id == "" || member_id == null){
 			// 기본추천영화
 			List<MovieVO> rec_basic = movie_service.basicMovie();
+			List<String> basic_title = new ArrayList();
 			
-			List<String> basic_title = new ArrayList<String>();
+			if(!rec_basic.isEmpty()){
+				basic_title.add("No.1");
+				basic_title.add("No.2");
+				basic_title.add("No.3");
+				
+				model.addAttribute("basic_title", basic_title);
+				model.addAttribute("rec_basic", rec_basic);
+			}else{
+				basic_title.add("등록된 영화가 없습니다");
+				
+				model.addAttribute("basic_title", basic_title);
+				model.addAttribute("rec_basic", null);
+			}
 			
-			basic_title.add("No.1");
-			basic_title.add("No.2");
-			basic_title.add("No.3");
-			
-			model.addAttribute("basic_title", basic_title);
-			model.addAttribute("rec_basic", rec_basic);
 		}else{
 			List<ReservationVO> list = reservation_service.getReservation_list(member_id);	// 예매내역
 			
@@ -108,19 +116,22 @@ public class YzrController {
 			
 			
 			if(list.isEmpty()){
-				
 				rec_genre = movie_service.genreMovie(member_id);
 				rec_actor = movie_service.actorMovie(member_id);
 				rec_director = movie_service.directorMovie(member_id);
+				List<MovieVO> rec_movie = new ArrayList();
 				
-				List<MovieVO> rec_movie = new ArrayList<MovieVO>();
-				rec_movie.add(rec_genre.get(0));
-				rec_movie.add(rec_actor.get(0));
-				rec_movie.add(rec_director.get(0));
-			
-				model.addAttribute("rec_movie", rec_movie);
+				if(!rec_genre.isEmpty() && !rec_actor.isEmpty() && !rec_director.isEmpty()){
+					rec_movie.add(rec_genre.get(0));
+					rec_movie.add(rec_actor.get(0));
+					rec_movie.add(rec_director.get(0));
 				
-				List<String> rec_title = new ArrayList<String>();
+					model.addAttribute("rec_movie", rec_movie);
+				}else{
+					model.addAttribute("rec_movie", null);
+				}
+				
+				List<String> rec_title = new ArrayList();
 				
 				rec_title.add("No.1");
 				rec_title.add("No.2");
@@ -130,7 +141,7 @@ public class YzrController {
 				
 			}else{
 				// 추천영화가 예매 내역에 있는지 확인하기 위한 movie_id 배열
-				List<String> list_movieId = new ArrayList<String>();
+				List list_movieId = new ArrayList();
 				
 				for(int i=0; i<list.size(); i++){
 					list_movieId.add(list.get(i).getMovie_id());
@@ -177,7 +188,7 @@ public class YzrController {
 				String director = director_service.getMovie_director(rec_director_movie.getMovie_id());
 			
 				// 카테고리별 추천영화 리스트 담기
-				List<MovieVO> rec_movie = new ArrayList<MovieVO>();
+				List<MovieVO> rec_movie = new ArrayList();
 				rec_movie.add(rec_genre_movie);
 				rec_movie.add(rec_actor_movie);
 				rec_movie.add(rec_director_movie);
@@ -185,7 +196,7 @@ public class YzrController {
 				model.addAttribute("rec_movie", rec_movie);
 				
 				// 추천영화별 타이틀
-				List<String> rec_title = new ArrayList<String>();
+				List<String> rec_title = new ArrayList();
 				
 				rec_title.add("장르&nbsp<&nbsp" + genre + "&nbsp>");
 				rec_title.add("배우&nbsp<&nbsp" + actor + "&nbsp>");
@@ -207,7 +218,7 @@ public class YzrController {
 		ResponseEntity<List<String>> entity = null;
 		
 		try{
-			List<String> list = new ArrayList<String>();
+			List<String> list = new ArrayList();
 			
 			if(category.equals(1)){
 				list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");

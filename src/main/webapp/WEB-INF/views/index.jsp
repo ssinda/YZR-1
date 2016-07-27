@@ -2,7 +2,7 @@
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="./include/header.jsp"%>
-<div id="wrap_content">
+<div id="wrap_content" style="min-height: 100%; position: relative;">
 	<div id="content" style="padding-bottom: 50px;">
 		<div id="notice" style="border-bottom:2px solid #000; margin-top:10px;" class="carousel up" data-ride="carousel" data-interval="3000">
 			<c:forEach begin="0" end="4" varStatus="n">
@@ -51,6 +51,18 @@
 			</c:otherwise>
 		</c:choose>
 		
+		<c:if test="${chart == null }">
+			<span style="font-weight:bold; font-size:15px;"> ${basic_title} </span>
+			<div id="rec_movie" style="border:0px solid #000; width:250px; height:380px; text-align:left; margin-top:5px;">
+				<a href=""><img src="/resources/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
+				<span style="font-weight:bold; font-size:15px;"> ${basic_title}  </span><br/>
+				관람등급 : <br/>
+				예매율 : <br/>
+				개봉날짜 : <br/>
+				<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
+			</div>
+		</c:if>
+		
 		<c:forEach items="${chart}" var="chart" begin="0" end="2" varStatus="i">
 			<div style="margin-top:20px; float:left; margin-left:92px; margin-right:92spx; ">
 				<div id="m1" style="margin-top:20px;">
@@ -75,8 +87,8 @@
 						</span>
 					</div>
 					<div id="rec_movie" style="border:0px solid #000; width:250px; height:380px; text-align:left; margin-top:5px;">
-						<img src="/resources/poster/${chart.poster}" style="width:249px; height:300px;"/>
-						제목 : ${chart.title} <br/>
+						<a href=""><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
+						<span style="font-weight:bold; font-size:15px;"> ${chart.title} </span><br/>
 						관람등급 : ${chart.rating} <br/>
 						예매율 : ${chart.reservation_rate}%<br/>
 						개봉날짜 : ${chart.open_date} <br/>
