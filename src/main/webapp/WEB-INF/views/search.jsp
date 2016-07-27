@@ -144,7 +144,6 @@
 		movie_list += '<div style="text-align: left; padding-left: 10px; padding-top: 9px; font-weight: bolder; font-size: 15px;"><a id="goMovieList" href="javascript:goMovieList()">영화('+result.movieList.length+'건)<span class="glyphicon glyphicon-plus-sign"></span></a></div>';
 		$(result.movieList).each(function(i){
 			if(i<4){
-				date = new Date(this.open_date);
 				movie_list+=  '<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">'
 							+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
 						    + '<span style="font-weight: bold; font-size: 16px;">'+ this.title + '</span>'
@@ -158,7 +157,7 @@
 				}
 				
 				movie_list+=  '</span>'
-							+ '<span>개봉일 : ' + date.toISOString().substring(0, 10) +'</span>'
+							+ '<span>개봉일 : ' + this.open_date +'</span>'
 							+ '<span>감독 : ';
 						
 				for(var k = 0; k<am.director.length; k++){
@@ -257,7 +256,6 @@
 		$("#page").show();
 		
 		$(ml).each(function(i){
-			date = new Date(this.open_date);
 			result+=  '<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">'
 					+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
 					+ '<span style="font-weight: bold; font-size: 16px;">' + this.title + '</span>'
@@ -271,7 +269,7 @@
 			}
 			
 			result+=  '</span>'
-					+ '<span>개봉일 : ' + date.toISOString().substring(0, 10) +'</span>'
+					+ '<span>개봉일 : ' + this.open_date +'</span>'
 					+ '<span>감독 : ';
 					
 			for(var k = 0; k<am.director.length; k++){
