@@ -34,7 +34,7 @@
 	</beans:bean>
 	
 	<beans:bean id="uploadPath" class="java.lang.String">
-      <beans:constructor-arg value="C:\\images\\"> </beans:constructor-arg>
+      <beans:constructor-arg value="C:\Users\user1\Desktop\pinisoos\spring\YZR\src\main\webapp\resources\images\"> </beans:constructor-arg>
    	</beans:bean>
 	
 </beans:beans>
