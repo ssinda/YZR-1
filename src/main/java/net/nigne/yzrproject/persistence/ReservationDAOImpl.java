@@ -25,7 +25,7 @@ public class ReservationDAOImpl implements ReservationDAO {
 		CriteriaQuery<ReservationVO> cq = cb.createQuery(ReservationVO.class);
 		Root<ReservationVO> root = cq.from(ReservationVO.class);
 		Predicate p = cb.equal(root.get("member_id"), member_id);
-		cq.where(p).orderBy(cb.desc(root.get("reservation_date")));
+		cq.where(p);
 		
 		TypedQuery<ReservationVO> tq = entityManager.createQuery(cq);
 		List<ReservationVO> list = tq.getResultList();

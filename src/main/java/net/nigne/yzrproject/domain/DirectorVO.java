@@ -34,17 +34,6 @@ public class DirectorVO {
 	
 	@Column(name="director_company")
 	String director_company;
-	
-	public DirectorVO(String director_name, String director_age, String director_photo){
-		
-		setDirector_name(director_name);
-		setDirector_age(director_age);
-		setDirector_photo(director_photo);
-	}
-
-	public DirectorVO() {
-		
-	}
 
 	public int getNo() {
 		return no;
