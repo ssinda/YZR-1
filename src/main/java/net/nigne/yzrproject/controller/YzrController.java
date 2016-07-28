@@ -53,10 +53,8 @@ public class YzrController {
       return new ModelAndView("redirect:/index");
    
    }
-   
-   
-   @RequestMapping(value = "/user", method = RequestMethod.GET)
-   public String userPage(Locale locale, Model model) throws Exception {
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String userPage(Locale locale, Model model) throws Exception {
 
       return "user/index";
    }
