@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.nigne.yzrproject.domain.Criteria;
+import net.nigne.yzrproject.domain.MemberVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.NoticeVO;
 import net.nigne.yzrproject.domain.ReservationVO;
@@ -28,6 +29,8 @@ import net.nigne.yzrproject.service.MovieService;
 import net.nigne.yzrproject.service.NoticeService;
 import net.nigne.yzrproject.service.ReservationService;
 import net.nigne.yzrproject.service.SupportNoticeService;
+import net.nigne.yzrproject.service.UserCouponService;
+import net.nigne.yzrproject.service.UserInfoService;
 
 @Controller
 public class YzrController {
@@ -46,6 +49,10 @@ public class YzrController {
 	private DirectorService director_service;
 	@Autowired
 	private SupportNoticeService noticeService;
+	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private UserCouponService userCouponService;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView homeA(Locale locale, Model model) throws Exception {
@@ -55,8 +62,15 @@ public class YzrController {
 	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String userPage(Locale locale, Model model) throws Exception {
-
+	public String userPage(Model model, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		String member_id = (String)session.getAttribute("member_id");
+		MemberVO vo = userInfoService.getMemberInfo(member_id);
+		long couponTotal = userCouponService.getCouponTotal(member_id);
+		List<ReservationVO> reservationList = reservation_service.getReservation_list(member_id);
+		model.addAttribute("userInfo", vo);
+		model.addAttribute("couponTotal", couponTotal);
+		model.addAttribute("reservationList", reservationList);
 		return "user/index";
 	}
 	
