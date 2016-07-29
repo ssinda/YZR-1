@@ -25,12 +25,22 @@
 
 
 	<div style="height: 34px; line-height: 34px;">
-		<span style="font-size: 20px;">예매내역</span><a style="margin-left: 5px;" href="/user/reservation">0건<span class="glyphicon glyphicon-plus-sign"></span></a>
+		<span style="font-size: 20px;">예매내역</span><a style="margin-left: 5px;" href="/user/reservation">${reservationTotal}건<span class="glyphicon glyphicon-plus-sign"></span></a>
 	</div>
-	<div id="reservationList" style="height: 200px; border: 1px solid #000;">
-		<c:forEach items="${reservationList}" var="r">
-			<div>
-				<span style="font-size: ">${r.reservation_code}</span>
+	<div id="reservationList" style="border: 1px solid #000;">
+		<div style="width: 888px; height:50px; line-height: 50px;">
+			<span style="width: 200px; display: block; float: left; text-align: center; font-size: 15px;">예매번호</span>
+			<span style="width: 688px; display: block; text-align: center; font-size: 15px;">예매정보</span>
+		</div>
+		<c:forEach items="${reservation.reservationList}" var="r" begin="0" end="4" step="1">
+			<div style="height: 50px; line-height: 50px;">
+				<span style="width: 200px; display: block; float: left; text-align: center;">${r.reservation_code}</span>
+				<c:forEach items="${reservation.reservationMovie}" var="rm">
+					<c:if test="${r.movie_id == rm.movie_id }">
+						<span>${rm.title}</span>
+					</c:if>
+				</c:forEach>
+				<span>${r.theater_name} ${r.plex_number}관</span>
 			</div>
 		</c:forEach>
 	</div>

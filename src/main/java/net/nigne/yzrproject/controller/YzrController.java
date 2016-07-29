@@ -3,6 +3,7 @@ package net.nigne.yzrproject.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,16 +63,21 @@ public class YzrController {
    }
    @RequestMapping(value = "/user", method = RequestMethod.GET)
    public String userPage(Model model, HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
+		
+	   HttpSession session = request.getSession();
 		String member_id = (String)session.getAttribute("member_id");
+		
 		MemberVO vo = userInfoService.getMemberInfo(member_id);
 		long couponTotal = userCouponService.getCouponTotal(member_id);
-		List<ReservationVO> reservationList = reservation_service.getReservation_list(member_id);
+		Map<String,Object> reservation = reservation_service.getReservation(member_id);
+		long reservationTotal = reservation_service.getReservationTotal(member_id);
+		
 		model.addAttribute("userInfo", vo);
 		model.addAttribute("couponTotal", couponTotal);
-		model.addAttribute("reservationList", reservationList);
+		model.addAttribute("reservation", reservation);
+		model.addAttribute("reservationTotal", reservationTotal);
 		return "user/index";
-	}
+   }
    
    @RequestMapping(value = "/membership", method = RequestMethod.GET)
    public String membershipPage(Locale locale, Model model) throws Exception {
