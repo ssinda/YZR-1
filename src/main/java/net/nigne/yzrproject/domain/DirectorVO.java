@@ -34,6 +34,16 @@ public class DirectorVO {
 	
 	@Column(name="director_company")
 	String director_company;
+	
+	public DirectorVO(String director_name, String director_age, String director_photo){
+		this.director_name = director_name;
+		this.director_age = director_age;
+		this.director_photo = director_photo;
+	}
+	
+	public DirectorVO(){
+		
+	}
 
 	public int getNo() {
 		return no;
