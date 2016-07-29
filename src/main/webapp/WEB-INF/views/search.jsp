@@ -68,7 +68,6 @@
 	<div id="listWrapper" style="clear: both; width: 100%;margin-top: 20px; height: auto; text-align: center;">
 		<!-- 영화 목록 -->
 		<div id="movie_list" class="tab-pane col-sm-12" style="border: 0px solid #000; height: auto; margin-top: 10px; padding: 0px;">
-<<<<<<< HEAD
 			<div style="text-align: left; padding-left: 10px; padding-top: 9px; font-weight: bolder; font-size: 15px;"><a href="javascript:getMovieList(1)">영화(${movieList.size()}건)<span class="glyphicon glyphicon-plus-sign"></span></a></div>
 			<c:forEach items="${movieList}" var="ml" begin="0" end="3" step="1">
 				<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">
@@ -107,8 +106,6 @@
 					</c:choose>
 				</div>
 			</c:forEach>	
-=======
->>>>>>> 1af0f15087b40a379708c26d4a4b800e5cfdd5a4
 		</div>
 		<!-- 구분선 -->
 		<div class="line_red"></div>
