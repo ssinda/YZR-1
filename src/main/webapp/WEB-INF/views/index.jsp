@@ -34,7 +34,6 @@
          </div>
       </div>      
       
-<<<<<<< HEAD
 	<div style="clear: both; width: 100%; height: 34px;">
 		<form class="form" action="/search" method="post">
 			<div class="form-group" style="clear: both; width: 100%; height: 34px;">
@@ -47,12 +46,6 @@
 			</div>	
 		</form>
 	</div>
-=======
-      <form class="form-inline" role="form" style="text-align:left; margin-top:20px;">
-         <input type="text" id="search" name="search" class="form-control" placeholder="검색어를 입력하세요" style="width:930px;"/>
-         <button type="submit" id="btn_seacrch" name="btn_seacrch" class="btn btn-danger" style="width:204px;">검색</button>
-      </form>
->>>>>>> 96f122c9cf572e77e88d5c8c2c7ac207833fd961
       
       <span style="font-weight:bold; font-size:36px; float:left; margin-top:10px;">추천영화</span>
       <div style="border:1px solid #000; margin-top:60px;"></div>
