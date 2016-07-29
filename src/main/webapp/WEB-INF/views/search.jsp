@@ -68,47 +68,6 @@
 	<div id="listWrapper" style="clear: both; width: 100%;margin-top: 20px; height: auto; text-align: center;">
 		<!-- 영화 목록 -->
 		<div id="movie_list" class="tab-pane col-sm-12" style="border: 0px solid #000; height: auto; margin-top: 10px; padding: 0px;">
-<<<<<<< HEAD
-			<div style="text-align: left; padding-left: 10px; padding-top: 9px; font-weight: bolder; font-size: 15px;"><a href="javascript:getMovieList(1)">영화(${movieList.size()}건)<span class="glyphicon glyphicon-plus-sign"></span></a></div>
-			<c:forEach items="${movieList}" var="ml" begin="0" end="3" step="1">
-				<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">
-					<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/${ml.poster}" style="width: 100%; max-height: 100%; vertical-align: middle;"></span>
-					<span style="font-weight: bold; font-size: 16px;">${ml.title}</span>
-					<span>등급 : ${ml.rating}</span>
-					<span>장르 : 
-						<c:forEach items="${associateMovie.genre}" var="am" varStatus="amvs">
-							<c:if test="${am.movie_id eq ml.movie_id}">
-								${am.movie_genre}
-							</c:if>
-						</c:forEach>
-					</span>
-					<span>개봉일 : ${fn:substring(ml.open_date, 0, 10)}</span>
-					<span>감독 : 
-						<c:forEach items="${associateMovie.director}" var="am" varStatus="amvs">
-							<c:if test="${am.movie_id eq ml.movie_id}">
-								${am.director_name}
-							</c:if>
-						</c:forEach>
-					</span>
-					<span>배우 : 
-						<c:forEach items="${associateMovie.actor}" var="am" varStatus="amvs">
-							<c:if test="${am.movie_id eq ml.movie_id}">
-								${am.actor_name}
-							</c:if>
-						</c:forEach>
-					</span>
-					<c:choose>
-						<c:when test="${ml.status eq 'play'}">
-							<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="${ml.movie_id}">예매</button></span>
-						</c:when>
-						<c:when test="${ml.status eq 'schedule'}">
-							<span style="text-align: center; color: #ff4859; font-weight: bold; letter-spacing: 25px;">&nbsp상영예정</span>
-						</c:when>
-					</c:choose>
-				</div>
-			</c:forEach>	
-=======
->>>>>>> 1af0f15087b40a379708c26d4a4b800e5cfdd5a4
 		</div>
 		<!-- 구분선 -->
 		<div class="line_red"></div>

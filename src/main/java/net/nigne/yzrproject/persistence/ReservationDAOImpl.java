@@ -95,9 +95,9 @@ public class ReservationDAOImpl implements ReservationDAO {
 		cq.select(cb.count(root)).where(p);
 		
 		TypedQuery<Long> tq = entityManager.createQuery(cq);
-		long couponTotal = tq.getSingleResult();
+		long reservationTotal = tq.getSingleResult();
 		
-		return couponTotal;
+		return reservationTotal;
 	}
 
 }
