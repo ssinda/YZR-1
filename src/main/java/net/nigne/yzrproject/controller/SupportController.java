@@ -29,10 +29,4 @@ public class SupportController {
 		view.setViewName("support/faq");
 		return view;
 	}
-	@RequestMapping(value = "/support/qna", method = RequestMethod.GET)
-	public ModelAndView supportQnaPage() throws Exception {
-		ModelAndView view=new ModelAndView();
-		view.setViewName("support/qna");
-		return view;
-	}
 }

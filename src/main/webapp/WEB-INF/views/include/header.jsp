@@ -89,6 +89,7 @@ font {
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font style="font-size: 15pt; font-weight: bold;">영화</font></a>
 							<ul class="dropdown-menu">
 								<li><a href="/movie">무비 차트</a></li>
+								<li><a href="/search">무비 파인더</a></li>
 							</ul>
 						</li>
 						<li class="dropdown" style="float: none; display: inline-block;">

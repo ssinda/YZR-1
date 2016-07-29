@@ -34,7 +34,7 @@
          </div>
       </div>      
       
-      <form class="form-inline" role="form" style="text-align:left; margin-top:20px;">
+      <form action="/search" method="post" class="form-inline" role="form" style="text-align:left; margin-top:20px;">
          <input type="text" id="search" name="search" class="form-control" placeholder="검색어를 입력하세요" style="width:930px;"/>
          <button type="submit" id="btn_seacrch" name="btn_seacrch" class="btn btn-danger" style="width:204px;">검색</button>
       </form>
@@ -54,7 +54,7 @@
       <c:if test="${chart == null }">
          <span style="font-weight:bold; font-size:15px;"> ${basic_title} </span>
          <div id="rec_movie" style="border:0px solid #000; width:250px; height:380px; text-align:left; margin-top:5px;">
-            <a href=""><img src="/resources/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
+            <a href=""><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
             <span style="font-weight:bold; font-size:15px;"> ${basic_title}  </span><br/>
             관람등급 : <br/>
             예매율 : <br/>
