@@ -34,8 +34,10 @@ th, td{
 			<span class="glyphicon glyphicon-search" style="margin-top: 70px;"></span><br><br>
 			<span style="font-weight: bold; font-size: 15pt; color: white;">자주찾는 질문 빠른검색</span><br><br>
 			<div style="padding-left: 30px; padding-right: 30px;">
-				<input type="text" style="float: left; height: 30px; padding-left: 5px; border-bottom: 0px; border-left: 0px; border-top: 0px; border-color: gray;" placeholder="검색어를 입력해 주세요.">
-				<div style="background-color: white; color: gray; font-size: 10pt; font-weight: bold; padding-top: 5px; height: 30px; cursor: pointer;" onclick="">검색</div>
+				<form id="faqfrm" method="post" action="/support/faq">
+					<input type="text" id="search" name="search" style="float: left; height: 30px; padding-left: 5px; border-bottom: 0px; border-left: 0px; border-top: 0px; border-color: gray;" placeholder="검색어를 입력해 주세요.">
+					<div style="background-color: white; color: gray; font-size: 10pt; font-weight: bold; padding-top: 5px; height: 30px; cursor: pointer;" onclick="faqPage();">검색</div>
+				</form>
 			</div>
 		</div>
 		<div style="width: 33%; height: 270px; float: left; border-left: 0px; background-color: ivory; text-align: center;">
@@ -68,4 +70,9 @@ th, td{
 		</div>
 	</div>
 </div>
+<script>
+	function faqPage(){
+		$("#faqfrm").submit();
+	}
+</script>
 <%@include file="../include/footer.jsp"%>

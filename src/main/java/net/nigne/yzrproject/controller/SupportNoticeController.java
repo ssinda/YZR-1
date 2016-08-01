@@ -30,8 +30,8 @@ public class SupportNoticeController {
 		return view;
 	}
 	@RequestMapping(value = "/support/notice/{page}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> noticeList(@PathVariable("page") Integer page, @RequestParam(name="keyword", required=false) String keyword,
-															@RequestParam(name="search", required=false, defaultValue="") String search) {
+	public ResponseEntity<Map<String, Object>> noticeList(@PathVariable("page") Integer page, @RequestParam("keyword") String keyword,
+															@RequestParam("search") String search) {
 		ResponseEntity<Map<String, Object>> entity = null;
 		try{
 			Map<String, Object> map = new HashMap<String, Object>();

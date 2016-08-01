@@ -42,7 +42,7 @@ public class AdminNoticeDAOImpl implements AdminNoticeDAO {
 		CriteriaQuery<NoticeVO> cq=cb.createQuery(NoticeVO.class);
 		Root<NoticeVO> root = cq.from(NoticeVO.class);
 		cq.select(root);
-		cq.where(cb.equal(root.get(keyword), search));
+		cq.where(cb.like(root.get(keyword),"%" + search + "%"));
 		cq.orderBy(cb.desc(root.get("no")));
 		try{
 			TypedQuery<NoticeVO> tq = entityManager.createQuery(cq).setFirstResult(cri.getStartPage()).setMaxResults(cri.getArticlePerPage());
@@ -77,7 +77,7 @@ public class AdminNoticeDAOImpl implements AdminNoticeDAO {
 		CriteriaQuery<Long> cq=cb.createQuery(Long.class);
 		Root<NoticeVO> root = cq.from(NoticeVO.class);
 		cq.select(cb.count(root));
-		cq.where(cb.equal(root.get(keyword), search));
+		cq.where(cb.like(root.get(keyword),"%" + search + "%"));
 		try{
 			TypedQuery<Long> tq = entityManager.createQuery(cq);
 			noticeSearchTotal=tq.getSingleResult();
