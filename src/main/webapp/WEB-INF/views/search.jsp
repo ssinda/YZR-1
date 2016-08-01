@@ -146,7 +146,7 @@
 		$(result.movieList).each(function(i){
 			if(i<4){
 				movie_list+=  '<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">'
-							+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
+							+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
 						    + '<span style="font-weight: bold; font-size: 16px;">'+ this.title + '</span>'
 							+ '<span>등급 : ' + this.rating + '</span>'
 							+ '<span>장르: ';
@@ -255,7 +255,7 @@
 		
 		$(ml).each(function(i){
 			result+=  '<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">'
-					+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
+					+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resource/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
 					+ '<span style="font-weight: bold; font-size: 16px;">' + this.title + '</span>'
 					+ '<span>등급 : ' + this.rating + '</span>'
 					+ '<span>장르: ';

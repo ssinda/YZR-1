@@ -55,6 +55,7 @@ public class YzrController {
    @Autowired
    private UserCouponService userCouponService;
 
+   
    @RequestMapping(value = "", method = RequestMethod.GET)
    public ModelAndView homeA(Locale locale, Model model) throws Exception {
 
@@ -64,19 +65,22 @@ public class YzrController {
    @RequestMapping(value = "/user", method = RequestMethod.GET)
    public String userPage(Model model, HttpServletRequest request) throws Exception {
 		
-	   HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		String member_id = (String)session.getAttribute("member_id");
-		
-		MemberVO vo = userInfoService.getMemberInfo(member_id);
-		long couponTotal = userCouponService.getCouponTotal(member_id);
-		Map<String,Object> reservation = reservation_service.getReservation(member_id);
-		long reservationTotal = reservation_service.getReservationTotal(member_id);
-		
-		model.addAttribute("userInfo", vo);
-		model.addAttribute("couponTotal", couponTotal);
-		model.addAttribute("reservation", reservation);
-		model.addAttribute("reservationTotal", reservationTotal);
-		return "user/index";
+		if(member_id == "" || member_id == null){
+			return "login";
+		}else{
+			MemberVO vo = userInfoService.getMemberInfo(member_id);
+			long couponTotal = userCouponService.getCouponTotal(member_id);
+			Map<String,Object> reservation = reservation_service.getReservation(member_id);
+			long reservationTotal = reservation_service.getReservationTotal(member_id);
+			
+			model.addAttribute("userInfo", vo);
+			model.addAttribute("couponTotal", couponTotal);
+			model.addAttribute("reservation", reservation);
+			model.addAttribute("reservationTotal", reservationTotal);
+			return "user/index";
+		}
    }
    
    @RequestMapping(value = "/membership", method = RequestMethod.GET)
