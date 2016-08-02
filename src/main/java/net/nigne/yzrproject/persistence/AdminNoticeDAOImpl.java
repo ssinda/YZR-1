@@ -123,4 +123,11 @@ public class AdminNoticeDAOImpl implements AdminNoticeDAO {
 		mergevo.setNotice_title(vo.getNotice_title());
 		mergevo.setNotice_content(vo.getNotice_content());
 	}
+	@Override
+	public void updateView_cnt(int no) {
+		// TODO Auto-generated method stub
+		NoticeVO findvo=entityManager.find(NoticeVO.class, no);
+		NoticeVO mergevo=entityManager.merge(findvo);
+		mergevo.setNotice_view_cnt(findvo.getNotice_view_cnt() + 1);
+	}
 }

@@ -63,10 +63,8 @@ public class SearchController {
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String Search(@RequestParam("search") String search, Model model,HttpServletRequest request) throws Exception {
+	public String Search(@RequestParam("search") String search, Model model) throws Exception {
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("search", search);
 		//영화 디렉터 배우  리스트
 		List<MovieVO> movieList = ss.getSearch(search);
 		List<DirectorVO> directorList = ss.getSearchDirector(search);
@@ -78,6 +76,7 @@ public class SearchController {
 		//감독 영화
 		List<SearchVO> associateMovieWithDirector = ss.getSearchAssociateMovieWithDirector(search);
 		
+		model.addAttribute("search", search);
 		model.addAttribute("movieList", movieList);
 		model.addAttribute("directorList", directorList);
 		model.addAttribute("actorList", actorList);
@@ -87,7 +86,6 @@ public class SearchController {
 
 		return "search";
 	}
-	
 	/** 
 	* @Method Name : SearchAll  
 	* @Method	   : 설명... 
@@ -97,9 +95,8 @@ public class SearchController {
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/search/result", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> SearchAll(Model model,HttpSession session) throws Exception {
+	public ResponseEntity<Map<String,Object>> SearchAll(Model model, @RequestParam("search") String search) throws Exception {
 		
-		String search = session.getAttribute("search").toString();
 		ResponseEntity<Map<String,Object>> entity = null;
 		
 		try{
@@ -145,9 +142,8 @@ public class SearchController {
 	*/
 	// /movie/ 목록페이징
 	@RequestMapping(value = "/search/movie/{page}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> movieListPage(@PathVariable("page") Integer page, HttpSession session) {
+	public ResponseEntity<Map<String,Object>> movieListPage(@PathVariable("page") Integer page, @RequestParam("search") String search) {
 		
-		String search = (String) session.getAttribute("search");
 		ResponseEntity<Map<String,Object>> entity = null;
 		
 		try{
@@ -192,9 +188,8 @@ public class SearchController {
 	*/
 	// /actor/ 목록페이징
 	@RequestMapping(value = "/search/actor/{page}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> actorListPage(@PathVariable("page") Integer page, HttpSession session) {
+	public ResponseEntity<Map<String,Object>> actorListPage(@PathVariable("page") Integer page, @RequestParam("search") String search) {
 		
-		String search = (String) session.getAttribute("search");
 		ResponseEntity<Map<String,Object>> entity = null;
 		
 		try{
@@ -239,9 +234,8 @@ public class SearchController {
 	*/
 	// /director/ 목록페이징
 	@RequestMapping(value = "/search/director/{page}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> directorListPage(@PathVariable("page") Integer page, HttpSession session) {
+	public ResponseEntity<Map<String,Object>> directorListPage(@PathVariable("page") Integer page, @RequestParam("search") String search) {
 		
-		String search = (String) session.getAttribute("search");
 		ResponseEntity<Map<String,Object>> entity = null;
 		
 		try{

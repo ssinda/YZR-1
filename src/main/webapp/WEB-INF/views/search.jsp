@@ -155,7 +155,6 @@
 		$("#actor_list").html("");
 		$("#director_list").html("");
 		$("#page").hide();
-		var search = "${search}";
 		
 		$.ajax({
 			type : 'get',
@@ -165,7 +164,7 @@
 	//			"X-HTTP-Method-Override" : "GET",
 			},
 			dataType : 'json',
-			data : '',
+			data : {"search" : "${ search }"},
 			success : function(result){
 				setSearchList(result);
 				
@@ -382,7 +381,7 @@
 //				"X-HTTP-Method-Override" : "GET",
 			},
 			dataType : 'json',
-			data : '',
+			data : {"search" : "${ search }"},
 			success : function(result){
 				endPage = result.p.endPage; 
 				startPage = result.p.startPage;
@@ -477,7 +476,7 @@
 //				"X-HTTP-Method-Override" : "GET",
 			},
 			dataType : 'json',
-			data : '',
+			data : {"search" : "${ search }"},
 			success : function(result){
 				actorEndPage = result.p.endPage;
 				actorStartPage = result.p.startPage;
@@ -569,7 +568,7 @@
 //				"X-HTTP-Method-Override" : "GET",
 			},
 			dataType : 'json',
-			data : '',
+			data : {"search" : "${ search }"},
 			success : function(result){
 				directorEndPage = result.p.endPage;
 				directorStartPage = result.p.startPage;

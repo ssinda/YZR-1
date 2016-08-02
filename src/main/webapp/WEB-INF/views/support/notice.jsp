@@ -76,7 +76,7 @@ td{
 			type : 'get',
 			url : '/admin/notice/' + page,
 			headers : {
-				"Content-Type" : "application/json",
+				"Content-Type" : "application/json"
 			},
 			data : {"keyword" : $("#keyword").val(), "search" : $("#search").val()},
 			dataType : 'json',

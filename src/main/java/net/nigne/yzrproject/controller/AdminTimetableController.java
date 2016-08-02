@@ -1,5 +1,6 @@
 package net.nigne.yzrproject.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.nigne.yzrproject.domain.Criteria;
+import net.nigne.yzrproject.domain.PageMaker;
+import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
 import net.nigne.yzrproject.service.AdminEtcService;
 import net.nigne.yzrproject.service.AdminTimetableService;
@@ -22,13 +26,37 @@ public class AdminTimetableController {
 
 	@Autowired
 	private AdminTimetableService service;
-
+	
 	@RequestMapping(value = "/admin/timetable", method = RequestMethod.GET)
 	public ModelAndView adminTimetablePage() throws Exception {
 		ModelAndView view=new ModelAndView();
-		view.addObject("theaterlist", service.getTheatername());
 		view.setViewName("admin/timetable");
 		return view;
+	}
+	@RequestMapping(value = "/admin/timetable/{page}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> theaterList(@PathVariable("page") Integer page) {
+
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		try{
+			Map<String, Object> map = new HashMap<String, Object>();
+			Criteria cri = new Criteria();
+			cri.setPage(page);
+			
+			List<TheaterVO> list=null;
+			list = service.getTheatername(cri);
+			
+			Long TheaterTotal = service.getTheaterCount();
+			PageMaker pm = new PageMaker(cri, TheaterTotal);
+			
+			map.put("theater_list", list);
+			map.put("paging", pm);
+
+			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+		}catch(Exception e){
+			entity = new ResponseEntity<Map<String, Object>>(HttpStatus.BAD_REQUEST); 
+		}
+		return entity;
 	}
 	@RequestMapping(value = "/admin/timetable/read/{theater_id}", method = RequestMethod.GET)
 	public ModelAndView adminReadTimetablePage(@PathVariable("theater_id") String theater_id) throws Exception {
@@ -41,7 +69,7 @@ public class AdminTimetableController {
 	public ModelAndView adminWriteTimetablePage() throws Exception {
 		ModelAndView view=new ModelAndView();
 		view.addObject("moviename_list", service.getAllMoviename());
-		view.addObject("theatername_list", service.getTheatername());
+		view.addObject("theatername_list", service.getTheatername(null));
 		view.addObject("plexnumber_list", service.getPlexnumber());
 		view.setViewName("admin/timetableWrite");
 		return view;

@@ -70,4 +70,12 @@ public class SupportFaqController {
 		}
 		return entity;
 	}
+	@RequestMapping(value = "/support/faq/read/{no}", method = RequestMethod.GET)
+	public ModelAndView supportNoticeReadPage(@PathVariable("no") Integer no) throws Exception {
+		
+		ModelAndView view=new ModelAndView();
+		view.addObject("vo", service.getFaqDetail(no));
+		view.setViewName("support/faqRead");
+		return view;
+	}
 }

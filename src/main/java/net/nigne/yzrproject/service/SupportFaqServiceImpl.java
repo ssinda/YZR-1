@@ -10,6 +10,7 @@ import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.FaqVO;
 import net.nigne.yzrproject.domain.LostVO;
 import net.nigne.yzrproject.domain.MemberVO;
+import net.nigne.yzrproject.domain.NoticeVO;
 import net.nigne.yzrproject.domain.PlexVO;
 import net.nigne.yzrproject.domain.QnaVO;
 import net.nigne.yzrproject.domain.RentVO;
@@ -36,5 +37,11 @@ public class SupportFaqServiceImpl implements SupportFaqService {
 	public Long getFaqCount(String search, String category) {
 		// TODO Auto-generated method stub
 		return dao.getFaqCount(search, category);
+	}
+	@Transactional(readOnly=true)
+	@Override
+	public FaqVO getFaqDetail(int no) {
+		// TODO Auto-generated method stub
+		return dao.getFaqDetail(no);
 	}
 }

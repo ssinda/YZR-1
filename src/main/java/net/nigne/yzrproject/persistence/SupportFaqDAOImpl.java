@@ -81,4 +81,21 @@ public class SupportFaqDAOImpl implements SupportFaqDAO {
 			return faqCount;
 		}
 	}
+	@Override
+	public FaqVO getFaqDetail(int no) {
+		// TODO Auto-generated method stub
+		FaqVO vo = null;
+		CriteriaBuilder cb=entityManager.getCriteriaBuilder();
+		CriteriaQuery<FaqVO> cq=cb.createQuery(FaqVO.class);
+		Root<FaqVO> root = cq.from(FaqVO.class);
+		cq.select(root);
+		cq.where(cb.equal(root.get("no"), no));
+		try{
+			TypedQuery<FaqVO> tq = entityManager.createQuery(cq);
+			vo=tq.getSingleResult();
+			return vo;
+		}catch(Exception e){
+			return vo;
+		}
+	}
 }
