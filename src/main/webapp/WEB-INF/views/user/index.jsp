@@ -33,7 +33,7 @@
 				<c:forEach items="${reservation.reservationMovie}" var="rm">
 					<c:if test="${r.movie_id == rm.movie_id }">
 						<div style="height: 130px; margin-left: 200px;">
-							<span style="height: 128px; width: 105px; display: block; margin: 0; float: left;"><a href="/movie/${r.movie_id}"><img style="height: 100%; vertical-align: baseline;" src="${rm.poster}"></a></span>
+							<span style="height: 128px; width: 105px; display: block; margin: 0; float: left;"><a href="/movie/${r.movie_id}"><img style="height: 100%; vertical-align: baseline;" src="/resources/images/poster/${rm.poster}"></a></span>
 							<span style="height:30px; display: block; margin-left: 115px; margin-bottom: 10px; padding-top:10px; font-weight: bold;"><a href="/movie/${r.movie_id}">${rm.title}</a></span>
 							<span style="height:20px; width: 56px;display: block; margin-left: 10px; margin-bottom: 10px; font-weight: bold; float: left;">관람극장</span>
 							<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 10px;">${r.theater_name} ${r.plex_number}관&nbsp/&nbsp${r.ticket_cnt}명</span>

@@ -17,6 +17,7 @@ import javax.persistence.criteria.Subquery;
 import org.springframework.stereotype.Repository;
 
 import net.nigne.yzrproject.domain.CouponVO;
+import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.ReservationVO;
 
@@ -98,6 +99,46 @@ public class ReservationDAOImpl implements ReservationDAO {
 		long reservationTotal = tq.getSingleResult();
 		
 		return reservationTotal;
+	}
+
+	/** 
+	* @Method Name	: getReservationPage 
+	* @Method Ό³Έν	: 
+	* @param member_id
+	* @return 
+	*/
+	@Override
+	public Map<String, Object> getReservationPage(String member_id, Criteria criteria) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<ReservationVO> cq = cb.createQuery(ReservationVO.class);
+		Root<ReservationVO> root = cq.from(ReservationVO.class);
+		Predicate p = cb.equal(root.get("member_id"), member_id);
+		cq.where(p).orderBy(cb.desc(root.get("reservation_date")));
+		
+		TypedQuery<ReservationVO> tq = entityManager.createQuery(cq).setFirstResult(criteria.getStartPage()).setMaxResults(criteria.getArticlePerPage());
+		List<ReservationVO> list = tq.getResultList();
+	
+		List<Predicate> pl = new ArrayList<Predicate>();
+		
+		CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
+        Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
+        movieQuery.select(movieRoot);
+        movieQuery.where(movieRoot.get("movie_id"));
+       
+        for(int a=0; a<list.size(); a++){
+        	pl.add(cb.or(cb.equal(movieRoot.get("movie_id"), list.get(a).getMovie_id())));
+        }
+        movieQuery.where(cb.or(pl.toArray(new Predicate[pl.size()])));
+		
+        TypedQuery<MovieVO> movieTq = entityManager.createQuery(movieQuery);
+		List<MovieVO> movieList = movieTq.getResultList();
+		//select title,movie_id from movie where movie_id = (select movie_id from reservation_list where member_id = member_id)
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("reservationList", list);
+		map.put("reservationMovie", movieList);
+		
+		return map;
 	}
 
 }
