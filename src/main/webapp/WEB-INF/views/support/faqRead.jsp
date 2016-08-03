@@ -15,9 +15,9 @@
 			<tr style="background-color: red; color: white;">
 				<th>[${ vo.category }] ${ vo.title }</th>
 				<th style="width: 8%; text-align: center;">등록일</th>
-				<th style="width: 12%; text-align: right;">${ vo.reg_date }</th>
+				<th style="width: 11%; text-align: center;">${ vo.reg_date }</th>
 				<th style="width: 8%; text-align: center;">조회수</th>
-				<th style="width: 8%; text-align: right;">${ vo.view_cnt }</th>
+				<th style="width: 6%; text-align: right;">${ vo.view_cnt }</th>
 			</tr>
 		</thead>
 		<tbody>
