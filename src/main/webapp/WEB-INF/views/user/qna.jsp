@@ -9,6 +9,29 @@
 	</script>
 </c:if>
 <div class="content" style="margin-left: 250px;">
-	qna
+	<h3>나의 문의내역</h3>
+	<div>
+		<b>1:1문의</b>
+	</div>
+	<div style="margin-top:4px;">
+		<b style="float: left;margin-top: 4px;">문의조회</b>
+		<div class="col-xs-4" style="float:left">
+			<input type="text" class="form-control" style="margin-left: 5px;">
+		</div>		
+		<button class="btn btn-danger" style="height: 30px;">검색하기</button>
+	</div>
+	
+	<table class="table" style="margin-top: 30px;">
+			<tr style="background-color: red">
+				<th style="text-align: center;">번호</th>
+				<th style="text-align: center;">문의cgv</th>
+				<th width="50%" style="text-align: center;">제목</th>
+				<th style="text-align: center;">등록일</th>
+			</tr>	
+		</table>
+	
+	
+	
+	
 </div>
 <%@include file="../include/footer.jsp"%>
