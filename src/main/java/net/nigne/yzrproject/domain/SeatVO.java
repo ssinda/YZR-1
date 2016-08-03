@@ -1,0 +1,105 @@
+/** 
+*
+*/
+package net.nigne.yzrproject.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/** 
+* @FileName : SeatVO.java 
+* @Package  : net.nigne.yzrproject.domain 
+* @Date     : 2016. 8. 3. 
+* @작성자		: 강대성
+* @프로그램 	: 설명...
+*/
+@Entity
+@Table(name="seat")
+public class SeatVO {
+	
+	/*----------------Columns----------------*/
+	
+	@Id
+	@Column(name="no")
+	int no;
+	
+	@Column(name="theater_id")
+	String theater_id;
+	
+	@Column(name="plex_number")
+	String plex_number;
+	
+	@Column(name="seat_type")
+	String seat_type;
+	
+	@Column(name="seat_index")
+	String seat_index;
+	
+	@Column(name="seat_number")
+	int seat_number;
+	
+	@Column(name="reservation_exist")
+	String reservation_exist;
+
+	
+	/*----------Getters and Setters----------*/
+	
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public String getTheater_id() {
+		return theater_id;
+	}
+
+	public void setTheater_id(String theater_id) {
+		this.theater_id = theater_id;
+	}
+
+	public String getPlex_number() {
+		return plex_number;
+	}
+
+	public void setPlex_nember(String plex_number) {
+		this.plex_number = plex_number;
+	}
+
+	public String getSeat_type() {
+		return seat_type;
+	}
+
+	public void setSeat_type(String seat_type) {
+		this.seat_type = seat_type;
+	}
+
+	public String getSeat_index() {
+		return seat_index;
+	}
+
+	public void setSeat_index(String seat_index) {
+		this.seat_index = seat_index;
+	}
+
+	public int getSeat_number() {
+		return seat_number;
+	}
+
+	public void setSeat_number(int seat_number) {
+		this.seat_number = seat_number;
+	}
+
+	public String getReservation_exist() {
+		return reservation_exist;
+	}
+
+	public void setReservation_exist(String reservation_exist) {
+		this.reservation_exist = reservation_exist;
+	}
+	
+}

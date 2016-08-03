@@ -1,6 +1,7 @@
 package net.nigne.yzrproject.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -80,6 +81,8 @@ public class YzrController {
 			model.addAttribute("couponTotal", couponTotal);
 			model.addAttribute("reservation", reservation);
 			model.addAttribute("reservationTotal", reservationTotal);
+			model.addAttribute("today", new Date());
+			
 			return "user/index";
 		}
    }

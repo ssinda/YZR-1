@@ -31,23 +31,16 @@ public class UserReservationController {
 	
 	@RequestMapping(value = "/user/reservation", method = RequestMethod.GET)
 	public ModelAndView userReservationPage(HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
-		String member_id = (String)session.getAttribute("member_id");
-		
-		Map<String,Object> reservation = reservation_service.getReservation(member_id);
-		long reservationTotal = reservation_service.getReservationTotal(member_id);
 		
 		ModelAndView view=new ModelAndView();
 		
-		view.addObject("reservation", reservation);
-		view.addObject("reservationTotal", reservationTotal);
 		view.addObject("today", new Date());
 		view.setViewName("user/reservation");
 		return view;
 	}
 	
 	@RequestMapping(value = "/user/reservation/{page}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> movieListPage(@PathVariable("page") Integer page, HttpServletRequest request) {
+	public ResponseEntity<Map<String,Object>> reservationListPage(@PathVariable("page") Integer page, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String member_id = (String)session.getAttribute("member_id");
 		
@@ -77,6 +70,23 @@ public class UserReservationController {
 			
 			//브라우저로 전송
 			entity = new ResponseEntity<>(map, HttpStatus.OK);
+		}catch(Exception e){
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@RequestMapping(value = "/user/reservation/{reservation_code}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> reservationCancel(@PathVariable("reservation_code") String reservation_code, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String member_id = (String)session.getAttribute("member_id");
+		
+		ResponseEntity<String> entity = null;
+		
+		try{
+			reservation_service.reservationCancel(reservation_code);
+			//브라우저로 전송
+			entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e){
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

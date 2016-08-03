@@ -63,4 +63,15 @@ public class ReservationServiceImpl implements ReservationService {
 		return dao.getReservationPage(member_id, criteria);
 	}
 
+	/** 
+	* @Method Name	: reservationCancel 
+	* @Method Ό³Έν	: 
+	* @param reservation_code 
+	*/
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void reservationCancel(String reservation_code) {
+		dao.reservationCancel(reservation_code);
+	}
+
 }

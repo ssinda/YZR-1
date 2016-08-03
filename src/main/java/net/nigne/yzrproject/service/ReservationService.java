@@ -11,4 +11,5 @@ public interface ReservationService {
 	public Map<String,Object> getReservation(String member_id);
 	public Map<String,Object> getReservationPage(String member_id, Criteria criteria);
 	public long getReservationTotal(String member_id);
+	public void reservationCancel(String reservation_code);
 }

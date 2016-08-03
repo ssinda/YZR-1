@@ -66,6 +66,7 @@
 	</div>
 	<!-- 목록 -->
 	<div id="listWrapper" style="clear: both; width: 100%;margin-top: 20px; height: auto; text-align: center;">
+		
 		<!-- 영화 목록 -->
 		<div id="movie_list" class="tab-pane col-sm-12" style="border: 0px solid #000; height: auto; margin-top: 10px; padding: 0px;">
 		</div>

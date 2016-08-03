@@ -20,6 +20,8 @@ import net.nigne.yzrproject.domain.CouponVO;
 import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.ReservationVO;
+import net.nigne.yzrproject.domain.SeatVO;
+import net.nigne.yzrproject.domain.TheaterVO;
 
 @Repository
 public class ReservationDAOImpl implements ReservationDAO {
@@ -56,25 +58,43 @@ public class ReservationDAOImpl implements ReservationDAO {
 		TypedQuery<ReservationVO> tq = entityManager.createQuery(cq);
 		List<ReservationVO> list = tq.getResultList();
 	
-		List<Predicate> pl = new ArrayList<Predicate>();
-		
+		//예매한 영화 관련 Query
 		CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
         Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
         movieQuery.select(movieRoot);
-        movieQuery.where(movieRoot.get("movie_id"));
        
+        //예매한 극장 관련 Query
+  		CriteriaQuery<TheaterVO> theaterQuery = cb.createQuery(TheaterVO.class);
+        Root<TheaterVO> theaterRoot = theaterQuery.from(TheaterVO.class);
+        theaterQuery.select(theaterRoot);
+              
+        //조건
+        List<Predicate> movie = new ArrayList<Predicate>();
+		List<Predicate> theater = new ArrayList<Predicate>();
+		
         for(int a=0; a<list.size(); a++){
-        	pl.add(cb.or(cb.equal(movieRoot.get("movie_id"), list.get(a).getMovie_id())));
+        	movie.add(cb.or(cb.equal(movieRoot.get("movie_id"), list.get(a).getMovie_id())));
+        	theater.add(cb.or(cb.equal(theaterRoot.get("theater_id"), list.get(a).getTheater_id())));
         }
-        movieQuery.where(cb.or(pl.toArray(new Predicate[pl.size()])));
+        
+        //예매 관련 영화 결과
+        movieQuery.where(cb.or(movie.toArray(new Predicate[movie.size()])));
 		
         TypedQuery<MovieVO> movieTq = entityManager.createQuery(movieQuery);
 		List<MovieVO> movieList = movieTq.getResultList();
-		//select title,movie_id from movie where movie_id = (select movie_id from reservation_list where member_id = member_id)
+		//select * from movie where movie_id = (select movie_id from reservation_list where member_id = member_id)
+		
+		//예매 관련 극장 결과
+		theaterQuery.where(cb.or(theater.toArray(new Predicate[theater.size()])));
+		
+        TypedQuery<TheaterVO> theaterTq = entityManager.createQuery(theaterQuery);
+		List<TheaterVO> theaterList = theaterTq.getResultList();
+		
 		
 		Map<String,Object> map = new HashMap<>();
 		map.put("reservationList", list);
 		map.put("reservationMovie", movieList);
+		map.put("reservationTheater", theaterList);
 		
 		return map;
 	}
@@ -118,27 +138,105 @@ public class ReservationDAOImpl implements ReservationDAO {
 		TypedQuery<ReservationVO> tq = entityManager.createQuery(cq).setFirstResult(criteria.getStartPage()).setMaxResults(criteria.getArticlePerPage());
 		List<ReservationVO> list = tq.getResultList();
 	
-		List<Predicate> pl = new ArrayList<Predicate>();
-		
+		//예매한 영화 관련 Query
 		CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
         Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
         movieQuery.select(movieRoot);
-        movieQuery.where(movieRoot.get("movie_id"));
        
+        //예매한 극장 관련 Query
+  		CriteriaQuery<TheaterVO> theaterQuery = cb.createQuery(TheaterVO.class);
+        Root<TheaterVO> theaterRoot = theaterQuery.from(TheaterVO.class);
+        theaterQuery.select(theaterRoot);
+              
+        //조건
+        List<Predicate> movie = new ArrayList<Predicate>();
+		List<Predicate> theater = new ArrayList<Predicate>();
+		
         for(int a=0; a<list.size(); a++){
-        	pl.add(cb.or(cb.equal(movieRoot.get("movie_id"), list.get(a).getMovie_id())));
+        	movie.add(cb.or(cb.equal(movieRoot.get("movie_id"), list.get(a).getMovie_id())));
+        	theater.add(cb.or(cb.equal(theaterRoot.get("theater_id"), list.get(a).getTheater_id())));
         }
-        movieQuery.where(cb.or(pl.toArray(new Predicate[pl.size()])));
+        
+        //예매 관련 영화 결과
+        movieQuery.where(cb.or(movie.toArray(new Predicate[movie.size()])));
 		
         TypedQuery<MovieVO> movieTq = entityManager.createQuery(movieQuery);
 		List<MovieVO> movieList = movieTq.getResultList();
-		//select title,movie_id from movie where movie_id = (select movie_id from reservation_list where member_id = member_id)
+		//select * from movie where movie_id = (select movie_id from reservation_list where member_id = member_id)
+		
+		//예매 관련 극장 결과
+		theaterQuery.where(cb.or(theater.toArray(new Predicate[theater.size()])));
+		
+        TypedQuery<TheaterVO> theaterTq = entityManager.createQuery(theaterQuery);
+		List<TheaterVO> theaterList = theaterTq.getResultList();
+		
 		
 		Map<String,Object> map = new HashMap<>();
 		map.put("reservationList", list);
 		map.put("reservationMovie", movieList);
+		map.put("reservationTheater", theaterList);
 		
 		return map;
+	}
+
+	/** 
+	* @Method Name	: reservationCancel 
+	* @Method 설명	: 
+	* @param reservation_code 
+	*/
+	@Override
+	public void reservationCancel(String reservation_code) {
+		//예매내역을 가져옴
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<ReservationVO> cq = cb.createQuery(ReservationVO.class);
+		Root<ReservationVO> root = cq.from(ReservationVO.class);
+		Predicate p = cb.equal(root.get("reservation_code"), reservation_code);
+		cq.where(p);
+		
+		TypedQuery<ReservationVO> tq = entityManager.createQuery(cq);
+		ReservationVO vo = tq.getSingleResult();
+		
+		//예매내역에서 가져온 view_seat로 seat테이블에서 좌석 예약 상태를 바꿈 
+		CriteriaQuery<SeatVO> seatQuery = cb.createQuery(SeatVO.class);
+		Root<SeatVO> seatRoot = seatQuery.from(SeatVO.class);
+		seatQuery.select(seatRoot);
+		
+		//reservation_list에서 가져온 view_seat를 ,로 나눔
+		String[] view_seat = vo.getView_seat().split(",");
+		
+		//조건
+        List<Predicate> seatWhere = new ArrayList<Predicate>();
+		
+		Predicate tempSeatIndex = null;
+		Predicate tempSeatNumber = null;
+		
+		//나눈 view_seat에서 seat_index와 seat_number를 나눠서 조건에 넣음 
+		//view_seat의 길이만큼 
+		//(seat_index = seat_index and seat_number = seat_number) or (seat_index = seat_index and seat_number = seat_number)
+		//or 반복
+		for(int i = 0; i < view_seat.length; i++){
+			//seat_index가 같고 seat_number가 같은
+			tempSeatIndex = cb.equal(seatRoot.get("seat_index"), view_seat[i].substring(0, 1));
+			tempSeatNumber = cb.equal(seatRoot.get("seat_number"), view_seat[i].substring(1, view_seat[i].length()));
+			
+			seatWhere.add(cb.or(cb.and(tempSeatIndex,tempSeatNumber)));
+		}
+		
+		seatQuery.where(cb.or(seatWhere.toArray(new Predicate[seatWhere.size()])));
+
+		TypedQuery<SeatVO> seatTq = entityManager.createQuery(seatQuery);
+		List<SeatVO> seatList = seatTq.getResultList();
+		//select * from seat where (seat_index = seat_index and seat_number = seat_number) or (seat_index = seat_index and seat_number = seat_number)
+		
+		
+		for(SeatVO seat : seatList){
+			seat = entityManager.find(SeatVO.class, seat.getNo());
+			SeatVO mergevo = entityManager.merge(seat);
+			mergevo.setReservation_exist("0");
+			System.out.println("Reservation_exist : "+seat.getReservation_exist());
+		}
+		
+		entityManager.remove(vo);
 	}
 
 }
