@@ -68,7 +68,7 @@ public class YzrController {
 		
 		HttpSession session = request.getSession();
 		String member_id = (String)session.getAttribute("member_id");
-		session.setAttribute("menu", "MY PAGE");
+		
 		if(member_id == "" || member_id == null){
 			return "login";
 		}else{
@@ -82,6 +82,7 @@ public class YzrController {
 			model.addAttribute("reservation", reservation);
 			model.addAttribute("reservationTotal", reservationTotal);
 			model.addAttribute("today", new Date());
+			session.setAttribute("menu", "MY PAGE");
 			
 			return "user/index";
 		}

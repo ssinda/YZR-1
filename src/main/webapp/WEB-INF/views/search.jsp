@@ -23,6 +23,30 @@
 			width: 1044px;
 		}
 		
+		.movie{
+			border: 0px solid #000; 
+			float: left; 
+			margin: 10px; 
+			width: 264px; 
+			height: 508px; 
+			text-align: left;
+		}
+		
+		.actor, .director{
+			border-bottom: 1px dashed #aaa; 
+			float: left; 
+			margin: 5px 5px 0 5px; 
+			padding-bottom: 5px;
+			width: 1128px; 
+			height: 105px; 
+			line-height: 20px;
+		}
+		
+		.actor:last-child, 
+		.director:last-child{
+			border: 0;
+		}
+		
 		.line_red{
 			clear: both; 
 			border: 1px solid red; 
@@ -125,9 +149,9 @@
 		$("#page").show();
 		
 		$(ml).each(function(i){
-			result+=  '<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">'
+			result+=  '<div class="movie">'
 					+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
-					+ '<span style="font-weight: bold; font-size: 16px;">' + this.title + '</span>'
+					+ '<span style="font-weight: bold; font-size: 16px;"><a href="/movie/' + this.movie_id + '">' + this.title + '</a></span>'
 					+ '<span>등급 : ' + this.rating + '</span>'
 					+ '<span>예매율 : ' + this.reservation_rate + '</span>'
 					+ '<span>개봉일 : ' + this.open_date +'</span>';
@@ -197,7 +221,7 @@
 		movie_list += '<div style="text-align: left; padding-left: 10px; padding-top: 9px; font-weight: bolder; font-size: 15px;"><a id="goMovieList" href="javascript:goMovieList()">영화('+result.movieList.length+'건)<span class="glyphicon glyphicon-plus-sign"></span></a></div>';
 		$(result.movieList).each(function(i){
 			if(i<4){
-				movie_list+=  '<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">'
+				movie_list+=  '<div class="movie">'
 							+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
 						    + '<span style="font-weight: bold; font-size: 16px;">'+ this.title + '</span>'
 							+ '<span>등급 : ' + this.rating + '</span>'
@@ -246,10 +270,12 @@
 		actor_list += '<div style="text-align: left; padding-left: 10px; padding-top: 9px; font-weight: bolder; font-size: 15px;"><a id="goActorList" href="javascript:goActorList()">배우(' + result.actorList.length + '건)<span class="glyphicon glyphicon-plus-sign"></span></a></div>';
 		$(result.actorList).each(function(i){
 			if(i<3){
-				actor_list+=  '<div style="border: 0px solid #000; float: left; margin: 5px; width: 1128px; height: 90px; line-height: 30px;">'
-						+ '<span style="height: 90px; width: 72px; margin-right: 10px;"><img src="' + this.actor_photo + '" style="max-width: 100%; height: 100%;"></span>'
-						+ '<span>배우이름 : '+ this.actor_name + '</span>'
+				actor_list+=  '<div class="actor">'
+						+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.actor_photo + '" style="max-width: 100%; height: 100%;"></span>'
+						+ '<span style="font-weight: bold; font-size: 16px;">'+ this.actor_name + '</span>'
 						+ '<span>나이 : '+ this.actor_age + '</span>'
+						+ '<span>데뷔 : '+ this.actor_debut + '</span>'
+						+ '<span>소속사 : '+ this.actor_company + '</span>'
 						+ '<span>출연영화 : ';
 				
 				for(var j = 0; j<result.movieActor.length; j++){
@@ -271,10 +297,12 @@
 		
 		$(result.directorList).each(function(i){
 			if(i<3){
-				director_list+=  '<div style="border: 0px solid #000; float: left; margin: 5px; width: 1128px; height: 90px; line-height: 30px;">'
-							   + '<span style="height: 90px; width: 72px; margin-right: 10px;"><img src="' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
-							   + '<span>감독이름 : '+ this.director_name + '</span>'
+				director_list+=  '<div class="director">'
+							   + '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
+							   + '<span style="font-weight: bold; font-size: 16px;">'+ this.director_name + '</span>'
 							   + '<span>나이 : '+ this.director_age + '</span>'
+							   + '<span>데뷔 : '+ this.director_debut + '</span>'
+							   + '<span>소속사 : '+ this.director_company + '</span>'
 							   + '<span>영화 : ';
 				
 				for(var j = 0; j<result.movieDirector.length; j++){
@@ -306,7 +334,7 @@
 		$("#page").show();
 		
 		$(ml).each(function(i){
-			result+=  '<div style="border: 0px solid #000; float: left; margin: 10px; width: 264px; height: 508px; text-align: left;">'
+			result+=  '<div class="movie">'
 					+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
 					+ '<span style="font-weight: bold; font-size: 16px;">' + this.title + '</span>'
 					+ '<span>등급 : ' + this.rating + '</span>'
@@ -431,10 +459,12 @@
 		
 		$(al).each(function(){
 			
-			result+=  '<div style="border: 0px solid #000; float: left; margin: 5px; width: 1128px; height: 90px; line-height: 30px;">'
-					+ '<span style="height: 90px; width: 72px; margin-right: 10px;"><img src="' + this.actor_photo + '" style="width: 100%; height: 100%;"></span>'
-					+ '<span>배우이름 : '+ this.actor_name + '</span>'
+			result+=  '<div class="actor">'
+					+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.actor_photo + '" style="width: 100%; height: 100%;"></span>'
+					+ '<span style="font-weight: bold; font-size: 16px;">'+ this.actor_name + '</span>'
 					+ '<span>나이 : '+ this.actor_age + '</span>'
+					+ '<span>데뷔 : '+ this.actor_debut + '</span>'
+					+ '<span>소속사 : '+ this.actor_company + '</span>'
 					+ '<span>출연영화 : ';
 			
 			for(var i = 0; i<am.length; i++){
@@ -527,10 +557,12 @@
 		$("#page").show();
 		
 		$(dl).each(function(){
-			result+=  '<div style="border: 0px solid #000; float: left; margin: 5px; width: 1128px; height: 90px; line-height: 30px;">'
-					+ '<span style="height: 90px; width: 72px; margin-right: 10px;"><img src="' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
-					+ '<span>감독이름 : '+ this.director_name + '</span>'
+			result+=  '<div class="director">'
+					+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
+					+ '<span style="font-weight: bold; font-size: 16px;">'+ this.director_name + '</span>'
 					+ '<span>나이 : '+ this.director_age + '</span>'
+					+ '<span>데뷔 : '+ this.director_debut + '</span>'
+					+ '<span>소속사 : '+ this.director_company + '</span>'
 					+ '<span>영화 : ';
 			
 			for(var i = 0; i<am.length; i++){
