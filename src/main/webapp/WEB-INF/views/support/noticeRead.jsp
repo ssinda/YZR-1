@@ -18,12 +18,15 @@
 		<tbody>
 			<tr style="background-color: ivory;">
 				<td colspan="5" style="padding: 30px; padding-top: 50px; padding-bottom: 50px;">
+					<c:if test="${ vo.notice_image != null }">
+						<div><img src="/resources/images/notice/${ vo.notice_image }" style="width: 830px;"></div><br>
+					</c:if>
 					<div>${ vo.notice_content }</div>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 	<hr>
-	<input type="button" class="btn btn-danger" value="목록으로" style="margin-left: 90%;" onclick="history.back();">
+	<a href="/support/notice"><input type="button" class="btn btn-danger" value="목록으로" style="margin-left: 90%;"></a>
 </div>
 <%@include file="../include/footer.jsp"%>

@@ -55,9 +55,11 @@ font {
 							</c:otherwise>
 						</c:choose>
 						<c:if test="${ member_id == null }">
-							<li><a href="/membership"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
+							<li><a href="/member"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
 						</c:if>
-						<li><a href="/user"><span class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
+						<c:if test="${ member_id != null }">
+							<li><a href="/user"><span class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
+						</c:if>
 						<li><a href="#"><span class="glyphicon glyphicon-star"></span> Club서비스</a></li>
 						<li><a href="/support"><span class="glyphicon glyphicon-info-sign"></span> 고객센터</a></li>
 					</ul>
