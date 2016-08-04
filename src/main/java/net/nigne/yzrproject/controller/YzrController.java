@@ -63,6 +63,12 @@ public class YzrController {
       return new ModelAndView("redirect:/index");
    
    }
+   @RequestMapping(value = "/map", method = RequestMethod.GET)
+   public ModelAndView homeB(Locale locale, Model model) throws Exception {
+
+      return new ModelAndView("map");
+   
+   }
    @RequestMapping(value = "/user", method = RequestMethod.GET)
    public String userPage(Model model, HttpServletRequest request) throws Exception {
 		
