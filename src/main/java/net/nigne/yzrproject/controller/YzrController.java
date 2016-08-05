@@ -63,6 +63,7 @@ public class YzrController {
       return new ModelAndView("redirect:/index");
    
    }
+  
    @RequestMapping(value = "/user", method = RequestMethod.GET)
    public String userPage(Model model, HttpServletRequest request) throws Exception {
 		
