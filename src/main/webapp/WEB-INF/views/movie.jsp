@@ -44,27 +44,6 @@
 </div>
 
 <script>
-	/* 
-	function setMenu(){
-		var menu = "";
-		menu += '<div id="sel_option" style="margin-top:10px;">'
-			+ '<input type="checkbox" id="checkbox" name="checkbox" checked="checked" style="margin-top:8px; float:left;"/>' 
-			+ '<label style="font-size:12px; margin-top:6px; float:left;">현재 상영작만 보기</label>'
-			+ '<div style="margin-top:8px; width:205px; float:right;">'
-			+ '<select id="order" class="form-control" style="width:150px; float:left;">'
-			+ '<option selected="selected" value="예매율순">예매율순</option>'
-			+ '<option value="평점순">평점순</option>'
-			+ '<option value="관람객순">관람객순</option>'
-			+ '</select>'
-			+ '<button type="button" id="sel_btn" class="btn btn-primary" name="sel_btn" onclick="view()" style="margin-left:5px;">'
-			+ 'GO'
-			+ '</button>'
-			+ '</div>'
-			+ '</div>';
-		
-			return menu;
-	}
-	*/
 	function more(){
 		$(".moreline").show();
 		$(".moregroup").show();
@@ -84,8 +63,10 @@
 					result += '<div id="movie_chart'+i+'" style="margin-top:35px;">'
 						+ '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
 						+ '<div style="margin-left:18px;">'
-						+ '<img src="/resources/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
-						+ '제목 : '+ movie[i].title +' <br/>'
+						+ '<a href="">'
+						+ '<img src="/resources/images/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
+						+ '</a>'
+						+ '<span style="font-weight:bold; font-size:15px;">'+ movie[i].title +' </span><br/>'
 						+ '관람등급 : '+ movie[i].rating +' <br/>'
 						+ '예매율 : '+ movie[i].reservation_rate +'% <br/>'
 						+ '개봉날짜 : '+ movie[i].open_date +' <br/>'
@@ -110,8 +91,10 @@
 						+ '<div id="movie_chart'+i+'" style="margin-top:35px;">'
 						+ '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
 						+ '<div style="margin-left:18px;">'
-						+ '<img src="/resources/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
-						+ '제목 : '+ movie[i].title +' <br/>'
+						+ '<a href="">'
+						+ '<img src="/resources/images/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
+						+ '</a>'
+						+ '<span style="font-weight:bold; font-size:15px;">'+ movie[i].title +' </span><br/>'
 						+ '관람등급 : '+ movie[i].rating +' <br/>'
 						+ '예매율 : '+ movie[i].reservation_rate +'% <br/>'
 						+ '개봉날짜 : '+ movie[i].open_date +' <br/>'
@@ -125,8 +108,10 @@
 					result += '<div id="movie_chart'+i+'" style="margin-top:100px;">'
 						+ '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
 						+ '<div style="margin-left:18px;">'
-						+ '<img src="/resources/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
-						+ '제목 : '+ movie[i].title +' <br/>'
+						+ '<a href="">'
+						+ '<img src="/resources/images/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
+						+ '</a>'
+						+ '<span style="font-weight:bold; font-size:15px;">'+ movie[i].title +' </span><br/>'
 						+ '관람등급 : '+ movie[i].rating +' <br/>'
 						+ '예매율 : '+ movie[i].reservation_rate +'% <br/>'
 						+ '개봉날짜 : '+ movie[i].open_date +' <br/>'
@@ -141,28 +126,61 @@
 		}else if(category == "schedule"){
 			menu.hide();
 			document.getElementById("checkbox").checked = false;
-			result += '<h3 style="margin-left:18px;">'+ movie[0].open_date +'</h3>'
+			
+			today = new Date();
+			current_year = today.getFullYear();
+			
+			result += '<h3 style="margin-left:18px; margin-bottom:10px;">'+ movie[0].open_date +'</h3>'
 			for(var j=0; j<movie.length; j++){
-				if(j>0){
-					if(movie[j].open_date != movie[j-1].open_date){
-						result += '<br/> <div style="border:1px solid #000; margin-top:430px;"></div>'
-							+ '<h3 style="margin-left:18px;">'+ movie[j].open_date +'</h3>'
+				if(current_year == movie[j].open_date.substring(0,4)){
+					if(j>0){
+						if(movie[j].open_date != movie[j-1].open_date){
+							result += '<br/> <div style="border:1px solid #000; margin-top:420px; clear:both;"></div>'
+								+ '<h3 style="margin-left:18px;">'+ movie[j].open_date +'</h3>'
+								+ '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
+								+ '<div style="margin-left:18px;">'
+								+ '<a href="">'
+								+ '<img src="/resources/images/poster/'+movie[j].poster+'" style="width:249px; height:300px;"/> <br/>'
+								+ '</a>'
+								+ '<span style="font-weight:bold; font-size:15px;">'+ movie[j].title +' </span><br/>'
+								+ '관람등급 : '+ movie[j].rating +' <br/>'
+								+ '예매율 : '+ movie[j].reservation_rate +'% <br/>'
+								+ '개봉날짜 : '+ movie[j].open_date +' <br/>'
+								+ '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
+								+ '</div>'
+								+ '</div>'
+								+ '</div>';
+						}
+						if(movie[j].open_date == movie[j-1].open_date){
+							result += '<div id="chart" style="width:285px; height:380px; text-align:left; float:left; margin-bottom:70px;">'
+								+ '<div style="margin-left:18px;">'
+								+ '<a href="">'
+								+ '<img src="/resources/images/poster/'+movie[j].poster+'" style="width:249px; height:300px;"/> <br/>'
+								+ '</a>'
+								+ '<span style="font-weight:bold; font-size:15px;">'+ movie[j].title +' </span><br/>'
+								+ '관람등급 : '+ movie[j].rating +' <br/>'
+								+ '예매율 : '+ movie[j].reservation_rate +'% <br/>'
+								+ '개봉날짜 : '+ movie[j].open_date +' <br/>'
+								+ '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
+								+ '</div>'
+								+ '</div>';
+						}
+					}else{
+						result += '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
+							+ '<div style="margin-left:18px;">'
+							+ '<a href="">'
+							+ '<img src="/resources/images/poster/'+movie[j].poster+'" style="width:249px; height:300px;"/> <br/>'
+							+ '</a>'
+							+ '<span style="font-weight:bold; font-size:15px;">'+ movie[j].title +' </span><br/>'
+							+ '관람등급 : '+ movie[j].rating +' <br/>'
+							+ '예매율 : '+ movie[j].reservation_rate +'% <br/>'
+							+ '개봉날짜 : '+ movie[j].open_date +' <br/>'
+							+ '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
+							+ '</div>'
+							+ '</div>';
 					}
 				}
-				result += '<div id="movie_chart" style="margin-top:20px;">'
-					+ '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
-					+ '<div style="margin-left:18px;">'
-					+ '<img src="/resources/poster/'+movie[j].poster+'" style="width:249px; height:300px;"/> <br/>'
-					+ '제목 : '+ movie[j].title +' <br/>'
-					+ '관람등급 : '+ movie[j].rating +' <br/>'
-					+ '예매율 : '+ movie[j].reservation_rate +'% <br/>'
-					+ '개봉날짜 : '+ movie[j].open_date +' <br/>'
-					+ '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
-					+ '</div>'
-					+ '</div>'
-					+ '</div>';
-			}
-			
+			}	
 		}
 		document.getElementById("ajax_movie").innerHTML = result;
 	}
@@ -171,13 +189,13 @@
 		if(category == "chart"){
 			$.ajax({
 				type : 'get',
-				url : '/movie/' + category,
+				url : '/movie/main',
 				headers : {
 				"Content-Type" : "application/json",
 				//"X-HTTP-Method-Override" : "GET",  ----  POST 이거나 GET인경우는 생략가능
 				},
 				dataType : 'json',
-				data : '',
+				data : {'category' : category},
 				success : function(movie){
 					setMovieByCategory(movie, "chart");
 				}
@@ -185,13 +203,13 @@
 		}else if(category == "schedule"){
 			$.ajax({
 				type : 'get',
-				url : '/movie/' + category,
+				url : '/movie/main',
 				headers : {
 				"Content-Type" : "application/json",
 				//"X-HTTP-Method-Override" : "GET",  ----  POST 이거나 GET인경우는 생략가능
 				},
 				dataType : 'json',
-				data : '',
+				data : {'category' : category},
 				success : function(movie){
 					setMovieByCategory(movie, "schedule");
 				}
@@ -209,16 +227,17 @@
 		}else if(!play.checked){
 			play.value = "off";
 		}
-		alert(play+"+"+order);
+		
 		$.ajax({
 			type : 'get',
-			url : '/movie/chart/' + play.value + "/" + order.value,
+			url : '/movie/main/select',
 			headers : {
 			"Content-Type" : "application/json",
 			//"X-HTTP-Method-Override" : "GET",  ----  POST 이거나 GET인경우는 생략가능
 			},
 			dataType : 'json',
-			data : '',
+			data : {'play' : play.value,
+					'order' : order.value},
 			success : function(movie){
 				setMovieByCategory(movie, "chart");
 			}
