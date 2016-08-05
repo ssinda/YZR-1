@@ -42,9 +42,6 @@ public class SearchController {
 	/** 
 	* @Method Name : SearchIndex  
 	* @Method	   : Ό³Έν... 
-	* @param search
-	* @param model
-	* @param request
 	* @return
 	* @throws Exception 
 	*/

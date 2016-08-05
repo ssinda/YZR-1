@@ -3,41 +3,43 @@
 <!-- Header begin -->
 <html lang="ko">
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>YZR</title>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap-theme.min.css"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap-theme.min.css"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
-<body>
 <style>
-body {
-	color: #000;
-}
-font {
-	color: black;
-}
-.navbar-header {
-	width: 100%;
-	text-align: center;
-}
-.navbar-header>li {
-	float: none;
-	display: inline-block;
-}
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover,
-	.navbar-default .navbar-nav>.open>a:focus {
-	color: black;
-	background-color: ivory;
-}
+	body {
+		color: #000;
+	}
+	font {
+		color: black;
+	}
+	.navbar-header {
+		width: 100%;
+		text-align: center;
+	}
+	.navbar-header>li {
+		float: none;
+		display: inline-block;
+	}
+	.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover,
+		.navbar-default .navbar-nav>.open>a:focus {
+		color: black;
+		background-color: ivory;
+	}
 </style>
+
+<body>
+
 <div id="wrapper" class="container">
-	<div style="position: relative;">
+	<div style="position: relative; padding-right: 0; padding-left: 0;">
 		<div style="position: absolute; top: 80px; left: 50px; z-index: 10;">
 			<a href="/index"><img src="http://img.cgv.co.kr/R2014/images/title/h1_cgv.png" width="200px;" height="80px;"></a>
 		</div>

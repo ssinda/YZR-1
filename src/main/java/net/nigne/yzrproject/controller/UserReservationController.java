@@ -78,11 +78,9 @@ public class UserReservationController {
 	
 	@RequestMapping(value = "/user/reservation/{reservation_code}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> reservationCancel(@PathVariable("reservation_code") String reservation_code, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String member_id = (String)session.getAttribute("member_id");
-		
+	
 		ResponseEntity<String> entity = null;
-		
+		System.out.println(reservation_code);
 		try{
 			reservation_service.reservationCancel(reservation_code);
 			//브라우저로 전송

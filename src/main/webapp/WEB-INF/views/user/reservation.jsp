@@ -50,8 +50,6 @@
 		var result = "";
 		var date = null;
 		a.html("");
-		a.show();
-		$("#page").show();
 		
 		result += '<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">'
 				+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
@@ -87,11 +85,10 @@
 							+ '<span class="reservationInfo">결제</span>'
 							+ '<span style="height:20px; display: block; margin-left: 181px;">'+ this.pay_method + '&nbsp/&nbsp' + this.pay + '원</span>'
 							+ '</div>'
-							+ '<div style="height: 130px; line-height: 130px; width: 288px; text-align: center; float: left;">'
-							+ '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger">예매확인</button></span>';
+							+ '<div style="height: 130px; line-height: 130px; width: 288px; text-align: center; float: left;">';
 					
 					if(this.start_time > "${today}"){
-						result += '<span style="display: inline-block; margin-top: 48px; margin-left: 20px;"><button class="btn btn-danger" onclick="deleteReservation("' + this.reservation_code+ '")">예매취소</button></span>';
+						result += '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger" onclick="deleteReservation(\'' + this.reservation_code+ '\')">예매취소</button></span>';
 					}
 					
 					result += '</div>';
@@ -169,7 +166,7 @@
 	getReservationList();
 	
 	function deleteReservation(reservation_code){
-		
+		alert(reservation_code);
 		$.ajax({
 			type : 'delete',
 			url : '/user/reservation/'+reservation_code,

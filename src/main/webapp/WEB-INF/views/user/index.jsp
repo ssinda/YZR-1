@@ -33,7 +33,7 @@
 
 
 	<div style="height: 34px; line-height: 34px;">
-		<span style="font-size: 20px; font-weight: bold;">예매내역</span><a style="margin-left: 5px;" href="/user/reservation">${reservationTotal}건<span class="glyphicon glyphicon-plus-sign"></span></a>
+		<span style="font-size: 20px; font-weight: bold;">예매내역</span><a style="margin-left: 5px;" href="/user/reservation"><span id="reservationTotal">${reservationTotal}건</span><span class="glyphicon glyphicon-plus-sign"></span></a>
 	</div>
 	<div id="reservationList" style="border: 1px solid #aaa; border-radius: 15px;">
 		<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">
@@ -64,7 +64,6 @@
 							<span style="height:20px; display: block; margin-left: 181px;">${r.pay_method} &nbsp/&nbsp ${r.pay}원</span>
 						</div>
 						<div style="height: 130px; line-height: 130px; text-align: center; float: left; width: 288px;">
-							<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger">예매확인</button></span>
 							<c:if test="${r.start_time gt today}">
 								<span style="display: inline-block; margin-top: 48px; margin-left: 20px;"><button class="btn btn-danger" onclick="deleteReservation('${r.reservation_code}')">예매취소</button></span>
 							</c:if>
@@ -80,7 +79,7 @@
 		var a = $("#reservationList");
 		var result = "";
 		var date = null;
-		a.html();
+		a.html("");
 		
 		result += '<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">'
 				+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
@@ -116,8 +115,7 @@
 								+ '<span class="reservationInfo">결제</span>'
 								+ '<span style="height:20px; display: block; margin-left: 181px;">'+ this.pay_method + '&nbsp/&nbsp' + this.pay + '원</span>'
 								+ '</div>'
-								+ '<div style="height: 130px; line-height: 130px; width: 288px; text-align: center; float: left;">'
-								+ '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger">예매확인</button></span>';
+								+ '<div style="height: 130px; line-height: 130px; width: 288px; text-align: center; float: left;">';
 						
 						if(this.start_time > "${today}"){
 							result += '<span style="display: inline-block; margin-top: 48px; margin-left: 20px;"><button class="btn btn-danger" onclick="deleteReservation(' + this.reservation_code+ ')">예매취소</button></span>';
@@ -148,6 +146,7 @@
 			data : '',
 			success : function(result){
 				setReservationList(result.l.reservationList, result.l.reservationMovie, result.l.reservationTheater);
+				$("#reservationTotal").html("");
 				$("#reservationTotal").html(result.total+"건");
 			}
 		});
