@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.ReservationVO;
 import net.nigne.yzrproject.persistence.ReservationDAO;
 
@@ -42,9 +43,35 @@ public class ReservationServiceImpl implements ReservationService {
 	* @return 
 	*/
 	@Override
+	@Transactional(readOnly=true)
 	public long getReservationTotal(String member_id) {
 		
 		return dao.getReservationTotal(member_id);
+	}
+
+	/** 
+	* @Method Name	: getReservationPage 
+	* @Method 설명	: 
+	* @param member_id
+	* @param criteria
+	* @return 
+	*/
+	@Override
+	@Transactional(readOnly=true)
+	public Map<String, Object> getReservationPage(String member_id, Criteria criteria) {
+		
+		return dao.getReservationPage(member_id, criteria);
+	}
+
+	/** 
+	* @Method Name	: reservationCancel 
+	* @Method 설명	: 
+	* @param reservation_code 
+	*/
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void reservationCancel(String reservation_code) {
+		dao.reservationCancel(reservation_code);
 	}
 
 }

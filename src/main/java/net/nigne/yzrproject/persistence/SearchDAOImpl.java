@@ -167,7 +167,9 @@ public class SearchDAOImpl implements SearchDAO {
 		Predicate p = cb.like(root.get("actor_name"), "%"+search+"%");
 		cq.distinct(true).multiselect(root.get("actor_name"),
 									  root.get("actor_age"),
-									  root.get("actor_photo")).where(p);
+									  root.get("actor_photo"),
+									  root.get("actor_debut"),
+									  root.get("actor_company")).where(p);
 		Order order = cb.asc(root.get("actor_name"));
 		cq.orderBy(order);
 		TypedQuery<ActorVO> tq = em.createQuery(cq);
@@ -193,7 +195,9 @@ public class SearchDAOImpl implements SearchDAO {
 		Predicate p = cb.like(root.get("actor_name"), "%"+search+"%");
 		cq.distinct(true).multiselect(root.get("actor_name"),
 									  root.get("actor_age"),
-									  root.get("actor_photo")).where(p);
+									  root.get("actor_photo"),
+									  root.get("actor_debut"),
+									  root.get("actor_company")).where(p);
 		Order order = cb.asc(root.get("actor_name"));
 		cq.orderBy(order);
 		TypedQuery<ActorVO> tq = em.createQuery(cq).setFirstResult(criteria.getStartPage()).setMaxResults(criteria.getArticlePerPage());
@@ -267,7 +271,9 @@ public class SearchDAOImpl implements SearchDAO {
 		Predicate p = cb.like(root.get("director_name"), "%"+search+"%");
 		cq.distinct(true).multiselect(root.get("director_name"),
 									  root.get("director_age"),
-									  root.get("director_photo")).where(p);
+									  root.get("director_photo"),
+									  root.get("director_debut"),
+									  root.get("director_company")).where(p);
 		Order order = cb.asc(root.get("director_name"));
 		cq.orderBy(order);
 		TypedQuery<DirectorVO> tq = em.createQuery(cq);
@@ -293,7 +299,9 @@ public class SearchDAOImpl implements SearchDAO {
 		Predicate p = cb.like(root.get("director_name"), "%"+search+"%");
 		cq.distinct(true).multiselect(root.get("director_name"),
 									  root.get("director_age"),
-									  root.get("director_photo")).where(p);
+									  root.get("director_photo"),
+									  root.get("director_debut"),
+									  root.get("director_company")).where(p);
 		Order order = cb.asc(root.get("director_name"));
 		cq.orderBy(order);
 		TypedQuery<DirectorVO> tq = em.createQuery(cq).setFirstResult(criteria.getStartPage()).setMaxResults(criteria.getArticlePerPage());

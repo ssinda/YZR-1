@@ -42,14 +42,11 @@ public class SearchController {
 	/** 
 	* @Method Name : SearchIndex  
 	* @Method	   : 설명... 
-	* @param search
-	* @param model
-	* @param request
 	* @return
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String SearchIndex(Model model,HttpServletRequest request) throws Exception {
+	public String SearchIndex() throws Exception {
 		
 		return "search";
 	}
@@ -65,27 +62,11 @@ public class SearchController {
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String Search(@RequestParam("search") String search, Model model) throws Exception {
 		
-		//영화 디렉터 배우  리스트
-		List<MovieVO> movieList = ss.getSearch(search);
-		List<DirectorVO> directorList = ss.getSearchDirector(search);
-		List<ActorVO> actorList = ss.getSearchActor(search);
-		//영화 관련 배우 감독
-		Map<String,Object> associateMovie = ss.getSearchAssociateMovie(search);
-		//배우 출연영화
-		List<SearchVO> associateMovieWithActor = ss.getSearchAssociateMovieWithActor(search);
-		//감독 영화
-		List<SearchVO> associateMovieWithDirector = ss.getSearchAssociateMovieWithDirector(search);
-		
 		model.addAttribute("search", search);
-		model.addAttribute("movieList", movieList);
-		model.addAttribute("directorList", directorList);
-		model.addAttribute("actorList", actorList);
-		model.addAttribute("associateMovie", associateMovie);
-		model.addAttribute("movieActor", associateMovieWithActor);
-		model.addAttribute("movieDirector", associateMovieWithDirector);
-
+		
 		return "search";
 	}
+	
 	/** 
 	* @Method Name : SearchAll  
 	* @Method	   : 설명... 
@@ -95,8 +76,10 @@ public class SearchController {
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/search/result", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> SearchAll(Model model, @RequestParam("search") String search) throws Exception {
+	public ResponseEntity<Map<String,Object>> SearchAll(@RequestParam("search") String search, Model model) throws Exception {
 		
+		//String search = session.getAttribute("search").toString();
+		System.out.println(search);
 		ResponseEntity<Map<String,Object>> entity = null;
 		
 		try{
