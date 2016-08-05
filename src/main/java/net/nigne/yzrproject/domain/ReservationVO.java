@@ -1,7 +1,5 @@
 package net.nigne.yzrproject.domain;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,14 +18,14 @@ public class ReservationVO {
 	@Column(name="movie_id")
 	String movie_id;
 	
-	@Column(name="theater_name")
-	String theater_name;
+	@Column(name="theater_id")
+	String theater_id;
 	
 	@Column(name="plex_number")
 	String plex_number;
 	
 	@Column(name="start_time")
-	Timestamp start_time;
+	String start_time;
 	
 	@Column(name="ticket_cnt")
 	int ticket_cnt;
@@ -39,10 +37,10 @@ public class ReservationVO {
 	int pay;
 	
 	@Column(name="pay_method")
-	String pay_mehtod;
+	String pay_method;
 	
 	@Column(name="reservation_date")
-	Timestamp reservation_date;
+	String reservation_date;
 
 	public String getReservation_code() {
 		return reservation_code;
@@ -68,12 +66,12 @@ public class ReservationVO {
 		this.movie_id = movie_id;
 	}
 
-	public String getTheater_name() {
-		return theater_name;
+	public String getTheater_id() {
+		return theater_id;
 	}
 
-	public void setTheater_name(String theater_name) {
-		this.theater_name = theater_name;
+	public void setTheater_name(String theater_id) {
+		this.theater_id = theater_id;
 	}
 
 	public String getPlex_number() {
@@ -84,11 +82,11 @@ public class ReservationVO {
 		this.plex_number = plex_number;
 	}
 
-	public Timestamp getStart_time() {
+	public String getStart_time() {
 		return start_time;
 	}
 
-	public void setStart_time(Timestamp start_time) {
+	public void setStart_time(String start_time) {
 		this.start_time = start_time;
 	}
 
@@ -116,19 +114,19 @@ public class ReservationVO {
 		this.pay = pay;
 	}
 
-	public String getPay_mehtod() {
-		return pay_mehtod;
+	public String getPay_method() {
+		return pay_method;
 	}
 
-	public void setPay_mehtod(String pay_mehtod) {
-		this.pay_mehtod = pay_mehtod;
+	public void setPay_method(String pay_method) {
+		this.pay_method = pay_method;
 	}
 
-	public Timestamp getReservation_date() {
+	public String getReservation_date() {
 		return reservation_date;
 	}
 
-	public void setReservation_date(Timestamp reservation_date) {
+	public void setReservation_date(String reservation_date) {
 		this.reservation_date = reservation_date;
 	}
 	

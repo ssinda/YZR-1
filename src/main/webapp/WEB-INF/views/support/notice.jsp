@@ -7,9 +7,16 @@
 th, td{
 	text-align: center;
 }
+th{
+	background-color: red;
+	color: white;
+}
+td{
+	background-color: ivory;
+}
 </style>
 <div class="content" style="margin-left: 250px;">
-	<h2>공지/뉴스</h2>
+	<h2>공지/뉴스</h2><br>
 	<table class="table">
 		<thead>
 			<tr>
@@ -69,7 +76,7 @@ th, td{
 			type : 'get',
 			url : '/admin/notice/' + page,
 			headers : {
-				"Content-Type" : "application/json",
+				"Content-Type" : "application/json"
 			},
 			data : {"keyword" : $("#keyword").val(), "search" : $("#search").val()},
 			dataType : 'json',
