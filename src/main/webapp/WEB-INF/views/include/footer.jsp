@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!-- Footer begin -->
 	<div id="footer" style="clear: both; margin-top: 100px;">
-		<hr>
+		<hr style="margin-top:100px;">
 		<ul class="nav nav-pills" style="margin-left:100px;">
 			<li><a href="#">회사소개</a></li>
 			<li><a href="#">IR</a></li>

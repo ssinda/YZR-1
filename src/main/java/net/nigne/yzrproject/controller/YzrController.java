@@ -213,41 +213,4 @@ public class YzrController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/index/{category}", method = RequestMethod.GET)
-	public ResponseEntity<List<String>> event_img(@PathVariable("category") Integer category){
-		ResponseEntity<List<String>> entity = null;
-		
-		try{
-			List<String> list = new ArrayList();
-			
-			if(category.equals(1)){
-				list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-				list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-				list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-				list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-			}else if(category.equals(2)){
-				list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-				list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-				list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-				list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-			}else if(category.equals(3)){
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-			}else if(category.equals(4)){
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-				list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-			}
-		
-			entity = new ResponseEntity<List<String>>(list, HttpStatus.OK);
-		
-		}catch(Exception e){
-			entity = new ResponseEntity<List<String>>(HttpStatus.BAD_REQUEST);
-		}
-		
-		return entity;
-	}
 }

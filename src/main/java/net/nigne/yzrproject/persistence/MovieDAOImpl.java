@@ -1,34 +1,16 @@
 package net.nigne.yzrproject.persistence;
 
-import java.sql.Array;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.AbstractQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
-
-import org.hibernate.jpa.criteria.expression.function.AggregationFunction.COUNT;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import net.nigne.yzrproject.domain.ActorVO;
 import net.nigne.yzrproject.domain.DirectorVO;
 import net.nigne.yzrproject.domain.GenreVO;
@@ -217,7 +199,7 @@ public class MovieDAOImpl implements MovieDAO {
 			if(actor_movie.isEmpty()){
 				for(int a=0; a<actor_list.size(); a++){
 					actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
-					actorSubQuery.where(cb.equal(actorSubQueryRoot.get("movie_genre"), actor_list.get(a)));
+					actorSubQuery.where(cb.equal(actorSubQueryRoot.get("actor_name"), actor_list.get(a)));
 					
 					movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
 					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
@@ -306,7 +288,7 @@ public class MovieDAOImpl implements MovieDAO {
 			if(director_movie.isEmpty()){
 				for(int d=0; d<director_list.size(); d++){
 					directorSubQuery.select(directorSubQueryRoot.get("movie_id"));
-					directorSubQuery.where(cb.equal(directorSubQueryRoot.get("movie_genre"), director_list.get(d)));
+					directorSubQuery.where(cb.equal(directorSubQueryRoot.get("director_name"), director_list.get(d)));
 					
 					movieQuery.where(cb.and(movieRoot.get("movie_id").in(directorSubQuery), cb.equal(movieRoot.get("status"), "play")));
 					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));

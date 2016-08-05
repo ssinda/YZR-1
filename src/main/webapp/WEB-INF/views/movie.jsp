@@ -44,27 +44,6 @@
 </div>
 
 <script>
-	/* 
-	function setMenu(){
-		var menu = "";
-		menu += '<div id="sel_option" style="margin-top:10px;">'
-			+ '<input type="checkbox" id="checkbox" name="checkbox" checked="checked" style="margin-top:8px; float:left;"/>' 
-			+ '<label style="font-size:12px; margin-top:6px; float:left;">현재 상영작만 보기</label>'
-			+ '<div style="margin-top:8px; width:205px; float:right;">'
-			+ '<select id="order" class="form-control" style="width:150px; float:left;">'
-			+ '<option selected="selected" value="예매율순">예매율순</option>'
-			+ '<option value="평점순">평점순</option>'
-			+ '<option value="관람객순">관람객순</option>'
-			+ '</select>'
-			+ '<button type="button" id="sel_btn" class="btn btn-primary" name="sel_btn" onclick="view()" style="margin-left:5px;">'
-			+ 'GO'
-			+ '</button>'
-			+ '</div>'
-			+ '</div>';
-		
-			return menu;
-	}
-	*/
 	function more(){
 		$(".moreline").show();
 		$(".moregroup").show();
