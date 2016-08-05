@@ -20,10 +20,10 @@ td{
 	<table class="table">
 		<thead>
 			<tr>
-				<th>카테고리</th>
+				<th style="width: 150px;">카테고리</th>
 				<th>제목</th>
-				<th>작성일</th>
-				<th>조회수</th>
+				<th style="width: 120px;">작성일</th>
+				<th style="width: 80px;">조회수</th>
 			</tr>
 		</thead>
 		<tbody id="notice_list">
@@ -52,7 +52,7 @@ td{
 			+ "<td>["
 			+ this.notice_category
 			+ "]</td>"
-			+ "<td>"
+			+ "<td style='text-align: left;'>"
 			+ "<a href='/support/notice/read/" + this.no + "'>"
 			+ this.notice_title
 			+ "</a>"
