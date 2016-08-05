@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.nigne.yzrproject.domain.MovieVO;
@@ -36,8 +37,8 @@ public class MovieController {
 		return view;
 	}
 	
-	@RequestMapping(value = "/movie/{category}", method = RequestMethod.GET)
-	public ResponseEntity<List<MovieVO>> movie_chart(@PathVariable("category") String category, HttpServletRequest request){
+	@RequestMapping(value = "/movie/main", method = RequestMethod.GET)
+	public ResponseEntity<List<MovieVO>> movie_chart(@RequestParam("category") String category, HttpServletRequest request){
 		ResponseEntity<List<MovieVO>> entity = null;
 		List<MovieVO> movie_chart = null;
 		try{
@@ -54,8 +55,8 @@ public class MovieController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/movie/chart/{play}/{order}", method = RequestMethod.GET)
-	public ResponseEntity<List<MovieVO>> play(@PathVariable("play") String play, @PathVariable("order") String order, HttpServletRequest request){
+	@RequestMapping(value = "/movie/main/select", method = RequestMethod.GET)
+	public ResponseEntity<List<MovieVO>> play(@RequestParam("play") String play, @RequestParam("order") String order, HttpServletRequest request){
 		ResponseEntity<List<MovieVO>> entity = null;
 		List<MovieVO> movie_chart = null;
 		
