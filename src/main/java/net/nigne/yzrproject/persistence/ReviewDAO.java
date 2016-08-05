@@ -18,6 +18,7 @@ public interface ReviewDAO {
 
 	public void reviewInsert(String member_id, String movie_id, String review_title, String review_content,
 			String review_date, int review_cnt, String review_file, String review_like) throws Exception;
+	
 	public List<ReviewVO> getReview(String movie_id);
 	public ReviewVO getReview_Read(int no);
 	public void Reviewcnt_Update(int no, int review_cnt) throws Exception;

@@ -92,8 +92,7 @@ public class ReviewController {
 
 	
 	@RequestMapping(value = "/movie/{movie_id}/{page}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> listPage(
-			@PathVariable("movie_id") String movie_id,
+	public ResponseEntity<Map<String, Object>> listPage(@PathVariable("movie_id") String movie_id,
 			@PathVariable("page") Integer page   ) {
 		ResponseEntity<Map<String, Object>> entity = null;
 		try{
