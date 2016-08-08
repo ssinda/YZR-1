@@ -39,7 +39,7 @@
 	</div>
 	
 	<!-- 예매내역 -->
-	<div id="reservationList" style="border: 1px solid #aaa; border-radius: 15px;">
+	<div id="reservationList" style="border: 1px solid #aaa; border-radius: 15px; margin-bottom: 10px;">
 		<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">
 			<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>
 			<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>
@@ -89,7 +89,14 @@
 	</div>
 	
 	<!-- 문의 내역 -->
+	<div style="height: 34px; line-height: 34px;">
+		<span style="font-size: 20px; font-weight: bold;">문의내역</span><a style="margin-left: 5px;" href="/user/reservation"><span id="reservationTotal">${reservationTotal}건</span><span class="glyphicon glyphicon-plus-sign"></span></a>
+	</div>
 	<div id="questionList" style="border: 1px solid #aaa; border-radius: 15px;">
+		<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">
+			<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">문의번호</div>
+			<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">문의내용</div>
+		</div>
 	</div>
 </div>
 <script>
