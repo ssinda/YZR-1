@@ -41,22 +41,24 @@
 		<hr>
 		<b>	
 		<div>
-			<span style="margin-left: 20px; margin-bottom: 10px;"> <font
-				face="NanumBarunGothicBold">감독 :</font> <c:forEach
-					items="${directorlist}" var="directorlist">
-						 ${directorlist.director_name }	
-					</c:forEach> 
-			</span> <span style="margin-left: 10px; margin-bottom: 10px;">배우 : <c:forEach
-					items="${actorlist}" var="actorlist">
-						${actorlist.actor_name }   
-					</c:forEach>
+			<span style="margin-left: 20px; margin-bottom: 10px;"> 
+			<font face="NanumBarunGothicBold">감독 :</font> 
+			<c:forEach items="${directorlist}" var="directorlist">
+				 ${directorlist.director_name }	
+			</c:forEach> 
+			</span>
+			<br/>
+			<span style="margin-left: 20px; margin-bottom: 10px;">배우 : 
+				<c:forEach	items="${actorlist}" var="actorlist">
+					${actorlist.actor_name }   
+				</c:forEach>
 			</span>
 		</div>
 		<div>
-			<span style="margin-left: 20px; margin-bottom: 10px;">장르 : <c:forEach
-					items="${genrelist}" var="genrelist">
-						${genrelist.movie_genre }
-					</c:forEach>
+			<span style="margin-left: 20px; margin-bottom: 10px;">장르 :
+				 <c:forEach items="${genrelist}" var="genrelist">
+							${genrelist.movie_genre }
+				</c:forEach>
 			</span>
 		</div>
 		<div>
@@ -103,8 +105,8 @@
 		<table class="table table-border" >
 			<thead>
 				<tr>
+					<th style="text-align: center; width:200px;">ID</th>		
 					<th style="width:900px; margin-left: 800px; text-align: center">제목</th>
-					<th style="text-align: center; width:200px;">ID</th>					
 					<th style="text-align: center; width: 150px;">등록날짜</th>
 					<th style="text-align: center;width: 150px;">조회수</th>
 				<tr>	
@@ -123,75 +125,110 @@
 					<H2>평점을 입력하세요</H2>
 				</div>
 				<div class="modal-body">
-					<font style="size: 20px; font-weight: bold;">배우연기</font><br> <label
-						class="radio-inline"> <input type="radio" name="acting"
-						value="1">1점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="acting" value="2">2점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="acting" value="3">3점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="acting" value="4">4점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="acting" value="5">5점
-					</label><br> <font style="size: 20px; font-weight: bold;">감독연출</font><br>
-					<label class="radio-inline"> <input type="radio"
-						name="direction" value="1">1점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="direction" value="2">2점
-					</label> <label class="radio-inline"> <input type="radio"
+					<font style="size: 20px; font-weight: bold;">배우연기</font><br> 
+					<label class="radio-inline"> 
+						<input type="radio" name="acting" value="1">1점
+					</label>
+					<label class="radio-inline"> 
+						<input type="radio" name="acting" value="2">2점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio"	name="acting" value="3">3점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="acting" value="4">4점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="acting" value="5">5점
+					</label>
+					<br> 
+					<font style="size: 20px; font-weight: bold;">감독연출</font
+					><br>
+					<label class="radio-inline">
+						<input type="radio" name="direction" value="1">1점
+					</label> 
+						<label class="radio-inline"> <input type="radio" name="direction" value="2">2점
+					</label> 
+					<label class="radio-inline"> 
+					<input type="radio"
 						name="direction" value="3">3점
-					</label> <label class="radio-inline"> <input type="radio"
+					</label> 
+					<label class="radio-inline"> <input type="radio"
 						name="direction" value="4">4점
-					</label> <label class="radio-inline"> <input type="radio"
+					</label> 
+					<label class="radio-inline"> <input type="radio"
 						name="direction" value="5">5점
-					</label><br> <font style="size: 20px; font-weight: bold;">영상미</font><br>
-					<label class="radio-inline"> <input type="radio"
+					</label
+					><br> 
+					<font style="size: 20px; font-weight: bold;">영상미</font><br>
+					<label class="radio-inline"> 
+					<input type="radio"
 						name="beauty" value="1">1점
-					</label> <label class="radio-inline"> <input type="radio"
+					</label> 
+					<label class="radio-inline"> <input type="radio"
 						name="beauty" value="2">2점
-					</label> <label class="radio-inline"> <input type="radio"
+					</label>
+					 <label class="radio-inline"> <input type="radio"
 						name="beauty" value="3">3점
-					</label> <label class="radio-inline"> <input type="radio"
+					</label> 
+					<label class="radio-inline"> <input type="radio"
 						name="beauty" value="4">4점
-					</label> <label class="radio-inline"> <input type="radio"
+					</label>
+					 <label class="radio-inline"> <input type="radio"
 						name="beauty" value="5">5점
-					</label><br> <font style="size: 20px; font-weight: bold;">OST</font><br>
-					<label class="radio-inline"> <input type="radio" name="ost"
-						value="1">1점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="ost" value="2">2점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="ost" value="3">3점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="ost" value="4">4점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="ost" value="5">5점
-					</label><br> <font style="size: 20px; font-weight: bold;">스토리</font><br>
-					<label class="radio-inline"> <input type="radio"
-						name="story" value="1">1점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="story" value="2">2점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="story" value="3">3점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="story" value="4">4점
-					</label> <label class="radio-inline"> <input type="radio"
-						name="story" value="5">5점
-					</label><br> <font style="size: 20px; font-weight: bold;">성별</font><br>
-					<label class="radio-inline"> <input type="radio"
-						name="gender" class="male" value="1">남자
-					</label> <label class="radio-inline"> <input type="radio"
-						name="gender" class="female" value="1">여자
-					</label><br> <font style="size: 20px; font-weight: bold;">나이</font><br>
-					<label class="radio-inline"> <input type="radio" name="age"
-						class="teenager" value="1">10대
-					</label> <label class="radio-inline"> <input type="radio" name="age"
-						class="twenties" value="1">20대
-					</label> <label class="radio-inline"> <input type="radio" name="age"
-						class="thirties" value="1">30대
-					</label> <label class="radio-inline"> <input type="radio" name="age"
-						class="forties" value="1">40대
+					</label>
+					<br> <font style="size: 20px; font-weight: bold;">OST</font><br>
+					<label class="radio-inline">
+						<input type="radio" name="ost" value="1">1점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="ost" value="2">2점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="ost" value="3">3점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="ost" value="4">4점
+					</label>
+					<label class="radio-inline"> 
+						<input type="radio" name="ost" value="5">5점
+					</label>
+					<br> <font style="size: 20px; font-weight: bold;">스토리</font><br>
+					<label class="radio-inline"> 
+						<input type="radio" name="story" value="1">1점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="story" value="2">2점
+					</label> 
+					<label class="radio-inline">
+						<input type="radio" name="story" value="3">3점
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="story" value="4">4점
+					</label> 
+					<label class="radio-inline">
+						<input type="radio" name="story" value="5">5점
+					</label>
+					<br> 
+					<font style="size: 20px; font-weight: bold;">성별</font><br>
+					<label class="radio-inline">
+						<input type="radio" name="gender" class="male" value="1">남자
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio"	name="gender" class="female" value="1">여자
+					</label>
+					<br> <font style="size: 20px; font-weight: bold;">나이</font><br>
+					<label class="radio-inline"> 
+						<input type="radio" name="age" class="teenager" value="1">10대
+					</label>
+					 <label class="radio-inline">
+					 	<input type="radio" name="age" class="twenties" value="1">20대
+					</label> 
+					<label class="radio-inline">
+					 	<input type="radio" name="age" class="thirties" value="1">30대
+					</label> 
+					<label class="radio-inline"> 
+						<input type="radio" name="age" class="forties" value="1">40대
 					</label><br>
 				</div>
 				<div class="modal-footer">
@@ -448,10 +485,10 @@ function setReviewList(data){
 	var result = "<tr>";
 		$(data).each(function(){
 			result += "<td style='text-align: center;'>" 
-			+"<a href='javascript:review_read("+this.no+")'style='text-decoration:none;'>"+this.review_title+"</a>"
-			+"</td>"
-			+"<td  style='text-align: center;'>"
 			+this.member_id
+			+"</td>"
+			+"<td  style='text-align: left;'>"
+			+"<a href='javascript:review_read("+this.no+")'style='text-decoration:none;'>"+this.review_title+"</a>"			
 			+"</td>"		
 			+"<td  style='text-align: center;'>"
 			+this.review_date

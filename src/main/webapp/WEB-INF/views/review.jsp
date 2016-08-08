@@ -7,15 +7,15 @@
 <script type="text/javascript" src="/resources/se2/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js" type="text/javascript" charset="utf-8"></script>
 <div id="wrap_content" style="min-height: 100%; position: relative;">
 	<div id="content" style="padding-bottom: 150px;">
-		<h2>리뷰 작성</h2>
-		<div style="margin-left: 110px;">
+		<h2 style="margin-left: 30px;">리뷰 작성</h2>
+		<div style="margin-left: 110px; margin-top: 40px;">
 			<div>
 				<img src="/resources/images/poster/${movievo.poster}"
-					alt="CGV" style="float: left; height: 240px; width: 190px; margin-left: 30px; margin-top: 40px;">
+					alt="CGV" style="float: left; height: 240px; width: 220px; margin-left: 30px;">
 			</div>
 			<div>
-				<span style="margin-left:20px; margin-top: 20px;"> 
-					<font size="6px"> ${movievo.title }</font>
+				<span style="margin-left:20px; margin-top:40px;" > 
+					<font size="6px" style="margin-top: 30px;"> ${movievo.title }</font>
 				</span> 
 			</div>
 			<hr>
@@ -26,7 +26,8 @@
 						items="${directorlist}" var="directorlist">
 							 ${directorlist.director_name }	
 						</c:forEach> 
-				</span> <span style="margin-left: 10px; margin-bottom: 10px;">배우 : <c:forEach
+				</span>
+				<br> <span style="margin-left: 20px; margin-bottom: 10px;">배우 : <c:forEach
 						items="${actorlist}" var="actorlist">
 							${actorlist.actor_name }   
 						</c:forEach>
@@ -47,24 +48,14 @@
 			</div>
 		
 		</div>		
-		<div style="margin-left: 140px; margin-top: 120px;">
-			<div
-				style="width: 864px; padding: 4px; padding-left: 7px; border: 1px solid black">
-				제 목 : <input type="text" id="review_title" name="review_title"
-					size="70" style="margin-left:13px;" />
-			</div>
-			<div
-				style="width: 864px; padding: 4px; padding-left: 7px; border: 1px solid black;">
-				작성자 : <input type="text" id="member_id" name="member_id" size="70" value="${member_id}" readonly="readonly" size="70" />
-			</div>	
-			<textarea name="review_content" id="review_content" rows="20"
-				cols="105">
-				
-				</textarea>
+		<div style="margin-left: 140px; margin-top: 80px;">
+			<input type="text" id="review_title" name="review_title" class="form-control" style="width: 864px;"placeholder="제목" />
+			<textarea name="review_content" id="review_content" rows="20" cols="105" style="margin-top: 5px;">
+			</textarea>
 			<div>
 				<div>
-					<button type="button" class="btn btn-default"
-						onclick="insertReview()" style="float:right;margin-right: 130px; width: 70px; height: 50px;">등록</button>
+					<button type="button" class="btn btn-danger"
+						onclick="insertReview()" style="float:right; margin-right: 130px; width: 70px; height: 50px;">등록</button>
 				</div>
 			</div>
 		</div>
@@ -110,7 +101,7 @@
 	function insertReview() {
 		oEditors.getById["review_content"].exec("UPDATE_CONTENTS_FIELD", []);
 		var review_title = $("#review_title").val();
-		var member_id = $("#member_id").val();
+		var member_id =  "${member_id}";
 		var review_content = $("#review_content").val();
 		$.ajax({
 			type : 'post',

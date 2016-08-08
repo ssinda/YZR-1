@@ -91,19 +91,19 @@ hr.hrone, hr.hrtwo {
 			</table>			
 			
 
-			<div style="width: 100%;min-height:500px; margin-top: 20px;">
+			<div style="width: 100%;min-height:200px; margin-top: 20px;">
 				<div style="text-align: center;">	
 					<c:if test="${reviewvo.review_file != null }">
-						<img style="width:700px;height: 500px;" src="/resources/images/review_photo/${reviewvo.review_file }">
+						<img style="width:700px;height: 800px;" src="/resources/images/review_photo/${reviewvo.review_file }">
 						<br>
 					</c:if>		
 				</div>
 				<br>				
-				<div style="margin-left: 40px;">	
+				<div style="margin-left: 40px; min-height: 200px; padding: 30px;">	
 					 ${reviewvo.review_content }	
 				</div>
 					
-				<div id="listbtdiv">
+				<div id="listbtdiv" style="margin-right: 0px;" >
 					<button type="button" class="btn btn-danger" onclick="toList()">목록</button>
 					<button type="button" class="btn btn-danger" onclick="eidt_review()" >수정</button>
 					<button type="button" class="btn btn-danger" onclick="delete_review()">삭제</button>
@@ -115,19 +115,20 @@ hr.hrone, hr.hrtwo {
 			<div id="reply_write_wrap" class="reply_write_wrap">
 				<div id="reply_write_input" class="reply_write_input">
 					<input type="hidden" id="reply_reply" class="reply_reply" name="reply_reply" value="n" /> 
-					<input type="text" id="user_id"	name="user_id" class="form-control" data-rule-required="true" placeholder="이름" maxlength="20" />
-					<textarea id="reply_content" name="reply_content" class="form-control col-lg-12" rows="4" style="resize: none;"></textarea>
+					<input type="text" id="user_id"	name="user_id" class="form-control" data-rule-required="true" placeholder="아이디" maxlength="20" />
+					<textarea id="reply_content" name="reply_content" class="form-control col-lg-12" rows="4" style="resize: none;"placeholder="내용을 입력하세요"></textarea>
 					<input type="hidden" id="review_no" name="review_no" value="${reviewvo.no }" />
 				</div>
 				<div class="reply_write_submit" id="1">
 					<button id="reply_submit" class="reply_submit btn btn-primary"
-						onclick="insertReply(${reviewvo.no})">댓글 등록</button>
+						onclick="insertReply(${reviewvo.no})" style="margin-right: 0px;">댓글 등록</button>
 				</div>
 			</div>
 				<hr class="hrone">
 				<div id="reply" class="reply"></div>
 			</div>
-			<div id="reply_page" style="text-align: center;"></div>
+			
+			<div id="reply_page" style="margin-top:40px; text-align: center;"></div>
 		</div>
 <script type="text/javascript">
 var review_no = "${reviewvo.no}";
@@ -162,11 +163,12 @@ function insertReply(no) {
 		success : function(result) {
 			if (result == "SUCCESS") {
 				getReplyList();
+				$(':text').val('');
+				$('#reply_content').val('');
 			}
 		}
 	});
 }
-
 
 function insertReply2(no) {
 	
@@ -228,7 +230,7 @@ function delete_reply(r_no){
 		data : '',
 		dataType : 'text',
 		success : function(result){
-			location.href="/movie/review_read/"+review_no;
+			getReplyList(1);			
 		}
 	});
 }
@@ -315,8 +317,8 @@ function setReplyList(data){
 				+ "<input type='hidden' name='aa' value='"+reply_list.no+"'/>"
 				+ "<div style='margin-bottm: 5px; margin-left:20px; font-size:15px'>"
 				+"<b><span> 아이디 : "+ reply_list.user_id +"</span><span style=' margin-left:20px;'> 등록일  :"+ reply_list.reply_date+"</span></b></div>"
-				+ "<button class='btn btn-info btn-xs' onclick='delete_reply("+ reply_list.no +")'; style='float: right; padding: 8px;'>"+"삭제"+"</button>"
-				+ "<button class='reply_write_submit_2 btn btn-info btn-xs' name='reply_write_submit_2' id='reply_write_submit_2' style='float: right; padding: 8px;'>"+"댓글"+"</button>"
+				+ "<button class='btn btn-info btn-xs' onclick='delete_reply("+ reply_list.no +")'; style='float: right; padding: 8px;' >"+"삭제"+"</button>"
+				+ "<button class='reply_write_submit_2 btn btn-info btn-xs' name='reply_write_submit_2' id='reply_write_submit_2' style='float: right; padding: 8px; '>"+"댓글"+"</button>"
 				+"<div><textarea disabled readonly='readonly' style='10px; padding: 2px; border: 0px;width: 840px; height: 70px; font-size:18px;"
 				+"resize: none; margin-top: 5px; margin-left: 20px; background-color: white'>" + reply_list.reply_content
 				+"</textarea></div>" 
@@ -410,12 +412,12 @@ $(document).on("click","div.div_re_uid button",function() {//동적으로 버튼
 							+ '<div class="reply_write_input">'
 							+ '<input type="hidden" id="reply_reply2" class="reply_reply2" name="reply_reply2" value="y"/>'
 							+ '<input type="hidden" id="reply_no" name="reply_no" value="'+a+'"/>'
-							+ '<input type="text" id="user_id2" name="user_id2" class="form-control col-lg-2" data-rule-required="true" placeholder="이름" maxlength="10" style="width : 200px;"/>'
+							+ '<input type="text" id="user_id2" name="user_id2" class="form-control col-lg-2" data-rule-required="true" placeholder="아이디" maxlength="10" style="width : 200px;"/>'
 							+ '<button id="reply_submit_2" class="reply_submit_2 btn btn-primary" onclick="insertReply2('+${ reviewvo.no }+')" style="margin-left:10px;">댓글 등록</button>'
-							+ '<textarea id="reply_content2" name="reply_content2" class="inputreply2 form-control col-lg-12" rows="4" style=""></textarea>'
+							+ '<textarea id="reply_content2" name="reply_content2" class="inputreply2 form-control col-lg-12" rows="4" style=""placeholder="내용을 입력하세요"></textarea>'
 							+ '<input type="hidden" id="review_no" name="review_no" value="' + ${ reviewvo.no } + '" />'
 							+'<br/><br/>'
-							+ '</div>' + '</form>' + '</div>';
+							+ '</div>' + '</form>' + '</div><br/><br/>';
 					parentElement.after(commentEditor);
 				}
 			});
