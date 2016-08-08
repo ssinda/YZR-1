@@ -50,56 +50,64 @@
 		var result = "";
 		var date = null;
 		a.html("");
-		
-		result += '<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">'
-				+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
-				+ '<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>'
-				+ '</div>';
-		
-		
-		$(r).each(function(){
-		
-			result += '<div style="height: 130px; border-top: 1px solid #aaa;">'
-					+ '<div style="width: 200px; line-height: 130px; float: left; text-align: center; border-right: 1px solid #aaa;">'
-					+ '<span>' + this.reservation_code + '</span>'
+		if(r.length > 0) {
+			result += '<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">'
+					+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
+					+ '<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>'
 					+ '</div>';
-					
-			for(var j=0; j<rm.length; j++){
-				if(this.movie_id == rm[j].movie_id){
-					
-					result += '<div style="height: 130px; width: 400px; float: left;">'
-							+ '<span style="height: 128px; width: 105px; display: block; margin: 0; float: left;"><a href="/movie/${r.movie_id}"><img style="height: 100%; width: 100%; vertical-align: baseline;" src="/resources/images/poster/'+rm[j].poster+'"></a></span>'
-							+ '<span style="height:30px; display: block; margin-left: 115px; margin-bottom: 5px; padding-top:10px; font-weight: bold;"><a href="/movie/' + this.movie_id + '">' + rm[j].title + '</a></span>'
-							+ '<span class="reservationInfo">관람극장</span>'
-							+ '<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 5px;">';
-					for(var k=0; k<rt.length; k++){
-						if(rt[k].theater_id == this.theater_id){
-							result += rt[k].theater_name;
+			
+			
+			$(r).each(function(i){
+			
+				result += '<div style="height: 130px; border-top: 1px solid #aaa;">'
+						+ '<div style="width: 200px; line-height: 130px; float: left; text-align: center; border-right: 1px solid #aaa;">'
+						+ '<span>' + this.reservation_code + '</span>'
+						+ '</div>';
+						
+				for(var j=0; j<rm.length; j++){
+					if(this.movie_id == rm[j].movie_id){
+						
+						result += '<div style="height: 130px; width: 400px; float: left;">'
+								+ '<span style="height: 128px; width: 105px; display: block; margin: 0; float: left;"><a href="/movie/${r.movie_id}"><img style="height: 100%; width: 100%; vertical-align: baseline;" src="/resources/images/poster/'+rm[j].poster+'"></a></span>'
+								+ '<span style="height:30px; display: block; margin-left: 115px; margin-bottom: 5px; padding-top:10px; font-weight: bold;"><a href="/movie/' + this.movie_id + '">' + rm[j].title + '</a></span>'
+								+ '<span class="reservationInfo">관람극장</span>'
+								+ '<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 5px;">';
+						for(var k=0; k<rt.length; k++){
+							if(rt[k].theater_id == this.theater_id){
+								result += rt[k].theater_name;
+							}
 						}
+						result += '&nbsp' + this.plex_number + '관&nbsp/&nbsp' + this.ticket_cnt + '명</span>'
+								+ '<span class="reservationInfo">관람좌석</span>'
+								+ '<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 5px;">' + this.view_seat + '</span>'
+								+ '<span class="reservationInfo">관람일시</span>'
+								+ '<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 5px;">' + this.start_time + '</span>'
+								+ '<span class="reservationInfo">결제</span>'
+								+ '<span style="height:20px; display: block; margin-left: 181px;">'+ this.pay_method + '&nbsp/&nbsp' + this.pay + '원</span>'
+								+ '</div>'
+								+ '<div style="height: 130px; line-height: 130px; width: 288px; text-align: center; float: left;">';
+						
+						if(this.start_time > "${today}"){
+							result += '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger" onclick="deleteReservation(\'' + this.reservation_code+ '\')">예매취소</button></span>';
+						}
+						
+						result += '</div>';
 					}
-					result += '&nbsp' + this.plex_number + '관&nbsp/&nbsp' + this.ticket_cnt + '명</span>'
-							+ '<span class="reservationInfo">관람좌석</span>'
-							+ '<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 5px;">' + this.view_seat + '</span>'
-							+ '<span class="reservationInfo">관람일시</span>'
-							+ '<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 5px;">' + this.start_time + '</span>'
-							+ '<span class="reservationInfo">결제</span>'
-							+ '<span style="height:20px; display: block; margin-left: 181px;">'+ this.pay_method + '&nbsp/&nbsp' + this.pay + '원</span>'
-							+ '</div>'
-							+ '<div style="height: 130px; line-height: 130px; width: 288px; text-align: center; float: left;">';
 					
-					if(this.start_time > "${today}"){
-						result += '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger" onclick="deleteReservation(\'' + this.reservation_code+ '\')">예매취소</button></span>';
-					}
-					
-					result += '</div>';
 				}
 				
-			}
+				result += '</div>';
 			
-			result += '</div>';
-			
-		});
-
+			});
+		}else{
+			result += '<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">'
+					+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
+					+ '<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>'
+					+ '</div>'
+					+ '<div style="height: 130px; border-top: 1px solid #aaa; line-height: 130px; text-align: center;">'
+					+ '<span style="height: 128px; margin: 0; font-size: 20px;">예매내역이 없습니다</span>'
+					+ '</div>';
+		}
 		a.html(result);
 	}
 	
