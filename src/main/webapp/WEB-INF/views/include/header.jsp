@@ -34,14 +34,15 @@ font {
 	background-color: ivory;
 }
 </style>
+<div id="wrapper" class="container">
 	<div style="position: relative;">
-		<div style="position: absolute; top: 80px; left: 270px; z-index: 10;">
+		<div style="position: absolute; top: 80px; left: 50px; z-index: 10;">
 			<a href="/index"><img src="http://img.cgv.co.kr/R2014/images/title/h1_cgv.png" width="200px;" height="80px;"></a>
 		</div>
 		<nav class="navbar navbar-default" role="navigation" style="border: 0px;">
 			<div class="container-fluid" style="padding: 0px;">
 				<div class="navbar-header" style="background-color: white; border-bottom: 5px solid red;">
-					<ul class="nav navbar-nav navbar-right" style="margin-right: 0px;">
+					<ul class="nav navbar-nav navbar-right">
 						<c:if test="${ member_id=='admin' }">
 							<li><a href="/admin/user"><span class="glyphicon glyphicon-cog"></span> 관리자페이지</a></li>
 						</c:if>
@@ -54,12 +55,10 @@ font {
 							</c:otherwise>
 						</c:choose>
 						<c:if test="${ member_id == null }">
-							<li><a href="/member"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
+							<li><a href="/membership"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
 						</c:if>
-						<c:if test="${ member_id != null }">
-							<li><a href="/user"><span class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
-						</c:if>
-						<li><a href="#"><span class="glyphicon glyphicon-star"></span> Club서비스</a></li>
+						<li><a href="/user"><span class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
+						<li><a href="/club"><span class="glyphicon glyphicon-star"></span> Club서비스</a></li>
 						<li><a href="/support"><span class="glyphicon glyphicon-info-sign"></span> 고객센터</a></li>
 					</ul>
 				</div>
@@ -90,13 +89,12 @@ font {
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font style="font-size: 15pt; font-weight: bold;">영화</font></a>
 							<ul class="dropdown-menu">
 								<li><a href="/movie">무비 차트</a></li>
-								<li><a href="/search">무비 파인더</a></li>
 							</ul>
 						</li>
 						<li class="dropdown" style="float: none; display: inline-block;">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font style="font-size: 15pt; font-weight: bold;">예매</font></a>
 							<ul class="dropdown-menu">
-								<li><a href="/timetable">상영시간표</a></li>
+								<li><a href="#">Page 1-1</a></li>
 							</ul>
 						</li>
 						<li class="dropdown" style="float: none; display: inline-block;">
@@ -108,8 +106,7 @@ font {
 						<li class="dropdown" style="float: none; display: inline-block;">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font style="font-size: 15pt; font-weight: bold;">이벤트&컬쳐</font></a>
 							<ul class="dropdown-menu">
-								<li><a href="/culture_shop">팝콘스토어</a></li>
-								<li><a href="/event">이벤트</a></li>
+								<li><a href="#">Page 1-1</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -122,6 +119,4 @@ font {
 			</div>
 		</nav>
 	</div>
-<div id="wrapper" class="container">
-
 		<!-- Header end -->
