@@ -1,8 +1,10 @@
 package net.nigne.yzrproject.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.nigne.yzrproject.domain.Criteria;
+import net.nigne.yzrproject.domain.MemberVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.NoticeVO;
 import net.nigne.yzrproject.domain.ReservationVO;
@@ -28,6 +31,8 @@ import net.nigne.yzrproject.service.MovieService;
 import net.nigne.yzrproject.service.NoticeService;
 import net.nigne.yzrproject.service.ReservationService;
 import net.nigne.yzrproject.service.SupportNoticeService;
+import net.nigne.yzrproject.service.UserCouponService;
+import net.nigne.yzrproject.service.UserInfoService;
 
 @Controller
 public class YzrController {
@@ -46,19 +51,47 @@ public class YzrController {
    private DirectorService director_service;
    @Autowired
    private SupportNoticeService noticeService;
+   @Autowired
+   private UserInfoService userInfoService;
+   @Autowired
+   private UserCouponService userCouponService;
 
+   
    @RequestMapping(value = "", method = RequestMethod.GET)
    public ModelAndView homeA(Locale locale, Model model) throws Exception {
 
       return new ModelAndView("redirect:/index");
    
    }
-   
-   
-   @RequestMapping(value = "/user", method = RequestMethod.GET)
-   public String userPage(Locale locale, Model model) throws Exception {
+   @RequestMapping(value = "/map", method = RequestMethod.GET)
+   public ModelAndView homeB(Locale locale, Model model) throws Exception {
 
-      return "user/index";
+      return new ModelAndView("map");
+   
+   }
+   @RequestMapping(value = "/user", method = RequestMethod.GET)
+   public String userPage(Model model, HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		String member_id = (String)session.getAttribute("member_id");
+		
+		if(member_id == "" || member_id == null){
+			return "login";
+		}else{
+			MemberVO vo = userInfoService.getMemberInfo(member_id);
+			long couponTotal = userCouponService.getCouponTotal(member_id);
+			Map<String,Object> reservation = reservation_service.getReservation(member_id);
+			long reservationTotal = reservation_service.getReservationTotal(member_id);
+			
+			model.addAttribute("userInfo", vo);
+			model.addAttribute("couponTotal", couponTotal);
+			model.addAttribute("reservation", reservation);
+			model.addAttribute("reservationTotal", reservationTotal);
+			model.addAttribute("today", new Date());
+			session.setAttribute("menu", "MY PAGE");
+			
+			return "user/index";
+		}
    }
    
    @RequestMapping(value = "/membership", method = RequestMethod.GET)

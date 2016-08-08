@@ -106,7 +106,7 @@ section {
 	padding-left: 15px;
 }
 </style>
-<div id="wrap_content" style="min-height: 100%; position: relative;">
+<div id="wrap_content" style="min-height: 100%; position: absolute; left: 250px;">
 	<nav class="navbar navbar-defalt sidebar" role="navigation">
 		<div class="container-fluid">
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -120,6 +120,9 @@ section {
 					</li>
 					<li>
 						<a href="/support/notice"><font style="font-weight: bold;">공지/뉴스 </font></a>
+					</li>
+					<li>
+						<a href="/support/qna"><font style="font-weight: bold;">1:1 문의 </font></a>
 					</li>
 					<li>
 						<a href="/support/lost"><font style="font-weight: bold;">분실물 문의 </font></a>
