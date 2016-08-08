@@ -68,5 +68,4 @@ public class QnaVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
 }
