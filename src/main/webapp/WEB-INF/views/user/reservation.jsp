@@ -113,28 +113,31 @@
 	
 	function setPagePrint(pm){
 		var str = "";
-		
-		str += "<ul class='pagination'>";
-		
-		if(pm.prev){
-			str += "<li><a href='javascript:getReservationList("+(pm.startPage-1)+")'>&lt;</a> </li>";
-		}
-		
-		for(var i = pm.startPage; i<=pm.endPage; i++){
-			if(i == pm.criteria.page){
-				str+="<li class='active'><a href='#'>" + i + "</a></li>";
-			}else{
-				str+="<li><a href='javascript:getReservationList("+i+")'>" + i + "</a></li>";
+		if(pm.totalArticles < 11){
+			$("#page").hide();
+		}else{
+			str += "<ul class='pagination'>";
+			
+			if(pm.prev){
+				str += "<li><a href='javascript:getReservationList("+(pm.startPage-1)+")'>&lt;</a> </li>";
 			}
 			
+			for(var i = pm.startPage; i<=pm.endPage; i++){
+				if(i == pm.criteria.page){
+					str+="<li class='active'><a href='#'>" + i + "</a></li>";
+				}else{
+					str+="<li><a href='javascript:getReservationList("+i+")'>" + i + "</a></li>";
+				}
+				
+			}
+			
+			
+			if(pm.next){
+				str += "<li><a href='javascript:getReservationList("+(pm.endPage+1)+")'>&gt;</a> </li>";
+			}
+			str += "</ul>";
+			document.getElementById("page").innerHTML = str;
 		}
-		
-		
-		if(pm.next){
-			str += "<li><a href='javascript:getReservationList("+(pm.endPage+1)+")'>&gt;</a> </li>";
-		}
-		str += "</ul>";
-		document.getElementById("page").innerHTML = str;
 		
 	}
 	
