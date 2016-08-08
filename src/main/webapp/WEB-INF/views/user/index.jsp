@@ -24,11 +24,11 @@
 		</div>
 		<div id="coupon" style="border-top: 1px solid #aaa; width: 444px; height:82px; float: left; padding-left: 20px;">
 			<span style="display: block; width:110px; margin: 10px; margin-left: 0; border: 2px dashed red; border-radius: 15px; text-align: center;"><h4 style="margin: 5px;">COUPON</h4></span>
-			<span>사용 가능 쿠폰 : ${couponTotal}장</span>
+			<span>사용 가능 쿠폰 : <a href="/user/coupon">${couponTotal}장</a></span>
 		</div>
 		<div id="point" style="border-top: 1px solid #aaa; border-left: 1px solid #aaa; width: 444px; height:82px; float: right; padding-left: 20px;">
 			<span style="display: block; width:110px; margin: 10px; margin-left: 0; border: 2px dashed red; border-radius: 15px; text-align: center;"><h4 style="margin: 5px;">POINT</h4></span>
-			<span>멤버십 포인트 : ${userInfo.point}점</span>
+			<span>멤버십 포인트 : <a href="/user/point">${userInfo.point}점</a><span id="grade" class="glyphicon glyphicon-question-sign"></span></span>
 		</div>
 	</div>
 
@@ -86,6 +86,11 @@
 	</div>
 </div>
 <script>
+
+	$(document).ready(function(){
+		$('#grade').popover({title: "등급", content: "1000점 일반<br>5000점 골드", trigger: "hover", html: true});
+	});
+	
 	function setReservationList(r,rm,rt){
 		var a = $("#reservationList");
 		var result = "";

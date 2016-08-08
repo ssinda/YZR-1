@@ -39,10 +39,7 @@ public class UserCouponDAOImpl implements UserCouponDAO {
 	*/
 	@Override
 	public long getCouponTotal(String member_id) {
-		//현재시간
-		Date dt = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
-		String today = sdf.format(dt).toString();
+	
         
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
@@ -51,9 +48,8 @@ public class UserCouponDAOImpl implements UserCouponDAO {
 		Predicate p = cb.equal(root.get("member_id"), member_id);
 		//사용하지 않은
 		Predicate p2 = cb.equal(root.get("used"), "n");
-		//기한이 지나지 않은 
-        Predicate p3 = cb.greaterThan(root.get("coupon_date"), today);
-		cq.select(cb.count(root)).where(cb.and(p,p2,p3));
+		
+		cq.select(cb.count(root)).where(cb.and(p,p2));
 		
 		TypedQuery<Long> tq = em.createQuery(cq);
 		long couponTotal = tq.getSingleResult();
