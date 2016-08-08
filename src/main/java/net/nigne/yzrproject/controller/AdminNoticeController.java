@@ -93,10 +93,13 @@ public class AdminNoticeController {
 	@RequestMapping(value = "/admin/notice/new", method = RequestMethod.POST)
 	public ModelAndView adminNoticeWrite(NoticeVO vo) throws Exception {
 		
-		String fileName = vo.getNotice_title() + ".jpg";
-		File target = new File(uploadPath + "notice\\", fileName);
-		FileCopyUtils.copy(vo.getFile().getBytes(), target);
-		
+		String fileName = "";
+		System.out.println(vo.getFile());
+		if(!vo.getFile().isEmpty()){
+			fileName = vo.getNotice_title() + ".jpg";
+			File target = new File(uploadPath + "notice\\", fileName);
+			FileCopyUtils.copy(vo.getFile().getBytes(), target);
+		}
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf=new SimpleDateFormat("YYYY-MM-dd");
 		String notice_date=sdf.format(cal.getTime().getTime());

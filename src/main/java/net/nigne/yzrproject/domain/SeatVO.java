@@ -1,6 +1,3 @@
-/** 
-*
-*/
 package net.nigne.yzrproject.domain;
 
 import javax.persistence.Column;
@@ -8,19 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/** 
-* @FileName : SeatVO.java 
-* @Package  : net.nigne.yzrproject.domain 
-* @Date     : 2016. 8. 3. 
-* @작성자		: 강대성
-* @프로그램 	: 설명...
-*/
 @Entity
 @Table(name="seat")
 public class SeatVO {
-	
-	/*----------------Columns----------------*/
-	
 	@Id
 	@Column(name="no")
 	int no;
@@ -43,9 +30,6 @@ public class SeatVO {
 	@Column(name="reservation_exist")
 	String reservation_exist;
 
-	
-	/*----------Getters and Setters----------*/
-	
 	public int getNo() {
 		return no;
 	}
@@ -66,7 +50,7 @@ public class SeatVO {
 		return plex_number;
 	}
 
-	public void setPlex_nember(String plex_number) {
+	public void setPlex_number(String plex_number) {
 		this.plex_number = plex_number;
 	}
 
@@ -101,5 +85,4 @@ public class SeatVO {
 	public void setReservation_exist(String reservation_exist) {
 		this.reservation_exist = reservation_exist;
 	}
-	
 }
