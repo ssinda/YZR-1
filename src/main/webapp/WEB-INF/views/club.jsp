@@ -176,11 +176,11 @@
 								<td style="float: left;">이벤트 포인트는 지급일로부터 24개월간 사용 가능합니다.</td>
 								<td>
 									<c:choose>	
-										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != 'vip'}">
+										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != 'VIP'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
 												onclick="club('vip')" value="가입" style="width: 196px;" />
 										</c:when>
-										<c:when test="${membervo.club == 'vip'}">
+										<c:when test="${membervo.club == 'VIP'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
 												onclick="club('no')" value="탈퇴" style="width: 196px;"  />
 										</c:when>								
@@ -325,11 +325,11 @@
 								<td style="float: left;">이벤트 포인트는 지급일로부터 24개월간 사용 가능합니다.</td>
 								<td>
 									<c:choose>	
-										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != 'special'}">
+										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != '특별관'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
-												onclick="club('special')" value="가입" style="width: 196px;"/>
+												onclick="club('특별관')" value="가입" style="width: 196px;"/>
 										</c:when>
-										<c:when test="${membervo.club == 'vip'}">
+										<c:when test="${membervo.club == '특별관'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
 												onclick="club('no')" value="탈퇴" style="width: 196px;"/>
 										</c:when>								
@@ -470,11 +470,11 @@
 								<td style="float: left;">이벤트 포인트는 지급일로부터 24개월간 사용 가능합니다.</td>
 								<td>
 									<c:choose>	
-										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != 'romance'}">
+										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != '로맨스'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
-												onclick="club('romance')" value="가입" style="width: 196px;" />
+												onclick="club('로맨스')" value="가입" style="width: 196px;" />
 										</c:when>
-										<c:when test="${membervo.club == 'romance'}">
+										<c:when test="${membervo.club == '로맨스'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
 												onclick="club('no')" value="탈퇴" style="width: 196px;" />
 										</c:when>								
@@ -616,11 +616,11 @@
 								<td style="float: left;">이벤트 포인트는 지급일로부터 24개월간 사용 가능합니다.</td>
 								<td>
 									<c:choose>	
-										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != 'action'}">
+										<c:when test="${membervo.club == null || membervo.club == 'no' || membervo.club != '액션'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
-												onclick="club('action')" value="가입" style="width: 196px;"/>
+												onclick="club('액션')" value="가입" style="width: 196px;"/>
 										</c:when>
-										<c:when test="${membervo.club == 'action'}">
+										<c:when test="${membervo.club == '액션'}">
 											<input type="button" id="clubbutton" class="btn btn-danger" data-dismiss="modal"
 												onclick="club('no')" value="탈퇴" style="width: 196px;" />
 										</c:when>								
