@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.GenreVO;
+import net.nigne.yzrproject.domain.GpaVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.persistence.AdminMovieDAO;
 
@@ -47,10 +48,11 @@ public class AdminMovieServiceImpl implements AdminMovieService {
 	}
 	@Transactional(rollbackFor={Exception.class})
 	@Override
-	public void persist(MovieVO vo, GenreVO gvo) throws Exception {
+	public void persist(MovieVO vo, GenreVO gvo, GpaVO gpavo) throws Exception {
 		// TODO Auto-generated method stub
 		dao.persist(vo);
 		dao.persistGenre(gvo);
+		dao.persistGpa(gpavo);
 	}
 	@Transactional(rollbackFor={Exception.class})
 	@Override
