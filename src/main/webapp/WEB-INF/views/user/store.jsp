@@ -8,6 +8,7 @@
 		<%response.sendRedirect("/login");%>
 	</script>
 </c:if>
+<<<<<<< HEAD
 <div class="content" style="margin-left: 250px;">
 	<div>
 		<h3>기프트콘 관리 </h3>
@@ -37,6 +38,10 @@
 			</div>
 		</div>
 	</div>
+=======
+<div class="content" style="margin-left: 120px; width: 890px;">
+	store
+>>>>>>> master
 </div>
 
 <script>

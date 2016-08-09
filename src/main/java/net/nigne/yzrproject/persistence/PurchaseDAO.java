@@ -1,5 +1,6 @@
 package net.nigne.yzrproject.persistence;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import net.nigne.yzrproject.domain.Criteria;
@@ -11,4 +12,10 @@ public interface PurchaseDAO {
 	public List<PurchaseVO> getListPage(String member_id, Criteria criteria);
 	public void delete_Store(int no);
 
+=======
+import net.nigne.yzrproject.domain.PurchaseVO;
+
+public interface PurchaseDAO {
+	public void payPersist(PurchaseVO vo) throws Exception;
+>>>>>>> master
 }

@@ -94,12 +94,20 @@ hr.hrone, hr.hrtwo {
 			<div style="width: 100%;min-height:200px; margin-top: 20px;">
 				<div style="text-align: center;">	
 					<c:if test="${reviewvo.review_file != null }">
+<<<<<<< HEAD
 						<img style="width:700px;height: 800px;" src="/resources/images/review_photo/${reviewvo.review_file }">
+=======
+						<img style="width:700px;height: 1000px;" src="/resources/images/review/${reviewvo.review_file }">
+>>>>>>> master
 						<br>
 					</c:if>		
 				</div>
 				<br>				
+<<<<<<< HEAD
 				<div style="margin-left: 40px; min-height: 200px; padding: 30px;">	
+=======
+				<div style="margin-left: 40px; padding: 50px;">	
+>>>>>>> master
 					 ${reviewvo.review_content }	
 				</div>
 					
