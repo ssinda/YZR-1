@@ -30,5 +30,4 @@ public class NoticeDAOImpl implements NoticeDAO {
 		List<NoticeVO> list = tq.getResultList();
 		return list;
 	}
-
 }

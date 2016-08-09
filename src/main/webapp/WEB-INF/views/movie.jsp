@@ -44,27 +44,6 @@
 </div>
 
 <script>
-   /* 
-   function setMenu(){
-      var menu = "";
-      menu += '<div id="sel_option" style="margin-top:10px;">'
-         + '<input type="checkbox" id="checkbox" name="checkbox" checked="checked" style="margin-top:8px; float:left;"/>' 
-         + '<label style="font-size:12px; margin-top:6px; float:left;">현재 상영작만 보기</label>'
-         + '<div style="margin-top:8px; width:205px; float:right;">'
-         + '<select id="order" class="form-control" style="width:150px; float:left;">'
-         + '<option selected="selected" value="예매율순">예매율순</option>'
-         + '<option value="평점순">평점순</option>'
-         + '<option value="관람객순">관람객순</option>'
-         + '</select>'
-         + '<button type="button" id="sel_btn" class="btn btn-primary" name="sel_btn" onclick="view()" style="margin-left:5px;">'
-         + 'GO'
-         + '</button>'
-         + '</div>'
-         + '</div>';
-      
-         return menu;
-   }
-   */
    function more(){
       $(".moreline").show();
       $(".moregroup").show();
@@ -84,7 +63,7 @@
                result += '<div id="movie_chart'+i+'" style="margin-top:35px;">'
                   + '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
                   + '<div style="margin-left:18px;">'
-                  + '<a href="/movie/'+ movie[i].movie_id +'>'
+                  + '<a href="' + movie[i].movie_id + '">'
                   + '<img src="/resources/images/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
                   + '</a>'
                   + '<span style="font-weight:bold; font-size:15px;">'+ movie[i].title +' </span><br/>'
@@ -112,7 +91,7 @@
                   + '<div id="movie_chart'+i+'" style="margin-top:35px;">'
                   + '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
                   + '<div style="margin-left:18px;">'
-                  + '<a href="/movie/'+ movie[i].movie_id +'">'
+                  + '<a href="' + movie[i].movie_id + '">'
                   + '<img src="/resources/images/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
                   + '</a>'
                   + '<span style="font-weight:bold; font-size:15px;">'+ movie[i].title +' </span><br/>'
@@ -129,7 +108,7 @@
                result += '<div id="movie_chart'+i+'" style="margin-top:100px;">'
                   + '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
                   + '<div style="margin-left:18px;">'
-                  + '<a href="/movie/'+ movie[i].movie_id +'">'
+                  + '<a href="' + movie[i].movie_id + '">'
                   + '<img src="/resources/images/poster/'+movie[i].poster+'" style="width:249px; height:300px;"/> <br/>'
                   + '</a>'
                   + '<span style="font-weight:bold; font-size:15px;">'+ movie[i].title +' </span><br/>'
@@ -160,7 +139,7 @@
                         + '<h3 style="margin-left:18px;">'+ movie[j].open_date +'</h3>'
                         + '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
                         + '<div style="margin-left:18px;">'
-                        + '<a href="/movie/'+ movie[j].movie_id +'">'
+                        + '<a href="' + movie[j].movie_id + '">'
                         + '<img src="/resources/images/poster/'+movie[j].poster+'" style="width:249px; height:300px;"/> <br/>'
                         + '</a>'
                         + '<span style="font-weight:bold; font-size:15px;">'+ movie[j].title +' </span><br/>'
@@ -175,7 +154,7 @@
                   if(movie[j].open_date == movie[j-1].open_date){
                      result += '<div id="chart" style="width:285px; height:380px; text-align:left; float:left; margin-bottom:70px;">'
                         + '<div style="margin-left:18px;">'
-                        + '<a href="/movie/'+ movie[j].movie_id +'">'
+                        + '<a href="' + movie[j].movie_id + '">'
                         + '<img src="/resources/images/poster/'+movie[j].poster+'" style="width:249px; height:300px;"/> <br/>'
                         + '</a>'
                         + '<span style="font-weight:bold; font-size:15px;">'+ movie[j].title +' </span><br/>'
@@ -189,11 +168,11 @@
                }else{
                   result += '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
                      + '<div style="margin-left:18px;">'
-                     + '<a href="/movie/'+ movie[j].movie_id +'">'
+                     + '<a href="' + movie[j].movie_id + '">'
                      + '<img src="/resources/images/poster/'+movie[j].poster+'" style="width:249px; height:300px;"/> <br/>'
                      + '</a>'
                      + '<span style="font-weight:bold; font-size:15px;">'+ movie[j].title +' </span><br/>'
-                     + '관람등급1 : '+ movie[j].rating +' <br/>'
+                     + '관람등급 : '+ movie[j].rating +' <br/>'
                      + '예매율 : '+ movie[j].reservation_rate +'% <br/>'
                      + '개봉날짜 : '+ movie[j].open_date +' <br/>'
                      + '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
