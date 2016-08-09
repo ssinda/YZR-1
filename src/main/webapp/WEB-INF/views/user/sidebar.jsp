@@ -147,11 +147,6 @@ section {
 						<li><a href="/user/coupon">할인 쿠폰</a></li>
 					</ul>
 				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-weight: bold;">포인트 관리 <span class="caret"></span></a>
-					<ul class="dropdown-menu forAnimate" role="menu">
-						<li><a href="/user/point">포인트 적립/사용내역</a></li>
-					</ul>
-				</li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-weight: bold;">팝콘스토어 <span class="caret"></span></a>
 					<ul class="dropdown-menu forAnimate" role="menu">
 						<li><a href="/user/store">매점상품 기프트콘</a></li>

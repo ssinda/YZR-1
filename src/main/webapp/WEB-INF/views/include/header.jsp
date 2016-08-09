@@ -105,7 +105,7 @@ font {
                   <li class="dropdown" style="float: none; display: inline-block;">
                      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><font style="font-size: 15pt; font-weight: bold;">이벤트&컬쳐</font></a>
                      <ul class="dropdown-menu">
-                        <li><a href="/culture_shop">팝콘스토어</a></li>
+                        <li><a href="/store">팝콘스토어</a></li>
                         <li><a href="/event">이벤트</a></li>
                      </ul>
                   </li>
