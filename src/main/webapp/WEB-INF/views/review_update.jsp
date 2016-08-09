@@ -86,7 +86,7 @@ hr.hrone, hr.hrtwo {
 				<textarea name="review_content" id="review_content" rows="20" cols="120" style="margin-top: 5px;"> ${reviewvo.review_content }</textarea>
 				<div>
 					<div>
-						<button type="button" class="btn btn-danger" onclick="updateReview()" style="float:right;margin-right: 78px; margin-top:5px; width: 70px; height: 50px;">등록</button>
+						<button type="button" class="btn btn-danger" onclick="updateReview()" style="float:right;margin-right: 73px; margin-top:5px; width: 70px; height: 50px;">등록</button>
 					</div>
 				</div>
 			</div>	

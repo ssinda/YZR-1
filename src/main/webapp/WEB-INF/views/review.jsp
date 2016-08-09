@@ -55,7 +55,7 @@
 			<div>
 				<div>
 					<button type="button" class="btn btn-danger"
-						onclick="insertReview()" style="float:right; margin-right: 130px; width: 70px; height: 50px;">등록</button>
+						onclick="insertReview()" style="float:right; margin-top:5px; margin-right: 135px; width: 70px; height: 50px;">등록</button>
 				</div>
 			</div>
 		</div>
