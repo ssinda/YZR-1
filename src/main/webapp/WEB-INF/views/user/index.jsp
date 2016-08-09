@@ -16,7 +16,7 @@
 	}
 </style>
 <fmt:formatDate value="${today}" pattern="yyyy-MM-dd HH:mm" var="today"/>
-<div class="content" style="margin-left: 250px; width: 890px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<div id="myInfo" style="border: 1px solid #aaa; height: 150px; width: 100%; margin-bottom: 10px; border-radius: 15px;">
 		<div style="height: 46px; margin: 10px; line-height: 46px;">
 			<h3 style="margin-top: 10px; display: inline-block;">${userInfo.member_name}님 등급은 <p style="display: inline; color: red;">${userInfo.grade}</p>입니다</h3>

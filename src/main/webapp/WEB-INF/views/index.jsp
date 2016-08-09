@@ -35,7 +35,7 @@
       </div>      
       
     <!-- 검색창 -->
-	<div style="clear: both; width: 100%; height: 34px;">
+	<div style="clear: both; width: 100%; height: 34px; margin-top: 20px;">
 		<form class="form" action="/search" method="post">
 			<div class="form-group" style="clear: both; width: 100%; height: 34px;">
 				<div class="col-sm-10" style="padding: 0; height: 34px;">
@@ -63,7 +63,7 @@
       <c:if test="${chart == null }">
          <span style="font-weight:bold; font-size:15px;"> ${basic_title} </span>
          <div id="rec_movie" style="border:0px solid #000; width:250px; height:380px; text-align:left; margin-top:5px;">
-            <a href=""><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
+            <a href="/movie/${ chart.movie_id }"><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
             <span style="font-weight:bold; font-size:15px;"> ${basic_title}  </span><br/>
             관람등급 : <br/>
             예매율 : <br/>
@@ -96,7 +96,7 @@
                   </span>
                </div>
                <div id="rec_movie" style="border:0px solid #000; width:250px; height:380px; text-align:left; margin-top:5px;">
-                  <a href=""><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
+                  <a href="/movie/${ chart.movie_id }"><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
                   <span style="font-weight:bold; font-size:15px;"> ${chart.title}  </span><br/>
                   관람등급 : ${chart.rating} <br/>
                   예매율 : ${chart.reservation_rate}%<br/>
