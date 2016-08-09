@@ -85,7 +85,7 @@
 								+ '<span class="reservationInfo">결제</span>'
 								+ '<span style="height:20px; display: block; margin-left: 181px;">'+ this.pay_method + '&nbsp/&nbsp' + this.pay + '원</span>'
 								+ '</div>'
-								+ '<div style="height: 140px; line-height: 130px; width: 288px; text-align: center; float: left;">';
+								+ '<div style="height: 140px; line-height: 140px; width: 288px; text-align: center; float: left;">';
 						
 						if(this.start_time > "${today}"){
 							result += '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger" onclick="deleteReservation(\'' + this.reservation_code+ '\')">예매취소</button></span>';

@@ -120,7 +120,7 @@
 			$(r).each(function(i){
 				if(i<3){
 					result += '<div style="height: 140px; border-top: 1px solid #aaa;">'
-							+ '<div style="width: 200px; line-height: 130px; float: left; text-align: center; border-right: 1px solid #aaa;">'
+							+ '<div style="width: 200px; line-height: 140px; float: left; text-align: center; border-right: 1px solid #aaa;">'
 							+ '<span>' + this.reservation_code + '</span>'
 							+ '</div>';
 							
@@ -164,7 +164,7 @@
 				+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
 				+ '<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>'
 				+ '</div>'
-				+ '<div style="height: 140px; border-top: 1px solid #aaa; line-height: 130px; text-align: center;">'
+				+ '<div style="height: 140px; border-top: 1px solid #aaa; line-height: 140px; text-align: center;">'
 				+ '<span style="height: 138px; margin: 0; font-size: 20px;">예매내역이 없습니다</span>'
 				+ '</div>';
 		}
