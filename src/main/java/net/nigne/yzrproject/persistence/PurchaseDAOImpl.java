@@ -1,6 +1,5 @@
 package net.nigne.yzrproject.persistence;
 
-<<<<<<< HEAD
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,14 +15,6 @@ import org.springframework.stereotype.Repository;
 import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.PurchaseVO;
 import net.nigne.yzrproject.domain.ReplyVO;
-=======
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.springframework.stereotype.Repository;
-
-import net.nigne.yzrproject.domain.PurchaseVO;
->>>>>>> master
 
 @Repository
 public class PurchaseDAOImpl implements PurchaseDAO {
@@ -32,7 +23,6 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 	private EntityManager entityManager;
 
 	@Override
-<<<<<<< HEAD
 	public long getTotalCount(String member_id) {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -66,12 +56,8 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		PurchaseVO vo = entityManager.find(PurchaseVO.class, no);
 		entityManager.remove(vo);
 	}
-
-
-=======
 	public void payPersist(PurchaseVO vo) throws Exception{
 		entityManager.persist(vo);
 	}
->>>>>>> master
 
 }

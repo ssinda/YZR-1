@@ -1,19 +1,11 @@
 package net.nigne.yzrproject.service;
 
-<<<<<<< HEAD
 import java.util.List;
-=======
 import javax.persistence.PersistenceContext;
->>>>>>> master
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-<<<<<<< HEAD
 import net.nigne.yzrproject.domain.Criteria;
-=======
->>>>>>> master
 import net.nigne.yzrproject.domain.PurchaseVO;
 import net.nigne.yzrproject.persistence.PurchaseDAO;
 
@@ -23,7 +15,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Autowired
 	private PurchaseDAO dao;
 	
-<<<<<<< HEAD
 	@Transactional(rollbackFor = { Exception.class })
 	@Override
 	public long getTotalCount(String member_id) {
@@ -44,12 +35,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public void delete_Store(int no) {
 		// TODO Auto-generated method stub
 		dao.delete_Store(no);
-=======
+	}
 	@Transactional(rollbackFor={Exception.class})
 	@Override
 	public void payPersist(PurchaseVO vo) throws Exception{
 		dao.payPersist(vo);
->>>>>>> master
 	}
-
 }
