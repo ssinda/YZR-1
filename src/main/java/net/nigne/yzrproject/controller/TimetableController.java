@@ -1,7 +1,9 @@
 package net.nigne.yzrproject.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,18 +56,31 @@ public class TimetableController {
 	}
 	
 	@RequestMapping(value = "/timetable/tt", method = RequestMethod.GET)
-	public ResponseEntity<List<TimetableVO>> timetable(@RequestParam("theater_id") String theater_id, @RequestParam("day") String day){
-		ResponseEntity<List<TimetableVO>> entity = null;
-		List<TimetableVO> tt = null;
-		
+	public ResponseEntity<Map<String,Object>> timetable(@RequestParam("theater_id") String theater_id, @RequestParam("day") String day){
+		ResponseEntity<Map<String,Object>> entity = null;
+		Map<String,Object> tt = tt_service.getTimetable(theater_id, day);
+		Map<String,Object> tt2 = new HashMap<>();
+		tt2.put("tt", tt);
+		tt2.put("total", tt.size());
 		try{
-			tt = tt_service.getTimetable(theater_id, day);
-			entity = new ResponseEntity<List<TimetableVO>>(tt, HttpStatus.OK);
+			entity = new ResponseEntity<Map<String,Object>>(tt2, HttpStatus.OK);
 		}catch(Exception e){
-			entity = new ResponseEntity<List<TimetableVO>>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
 		
 		return entity;
 	}
 	
+	@RequestMapping(value = "/timetable/tt/movieInfo", method = RequestMethod.GET)
+	public ResponseEntity<List<MovieVO>> tt_movie(@RequestParam("theater_id") String theater_id, @RequestParam("day") String day){
+		ResponseEntity<List<MovieVO>> entity = null;
+		List<MovieVO> mlist = tt_service.getMovieInfo(theater_id, day);
+		try{
+			entity = new ResponseEntity<List<MovieVO>>(mlist, HttpStatus.OK);
+		}catch(Exception e){
+			entity = new ResponseEntity<List<MovieVO>>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
 }

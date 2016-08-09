@@ -47,124 +47,23 @@
 		<div style="border:2px solid #000; width:1140px; margin-top:20px; clear:both;"></div>
 		
 		<div id="play_date" style="clear:both; margin-top:20px; margin-left:260px;">
-			<i id="prev" class="fa fa-calendar fa-3x" aria-hidden="true" style="float:left; margin-top:6px;"></i>
+			<i id="cal" class="fa fa-calendar fa-3x" aria-hidden="true" style="float:left; margin-top:6px;"></i>
 			<div id="date_group" style="float:left; width:600px; margin-left:5px;">
-				
-				<div id="0d" class="date_div">
-					<div style="float:left;">
-						<span class="month" style="margin-top:8px; float:left;"></span> <br/>
-						<span id="dayoftheweek0" style="margin-left:6px;"></span>
-					</div>
-					<span id="day0" style="float:left; font-size:40px;"></span>
-				</div>
-				
-				<div id="1d" class="date_div">
-					<div style="float:left;">
-						<span class="month" style="margin-top:8px; float:left;"></span> <br/>
-						<span id="dayoftheweek1" style="margin-left:6px;"></span>
-					</div>
-					<span id="day1" style="float:left; font-size:40px;"></span>
-				</div>
-				
-				<div id="2d" class="date_div">
-					<div style="float:left;">
-						<span class="month" style="margin-top:8px; float:left;"></span> <br/>
-						<span id="dayoftheweek2" style="margin-left:6px;"></span>
-					</div>
-					<span id="day2" style="float:left; font-size:40px;"></span>
-				</div>
-				
-				<div id="3d" class="date_div">
-					<div style="float:left;">
-						<span class="month" style="margin-top:8px; float:left;"></span> <br/>
-						<span id="dayoftheweek3" style="margin-left:6px;"></span>
-					</div>
-					<span id="day3" style="float:left; font-size:40px;"></span>
-				</div>
-				<div id="4d" class="date_div">
-					<div style="float:left;">
-						<span class="month" style="margin-top:8px; float:left;"></span> <br/>
-						<span id="dayoftheweek4" style="margin-left:6px;"></span>
-					</div>
-					<span id="day4" style="float:left; font-size:40px;"></span>
-				</div>
+				<!-- setTheater에서 출력 -->
 			</div>
 		</div>
 		
 		<div style="border:1px solid #000; margin-top:25px; width:100%; float:left;"></div>
 		
-		<div style="margin-top:10px; margin-left:20px; float:left;">
+		<div style="margin-top:15px; margin-left:20px; float:left;">
 			<i class="fa fa-sun-o fa-1x" aria-hidden="true" style="color:red"><span style="color:black; font-weight:bold;">조조</span></i> &nbsp
-			<i class="fa fa-moon-o fa-1x" aria-hidden="true" style="color:blue"><span style="color:black; font-weight:bold;">심야</span></i>
+			<i class="fa fa-moon-o fa-1x" aria-hidden="true" style="color:blue"><span style="color:black; font-weight:bold;">심야</span></i> &nbsp
+			<i class="fa fa-arrow-circle-o-right fa-1x" aria-hidden="true" style="color:green"><span style="color:black; font-weight:bold;">일반</span></i>
 			<span style="margin-left:50px; color:#4B4B4B;">* 시간을 클릭하시면 빠른 예매를 하실 수 있습니다.</span>
 		</div>
 		
-		<div id="movie_place1" style="float:left;">
-			<div style="border-top:1px solid #000; margin-top:10px; width:1140px;"></div>
-			<div id="movie" style="float:left; margin-top:20px; margin-left:20px;">
-				<div id="grade_circle" style="margin-top:3px; float:left; border:1px solid orange; border-radius:20px; width:25px; height:25px; text-align:center; padding-top:1px; background-color:orange; color:white;">15</div>
-				<span style="margin-left:20px; font-size:20px;">제임스 본</span>
-				<span style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">상영중</span>
-				<span>장르 / 상영시간 / 2016-08-02 개봉</span>
-				<br/>
-				
-				<i class="fa fa-caret-right" aria-hidden="true" style="margin-top:10px;"><span>&nbsp 2D > 3관 8층 > 총 150석</span></i>
-				<br/>
-				<div id="time_table">
-					<!-- timetable ajax 구간 -->
-				</div>
-				
-			</div>
-		</div>
-		<div id="movie_place2" style="clear:both; float:left;">
-			<div style="border-top:1px solid #000; margin-top:30px; width:1140px;"></div>
-			<div id="movie" style="float:left; margin-top:20px; margin-left:20px;">
-				<div id="grade_circle" style="margin-top:3px; float:left; border:1px solid orange; border-radius:20px; width:25px; height:25px; text-align:center; padding-top:1px; background-color:orange; color:white;">15</div>
-				<span style="margin-left:20px; font-size:20px;">수어사이드 스쿼드</span>
-				<span style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">상영중</span>
-				<span>장르 / 상영시간 / 2016-08-03 개봉</span>
-				<br/>
-				
-				<i class="fa fa-caret-right" aria-hidden="true" style="margin-top:10px;"><span>&nbsp 2D > 3관 8층 > 총 150석</span></i>
-				<br/>
-				<div class="time_table">
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">13:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">15:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">17:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">19:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">21:20</span><span>120석</span></a>
-					</li>
-				</div>
-				
-				<i class="fa fa-caret-right" aria-hidden="true" style="clear:both; margin-top:10px;"><span>&nbsp 2D > 1관 3층 > 총 150석</span></i>
-				<br/>
-				<div class="time_table">
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">13:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">15:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">17:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">19:20</span><span>120석</span></a>
-					</li>
-					<li class="time_li">
-						<a href="#"><span style="font-size:15px; display:block;">21:20</span><span>120석</span></a>
-					</li>
-				</div>
-			</div>
+		<div id="movie_place">
+			<!-- timetable ajax구간 -->
 		</div>
 		
 		<div style="border:1px solid #000; margin-top:25px; clear:both; float:left; width:100%;"></div>
@@ -177,10 +76,6 @@
 	
 	var month = date.getMonth() + 1;
 	var day = date.getDate();
-	
-	if(month < 10){
-		month = "0" + month;
-	}
 	
 	var dayOfWeek = date.getDay();
 	
@@ -219,14 +114,35 @@
 		document.getElementById("theater_name").innerHTML = theater_name;
 		document.getElementById("theater_id").innerHTML = theater_id;
 		document.getElementById("theater_id").value = theater_id;
+		
+		var cal_date = "";
+		for(var cd=0; cd<5; cd++){
+			cal_date += '<div id="'+cd+'d" class="date_div">'
+				+ '<div style="float:left;">'
+				+ '<span id="month'+cd+'" style="margin-top:8px; float:left;">'
+				+ '</span>'
+				+ '<br/>'
+				+ '<span id="dayoftheweek'+cd+'" style="margin-left:6px;">'
+				+ '</span>'
+				+ '</div>'
+				+ '<span id="day'+cd+'" style="float:left; font-size:40px;">' 
+				+ '</span>'
+				+ '</div>';
+		}
+		document.getElementById("date_group").innerHTML = cal_date;
 	}
 	
 	setTheater_name("CGV강남","T001");
 	
 	$(document).ready(function(){
-		$(".month").text(month+"월");
-		
 		for(var a=0; a<5; a++){
+			day = date.getDate();
+			month = date.getMonth() + 1;
+			dayOfWeek = date.getDay(dayOfWeek);
+			if(month < 10){
+				month = "0" + month;
+			}
+			$("#month"+a).html(month+"월");
 			if(day < 10){
 				day = "0" + day;
 			}
@@ -237,6 +153,7 @@
 			
 			day++;
 			dayOfWeek++;
+			date.setDate(date.getDate()+1);
 		}
 	});
 	
@@ -264,14 +181,20 @@
 	var ti = document.getElementById("theater_id").value;
 	
 	$(".date_div").click(function(){
-		alert($(this));
-		var temp=$(this).id.substring(0, 1);
+		var temp=$(this).attr('id').substring(0, 1);
 			cday = month + "-" + $("#day" + temp).val();
 			getTimetable(ti, cday);
-		$(".time_li").html("1");
+			getMovieInfo(ti, cday);
 	})
 	
-	getTimetable("T001", month+"-0"+day);
+	if(day<10){
+		getTimetable("T001", month+"-0"+day);
+		getMovieInfo("T001", month+"-0"+day);
+	}else{
+		getTimetable("T001", month+day);
+		getMovieInfo("T001", month+day);
+	}
+	
 	
 	function getTimetable(theater_id, cday){
 		$.ajax({
@@ -286,35 +209,104 @@
 				"day" : cday	
 			},
 			success : function(tt){
-				setTimetable(tt);
+				setTimetable(tt.tt, tt.total);
 			}
 		});
 	}
 	
 	
-	function setTimetable(tt){
+	function setTimetable(tt, total){
 		var timetable = "";
-		$("#time_table").html("");
-		for(var i=0; i<tt.length; i++){
-			timetable += '<li class="time_li">'
-				+ '<a href="#">'
-				+ '<span style="font-size:15px; display:block;">'
-				+ tt[i].start_time.substring(11,16)
+		$("#movie_place").html("");
+		var plex = "";
+		
+		for(var a=0; a<total; a++){
+			plex += '<div class="movie_time" style="float:left; margin-top:15px;">'
+				+ '<div style="border-top:1px solid #000; margin-top:10px; width:1140px;">'
+				+ '</div>'
+				+ '<div id="movie" style="float:left; margin-top:15px; margin-left:20px;">'
+				+ '<div id="grade_circle'+a+'" style="margin-top:3px; float:left; border:1px solid orange; border-radius:20px; width:25px; height:25px; text-align:center; padding-top:1px; background-color:orange; color:white;">'
+				+ '</div>'
+				+ '<span id="movie_title'+a+'" style="margin-left:20px; font-size:20px;">'
+				+ '</span>'
+				+ '<span id="movie_status'+a+'" style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">'
 				+ '</span>'
 				+ '<span>'
-				+ '120석'
+				+ '장르 / <span id="runtime'+a+'"></span> / <span id="open_date'+a+'"></span> 개봉'
 				+ '</span>'
-				+ '</a>'
-				+ '</li>';
+				+ '<br/>'
+				+ '<i class="fa fa-caret-right" aria-hidden="true" style="margin-top:10px;">'
+				+ '<span>'
+				+ '&nbsp 2D > '
+				+ tt[a][0].plex_number
+				+ '관 > 총 150석'
+				+ '</span>'
+				+ '</i>'
+				+ '<br/>'
+				+ '<div id="time_table'+a+'">'
+				+ '</div>'
+				+ '</div>'
+				+ '</div>';
+			$("#movie_place").html(plex);
+			
+					
+			
 		}
-		
-		$("#time_table").html(timetable);
+		for(var a=0; a<total; a++){
+			timetable = "";	
+			for(var b=0; b < tt[a].length; b++){
+				timetable += '<li class="time_li">'
+					+ '<a href="#">'
+					+ '<span style="font-size:15px; display:block;">'
+					+ tt[a][b].start_time.substring(11,16)
+					+ '</span>'
+					+ '<span>'
+					+ '120석'
+					+ '</span>'
+					+ '</a>'
+					+ '</li>';
+			}
+			$("#time_table"+a).html(timetable);
+		}
 	}
+	
+	function getMovieInfo(theater_id, cday){
+		$.ajax({
+			type : 'get',
+			url : '/timetable/tt/movieInfo',
+			headers : {
+			"Content-Type" : "application/json",
+			},
+			dataType : 'json',
+			data : {
+				"theater_id" : theater_id,
+				"day" : cday	
+			},
+			success : function(movie_info){
+				setMovieInfo(movie_info);
+			}
+		});
+	}
+	
+	function setMovieInfo(movie_info){
+		for(var i=0; i<movie_info.length; i++){
+			$("#movie_title"+i).html(movie_info[i].title);
+			$("#grade_circle"+i).html(movie_info[i].rating);
+			if(movie_info[i].status == "play"){
+				$("#movie_status"+i).html("현재상영중");
+			}
+			$("#runtime"+i).html(movie_info[i].runtime + "분");
+			$("#open_date"+i).html(movie_info[i].open_date);
+		}
+	}
+					
+		
+	
 </script>
 
 <style>
 	
-	#time_table > .time_li:FIRST-CHILD{
+	.time_li:FIRST-CHILD{
 		border-left:1px solid #BDBDBD;
 	}
 	.time_li{
