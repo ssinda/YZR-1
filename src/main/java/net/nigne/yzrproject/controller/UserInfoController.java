@@ -63,21 +63,31 @@ public class UserInfoController {
 	}
 	
 	
+	@RequestMapping(value = "/user/memberPwEdit", method = RequestMethod.POST)
+	public ModelAndView newPwEdit(@RequestBody MemberVO vo) throws Exception {
+		ModelAndView view=new ModelAndView();
+		
+		view.setViewName("user/memberPwEdit");
+		return view;
+	}
+	
+	
 	@RequestMapping(value = "/user/pwFind", method = RequestMethod.POST)
-	public ResponseEntity<Boolean> pwFind(@RequestParam("member_id") String member_id, @RequestParam("question") String question,@RequestParam("answer") String answer) throws Exception {
+	public ResponseEntity<Boolean> pwFind(@RequestBody MemberVO vo) throws Exception {
 		ResponseEntity<Boolean> entity = null; // ↑ 이 부분이 잘 이해가 안감, 이건 무슨형태의 파라미터인가? 
-		MemberVO vo = new MemberVO();
-		vo.setMember_id(member_id);
-		vo.setQuestion(question);
-		vo.setAnswer(answer);
-		System.out.println(member_id);
+//		MemberVO vo = new MemberVO();
+//		vo.setMember_id(member_id);
+//		vo.setQuestion(question);
+//		vo.setAnswer(answer);
+		System.out.println("m :" + vo.getMember_id());
+		System.out.println("a :" + vo.getAnswer());
+		System.out.println("q :" + vo.getQuestion());
 		try{
+			System.out.println(service.pwFind(vo));
 			entity = new ResponseEntity<Boolean>(service.pwFind(vo),HttpStatus.OK); // 이 부분도 마찬가지!!
-			System.out.println(member_id);
-
 		}catch(Exception e){
-			entity = new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST); 
-			System.out.println(answer);
+			entity = new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+			System.out.println(e.getMessage()); 
 		}
 		return entity;
 	}

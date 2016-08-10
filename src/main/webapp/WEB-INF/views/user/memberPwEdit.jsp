@@ -51,11 +51,13 @@
 		<br>
 		<form action="/user/member/pwChange" id="pwChange" name="pwChange" method="post" >
 			<table class="table">
-				<tr>
-					<th class="col-xs-3">기존 비밀번호</th>
-					<td class="col-sm-2"><input type="text" id="originPw" name="originPw"></td>
-					<td id="originPw_" name="originPw_" ></td>
-				</tr>
+				<c:if test="${password != null || password != ''}">
+					<tr>
+						<th class="col-xs-3">기존 비밀번호</th>
+						<td class="col-sm-2"><input type="text" id="originPw" name="originPw"></td>
+						<td id="originPw_" name="originPw_" ></td>
+					</tr>
+				</c:if>
 				<tr>
 					<th>새 비밀번호</th>
 					<td><input type="text" id="newPw" name="newPw"></td>

@@ -74,24 +74,28 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		mergevo.setEmail(vo.getEmail());
 		mergevo.setTel(vo.getTel());
 	}
+	
 	@Override
-	public boolean pwFind(MemberVO vo) {
+	public boolean pwFind(MemberVO vo){
 		
-		String check=null;
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<String> cq = cb.createQuery(String.class);
-		Root<MemberVO> root = cq.from(MemberVO.class);
-		cq.select(root.get("member_id"));
-		Predicate mc = cb.equal(root.get("member_id"), vo.getMember_id());
-		Predicate qc = cb.equal(root.get("question"), vo.getQuestion());
-		Predicate ac = cb.equal(root.get("checkQuestion"), vo.getAnswer());
-		cq.where(cb.and(mc,qc,ac));
+		boolean check = true;
 		try{
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<String> cq = cb.createQuery(String.class);
+			Root<MemberVO> root = cq.from(MemberVO.class);
+			cq.select(root.get("member_id"));
+			Predicate mc = cb.equal(root.get("member_id"), vo.getMember_id());
+			Predicate qc = cb.equal(root.get("question"), vo.getQuestion());
+			Predicate ac = cb.equal(root.get("answer"), vo.getAnswer());
+			cq.where(cb.and(mc,qc,ac));
+		
 			TypedQuery<String> tq = em.createQuery(cq);
-			check = tq.getSingleResult();
-			return true;
+			check = tq.getSingleResult().isEmpty();
+			System.out.println(check);
+			return check;
 		}catch(Exception e){
-			return false;
+			System.out.println(e.getMessage());
+			return check;
 		}
 	}
 

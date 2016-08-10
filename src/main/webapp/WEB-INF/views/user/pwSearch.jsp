@@ -22,14 +22,15 @@
 				type : 'post',
 				url : '/user/pwFind',
 				headers : {"Content-Type" : "application/json"},
-				data : {"member_id" : member_id, "question" : question, "answer" : answer},
+				data : JSON.stringify({"member_id" : member_id, "question" : question, "answer" : answer}),
 				dataType : 'json',
 				success : function(result){
+					alert(result);
 					if(result == true){
-						alert("success");
-						
-					}else{
 						alert("fail");
+					}else{
+						alert("success");
+						$("#pwSearch").submit();
 					}
 				}
 			});
@@ -40,7 +41,7 @@
 
 <div align="center" >
 	<h1>비밀번호 찾기</h1>
-	<form id="pwSearch" name="pwSearch" method="post">
+	<form id="pwSearch" name="pwSearch" action="/user/memberPwEdit"  method="post">
 		<table class="table" style="width:400px;" >
 			<tr>
 				<th>아이디</th>

@@ -52,11 +52,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public boolean pwFind(MemberVO vo) {
+	public boolean pwFind(MemberVO vo){
 		
-		dao.pwFind(vo);
-		
-		return false;
+		return dao.pwFind(vo);
 	}
 	
 }
