@@ -14,6 +14,7 @@
 		font-weight: bold; 
 		float: left;
 	}
+	
 </style>
 <c:if test="${ member_id == null }">
 	<script>
@@ -50,12 +51,13 @@
 		var result = "";
 		var date = null;
 		a.html("");
-		if(r.length > 0) {
-			result += '<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">'
-					+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
-					+ '<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>'
-					+ '</div>';
+		
+		result += '<div style="width: 888px; height:50px; line-height: 50px;">'
+			+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
+			+ '<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>'
+			+ '</div>';
 			
+		if(r.length > 0) {
 			
 			$(r).each(function(i){
 			
@@ -68,7 +70,7 @@
 					if(this.movie_id == rm[j].movie_id){
 						
 						result += '<div style="height: 140px; width: 400px; float: left;">'
-								+ '<span style="height: 138px; width: 105px; display: block; margin: 0; float: left;"><a href="/movie/${r.movie_id}"><img style="height: 100%; width: 100%; vertical-align: baseline;" src="/resources/images/poster/'+rm[j].poster+'"></a></span>'
+								+ '<span style="height: 138px; width: 105px; display: block; float: left;"><a href="/movie/${r.movie_id}"><img style="height: 100%; width: 100%; vertical-align: baseline;" src="/resources/images/poster/'+rm[j].poster+'"></a></span>'
 								+ '<span style="height:30px; display: block; margin-left: 115px; margin-bottom: 5px; padding-top:10px; font-weight: bold;"><a href="/movie/' + this.movie_id + '">' + rm[j].title + '</a></span>'
 								+ '<span class="reservationInfo">관람극장</span>'
 								+ '<span style="height:20px; display: block; margin-left: 181px; margin-bottom: 5px;">';
@@ -100,11 +102,7 @@
 			
 			});
 		}else{
-			result += '<div style="width: 888px; height:50px; line-height: 50px; border-bottom: 1px solid #aaa;">'
-					+ '<div style="width: 200px; text-align: center; font-size: 15px; border-right: 1px solid #aaa; float: left; font-weight: bold;">예매번호</div>'
-					+ '<div style="width: 688px; text-align: center; font-size: 15px; margin-left: 200px; font-weight: bold;">예매정보</div>'
-					+ '</div>'
-					+ '<div style="height: 140px; border-top: 1px solid #aaa; line-height: 130px; text-align: center;">'
+			result += '<div style="height: 140px; line-height: 130px; text-align: center;">'
 					+ '<span style="height: 138px; margin: 0; font-size: 20px;">예매내역이 없습니다</span>'
 					+ '</div>';
 		}
