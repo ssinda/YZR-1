@@ -23,7 +23,7 @@
 </c:if>
 <fmt:formatDate value="${today}" pattern="yyyy-MM-dd HH:mm" var="today"/>
 
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	
 	<!-- 예매 Total -->
 	<div style="height: 34px; line-height: 34px;">
