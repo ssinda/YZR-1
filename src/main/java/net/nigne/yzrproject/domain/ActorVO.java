@@ -34,6 +34,18 @@ public class ActorVO {
 	
 	@Column(name="actor_company")
 	String actor_company;
+	
+	public ActorVO(String actor_name, String actor_age, String actor_photo, String actor_debut, String actor_company){
+		this.actor_name = actor_name;
+		this.actor_age = actor_age;
+		this.actor_photo = actor_photo;
+		this.actor_debut = actor_debut;
+		this.actor_company = actor_company;
+	}
+	
+	public ActorVO(){
+		
+	}
 
 	public int getNo() {
 		return no;

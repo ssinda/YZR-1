@@ -5,13 +5,13 @@
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script>
 	function initialize() {
-		var Y_point = 영화관.xpoint // Y 좌표
-		var X_point = 영화관.ypoint // X 좌표
+		var Y_point = 37.529613; // Y 좌표
+		var X_point = 126.965786; // X 좌표
 		var zoomLevel = 16; // 지도의 확대 레벨 : 숫자가 클수록 확대정도가 큼
-		var markerTitle = 영화관.name // 현재 위치 마커에 마우스를 오버했을때 나타나는 정보
+		var markerTitle = "영화관name"; // 현재 위치 마커에 마우스를 오버했을때 나타나는 정보
 		var markerMaxWidth = 300;
 		// 말풍선 내용
-		var contentString = 영화관.address;
+		var contentString = "영화관address";
 		var myLatlng = new google.maps.LatLng(Y_point, X_point);
 		var mapOptions = {
 			zoom : zoomLevel,
