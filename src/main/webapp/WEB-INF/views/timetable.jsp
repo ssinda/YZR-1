@@ -102,7 +102,7 @@
 	function setTheater_list(theater_list){
 		var result = "";
 		for(var i=0; i<theater_list.length; i++){
-			result += '<li class="th_li" onclick="setTheater_name('+"'"+theater_list[i].theater_name+"'"+","+"'"+theater_list[i].theater_id+"'"+')">'
+			result += '<li id="th_tt'+i+'" class="th_li" onclick="setTheater_name('+"'"+theater_list[i].theater_name+"'"+","+"'"+theater_list[i].theater_id+"'"+')">'
 				+ theater_list[i].theater_name
 				+ '</li>';
 		}
@@ -116,6 +116,7 @@
 		document.getElementById("theater_id").value = theater_id;
 		
 		var cal_date = "";
+		
 		for(var cd=0; cd<5; cd++){
 			cal_date += '<div id="'+cd+'d" class="date_div">'
 				+ '<div style="float:left;">'
@@ -130,9 +131,11 @@
 				+ '</div>';
 		}
 		document.getElementById("date_group").innerHTML = cal_date;
+
 	}
 	
 	setTheater_name("CGV강남","T001");
+	
 	
 	$(document).ready(function(){
 		for(var a=0; a<5; a++){
@@ -155,7 +158,7 @@
 			dayOfWeek++;
 			date.setDate(date.getDate()+1);
 		}
-	});
+	})
 	
 	function getDay(dayOfWeek){
 		var date = "";
@@ -181,20 +184,19 @@
 	var ti = document.getElementById("theater_id").value;
 	
 	$(".date_div").click(function(){
-		var temp=$(this).attr('id').substring(0, 1);
+		$(".date_div").css("color","black");
+		$(this).css("color","red");
+		var temp = $(this).attr('id').substring(0, 1);
 			cday = month + "-" + $("#day" + temp).val();
 			getTimetable(ti, cday);
-			getMovieInfo(ti, cday);
 	})
+	
 	
 	if(day<10){
 		getTimetable("T001", month+"-0"+day);
-		getMovieInfo("T001", month+"-0"+day);
-	}else{
-		getTimetable("T001", month+day);
-		getMovieInfo("T001", month+day);
-	}
-	
+	}else if(day>=10){
+		getTimetable("T001", month+"-"+day);
+	}	
 	
 	function getTimetable(theater_id, cday){
 		$.ajax({
@@ -210,6 +212,9 @@
 			},
 			success : function(tt){
 				setTimetable(tt.tt, tt.total);
+				getMovieInfo(theater_id, cday);
+				getMovieGenre(theater_id, cday);
+				getPlexInfo(theater_id, cday);
 			}
 		});
 	}
@@ -225,21 +230,21 @@
 				+ '<div style="border-top:1px solid #000; margin-top:10px; width:1140px;">'
 				+ '</div>'
 				+ '<div id="movie" style="float:left; margin-top:15px; margin-left:20px;">'
-				+ '<div id="grade_circle'+a+'" style="margin-top:3px; float:left; border:1px solid orange; border-radius:20px; width:25px; height:25px; text-align:center; padding-top:1px; background-color:orange; color:white;">'
+				+ '<div id="grade_circle'+a+'" style="margin-top:3px; float:left; border:1px solid white; border-radius:20px; width:25px; height:25px; text-align:center; padding-top:1px; color:white;">'
 				+ '</div>'
 				+ '<span id="movie_title'+a+'" style="margin-left:20px; font-size:20px;">'
 				+ '</span>'
 				+ '<span id="movie_status'+a+'" style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">'
 				+ '</span>'
 				+ '<span>'
-				+ '장르 / <span id="runtime'+a+'"></span> / <span id="open_date'+a+'"></span> 개봉'
+				+ ' <span id="genre'+a+'"></span> / <span id="runtime'+a+'"></span> / <span id="open_date'+a+'"></span> 개봉'
 				+ '</span>'
 				+ '<br/>'
 				+ '<i class="fa fa-caret-right" aria-hidden="true" style="margin-top:10px;">'
 				+ '<span>'
-				+ '&nbsp 2D > '
+				+ '&nbsp <span id="plex_type'+a+'"></span> > '
 				+ tt[a][0].plex_number
-				+ '관 > 총 150석'
+				+ '관 > <span id="seat_cnt'+a+'"></span>'
 				+ '</span>'
 				+ '</i>'
 				+ '<br/>'
@@ -252,6 +257,11 @@
 					
 			
 		}
+		
+		var mor = '<i class="fa fa-sun-o fa-1x" aria-hidden="true" style="color:red"><span style="color:black; font-weight:bold;">조조</span></i>';
+		var night = '<i class="fa fa-moon-o fa-1x" aria-hidden="true" style="color:blue"><span style="color:black; font-weight:bold;">심야</span></i>';
+		var nor = '<i class="fa fa-arrow-circle-o-right fa-1x" aria-hidden="true" style="color:green"><span style="color:black; font-weight:bold;">일반</span></i>';
+		
 		for(var a=0; a<total; a++){
 			timetable = "";	
 			for(var b=0; b < tt[a].length; b++){
@@ -260,13 +270,23 @@
 					+ '<span style="font-size:15px; display:block;">'
 					+ tt[a][b].start_time.substring(11,16)
 					+ '</span>'
-					+ '<span>'
-					+ '120석'
+					+ '<span id="pt'+a+b+'">'
 					+ '</span>'
 					+ '</a>'
 					+ '</li>';
 			}
 			$("#time_table"+a).html(timetable);
+			for(var c=0; c < tt[a].length; c++){
+				var tempHour = parseInt(tt[a][c].start_time.substring(11,13)); 
+				
+				if(tempHour < 10){
+					$("#pt"+a+c).html(mor);
+				}else if(tempHour >= 10 && tempHour < 23){
+					$("#pt"+a+c).html(nor);
+				}else if(tempHour >= 23 && tempHour <= 28){
+					$("#pt"+a+c).html(night);
+				}
+			}
 		}
 	}
 	
@@ -292,16 +312,71 @@
 		for(var i=0; i<movie_info.length; i++){
 			$("#movie_title"+i).html(movie_info[i].title);
 			$("#grade_circle"+i).html(movie_info[i].rating);
+			if(movie_info[i].rating == "18"){
+				$("#grade_circle"+i).css("background-color","red");
+			}else if(movie_info[i].rating == "15"){
+				$("#grade_circle"+i).css("background-color","orange");
+			}else if(movie_info[i].rating == "12"){
+				$("#grade_circle"+i).css("background-color","green");
+			}
 			if(movie_info[i].status == "play"){
 				$("#movie_status"+i).html("현재상영중");
+			}else if(movie_info[i].status == "schedule"){
+				$("#movie_status"+i).html("상영예정")
 			}
 			$("#runtime"+i).html(movie_info[i].runtime + "분");
 			$("#open_date"+i).html(movie_info[i].open_date);
 		}
 	}
-					
-		
 	
+	function getMovieGenre(theater_id, day){
+		$.ajax({
+			type : 'get',
+			url : '/timetable/tt/movieGenre',
+			headers : {
+			"Content-Type" : "application/json",
+			},
+			dataType : 'json',
+			data : {
+				"theater_id" : theater_id,
+				"day" : day	
+			},
+			success : function(genre){
+				setMovieGenre(genre);
+			}
+		});
+	}
+	
+	function setMovieGenre(genre){
+		for(var i=0; i<genre.length; i++){
+			$("#genre"+i).html(genre[i].movie_genre);
+		}
+	}
+		
+	function getPlexInfo(theater_id, day){
+		$.ajax({
+			type : 'get',
+			url : '/timetable/tt/plexInfo',
+			headers : {
+			"Content-Type" : "application/json",
+			},
+			dataType : 'json',
+			data : {
+				"theater_id" : theater_id,
+				"day" : day	
+			},
+			success : function(plex){
+				setPlexInfo(plex);
+			}
+		});
+	}
+	
+	function setPlexInfo(plex){
+		for(var i=0; i<plex.length; i++){
+			$("#plex_type"+i).html(plex[i].plex_type);
+			$("#seat_cnt"+i).html("총 "+plex[i].plex_seat_cnt+"석");
+		}
+	}
 </script>
 
 <style>
@@ -316,6 +391,7 @@
 		border-right:1px solid #BDBDBD;
 		border-bottom:1px solid #BDBDBD;
 		width:70px;
+		height:42px;
 		text-align:center;
 	}
 	.time_li > a{

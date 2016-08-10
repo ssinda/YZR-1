@@ -15,7 +15,9 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
+import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.MovieVO;
+import net.nigne.yzrproject.domain.PlexVO;
 import net.nigne.yzrproject.domain.TimetableVO;
 
 @Repository
@@ -84,5 +86,62 @@ public class TimetableDAOImpl implements TimetableDAO {
 		
 		return mlist;
 	}
+
+	@Override
+	public List<GenreVO> getMovieGenre(String theater_id, String day) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<TimetableVO> root = cq.from(TimetableVO.class);
+		
+		cq.select(root.get("movie_id"));
+		cq.distinct(true);
+		cq.where(cb.and(cb.equal(root.get("theater_id"), theater_id), cb.like(root.get("start_time"), "%"+day+"%")));
+		
+		TypedQuery<String> tq = entityManager.createQuery(cq);
+		List<String> tt_movie_id = tq.getResultList();
+		
+		CriteriaQuery<GenreVO> gcq = cb.createQuery(GenreVO.class);
+		Root<GenreVO> groot = gcq.from(GenreVO.class);
+		TypedQuery<GenreVO> gtq = null;
+		List<GenreVO> glist = new ArrayList<GenreVO>();
+		
+		for(int i=0; i<tt_movie_id.size(); i++){
+			gcq.where(cb.equal(groot.get("movie_id"), tt_movie_id.get(i)));
+			gtq = entityManager.createQuery(gcq);
+			glist.add(gtq.getSingleResult());
+		}
+		
+		return glist;
+	}
+
+	@Override
+	public List<PlexVO> getPlexInfo(String theater_id, String day) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<TimetableVO> cq = cb.createQuery(TimetableVO.class);
+		Root<TimetableVO> root = cq.from(TimetableVO.class);
+		
+		cq.multiselect(root.get("theater_id"), root.get("plex_number"));
+		cq.distinct(true);
+		cq.where(cb.and(cb.equal(root.get("theater_id"), theater_id), cb.like(root.get("start_time"), "%"+day+"%")));
+		cq.orderBy(cb.asc(root.get("plex_number")));
+		
+		TypedQuery<TimetableVO> tq = entityManager.createQuery(cq);
+		List<TimetableVO> tplist = tq.getResultList();
+		
+		CriteriaQuery<PlexVO> pcq = cb.createQuery(PlexVO.class);
+		Root<PlexVO> proot = pcq.from(PlexVO.class);
+		TypedQuery<PlexVO> ptq = null;
+		List<PlexVO> plist = new ArrayList<PlexVO>();
+		
+		for(int i=0; i<tplist.size(); i++){
+			pcq.where(cb.and(cb.equal(proot.get("theater_id"), tplist.get(i).getTheater_id()), cb.equal(proot.get("plex_number"), tplist.get(i).getPlex_number())));
+			ptq = entityManager.createQuery(pcq);
+			plist.add(ptq.getSingleResult());
+		}
+		
+		return plist;
+	}
+	
+	
 
 }

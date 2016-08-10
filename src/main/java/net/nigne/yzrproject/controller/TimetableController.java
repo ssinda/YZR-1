@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.nigne.yzrproject.domain.EmpVO;
+import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.MovieVO;
+import net.nigne.yzrproject.domain.PlexVO;
 import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
 import net.nigne.yzrproject.service.EmpService;
@@ -74,11 +76,40 @@ public class TimetableController {
 	@RequestMapping(value = "/timetable/tt/movieInfo", method = RequestMethod.GET)
 	public ResponseEntity<List<MovieVO>> tt_movie(@RequestParam("theater_id") String theater_id, @RequestParam("day") String day){
 		ResponseEntity<List<MovieVO>> entity = null;
+		
 		List<MovieVO> mlist = tt_service.getMovieInfo(theater_id, day);
 		try{
 			entity = new ResponseEntity<List<MovieVO>>(mlist, HttpStatus.OK);
 		}catch(Exception e){
 			entity = new ResponseEntity<List<MovieVO>>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/timetable/tt/movieGenre", method = RequestMethod.GET)
+	public ResponseEntity<List<GenreVO>> tt_movie_genre(@RequestParam("theater_id") String theater_id, @RequestParam("day") String day){
+		ResponseEntity<List<GenreVO>> entity = null;
+		
+		List<GenreVO> glist = tt_service.getMovieGenre(theater_id, day);
+		try{
+			entity = new ResponseEntity<List<GenreVO>>(glist, HttpStatus.OK);
+		}catch(Exception e){
+			entity = new ResponseEntity<List<GenreVO>>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/timetable/tt/plexInfo", method = RequestMethod.GET)
+	public ResponseEntity<List<PlexVO>> tt_plex_info(@RequestParam("theater_id") String theater_id, @RequestParam("day") String day){
+		ResponseEntity<List<PlexVO>> entity = null;
+		
+		List<PlexVO> plist = tt_service.getPlexInfo(theater_id, day);
+		try{
+			entity = new ResponseEntity<List<PlexVO>>(plist, HttpStatus.OK);
+		}catch(Exception e){
+			entity = new ResponseEntity<List<PlexVO>>(HttpStatus.BAD_REQUEST);
 		}
 		
 		return entity;
