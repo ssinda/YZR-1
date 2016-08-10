@@ -11,6 +11,9 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
 </head>
 <body>
 <style>
@@ -55,7 +58,7 @@ font {
 							</c:otherwise>
 						</c:choose>
 						<c:if test="${ member_id == null }">
-							<li><a href="/membership"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
+							<li><a href="/member"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
 						</c:if>
 						<li><a href="/user"><span class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
 						<li><a href="#"><span class="glyphicon glyphicon-star"></span> Club서비스</a></li>

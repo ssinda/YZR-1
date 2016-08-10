@@ -1,0 +1,15 @@
+package net.nigne.yzrproject.service;
+
+import java.util.List;
+
+import net.nigne.yzrproject.domain.MemberVO;
+
+public interface MemberService {
+
+	public void insert(MemberVO vo);
+	public boolean idCheck(String member_id);
+	public boolean pwCheck(String member_pw, String member_id);
+	public MemberVO select(String member_id);
+	public void delete(String member_id); 
+	
+}

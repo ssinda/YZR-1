@@ -79,12 +79,6 @@ public class YzrController {
 		return "user/index";
    }
    
-   @RequestMapping(value = "/membership", method = RequestMethod.GET)
-   public String membershipPage(Locale locale, Model model) throws Exception {
-
-      return "membership";
-   }
-   
    @RequestMapping(value = "/support", method = RequestMethod.GET)
    public ModelAndView supportPage() throws Exception {
       

@@ -159,7 +159,8 @@ section {
 				</li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-weight: bold;">회원 정보 <span class="caret"></span></a>
 					<ul class="dropdown-menu forAnimate" role="menu">
-						<li><a href="/user/update">개인정보 변경</a></li>
+						<li><a href="/user/member/edit">개인정보 변경</a></li>
+						<li><a href="/user/memberPwEdit">비밀번호 변경</a></li>
 						<li><a href="/user/delete">회원 탈퇴</a></li>
 					</ul>
 				</li>
