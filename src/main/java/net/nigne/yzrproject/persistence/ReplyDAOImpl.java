@@ -52,7 +52,7 @@ public class ReplyDAOImpl implements ReplyDAO {
 		vo.setUser_id(user_id);
 		vo.setReply_content(reply_content);
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd-hh:mm");
 		String date = sdf.format(cal.getTime().getTime());
 		vo.setReply_date(date);
 		vo.setReply_reply(reply_reply);

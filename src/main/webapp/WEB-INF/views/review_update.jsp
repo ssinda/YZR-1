@@ -77,24 +77,16 @@ hr.hrone, hr.hrtwo {
 	<div class="container">
 		<div id="wrap" class="wrap" name="wrap">
 			<div>
-				<h2 style="margin-left: 60px; margin-bottom: 20px;">후기</h2>
+				<h2 style="margin-left: 60px; margin-bottom: 20px;">수정</h2>
 			</div>
+			
 				
 			<div style="margin-left:60px;">
-				<div
-					style="width: 864px; padding: 4px; padding-left: 7px; border: 1px solid black">
-					제 목 : <input type="text" id="review_title" name="review_title"
-						size="70" style="margin-left:13px;" value="${reviewvo.review_title }"/>
-				</div>
-				<div
-					style="width: 864px; padding: 4px; padding-left: 7px; border: 1px solid black;">
-					작성자 : <input type="text" id="member_id" name="member_id" size="70" value="${member_id}" readonly="readonly" size="70" 
-						/>
-				</div>
-					<textarea name="review_content" id="review_content" rows="20" cols="120"> ${reviewvo.review_content }</textarea>
+				<input type="text" id="review_title" name="review_title" class="form-control" style="width: 864px;"placeholder="제목" value="${reviewvo.review_title }"/>
+				<textarea name="review_content" id="review_content" rows="20" cols="120" style="margin-top: 5px;"> ${reviewvo.review_content }</textarea>
 				<div>
 					<div>
-						<button type="button" class="btn btn-default" onclick="updateReview()" style="float:right;margin-right: 78px; width: 70px; height: 50px;">등록</button>
+						<button type="button" class="btn btn-danger" onclick="updateReview()" style="float:right;margin-right: 73px; margin-top:5px; width: 70px; height: 50px;">등록</button>
 					</div>
 				</div>
 			</div>	
