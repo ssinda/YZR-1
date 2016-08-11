@@ -93,6 +93,7 @@ font {
                   <li class="dropdown" style="float: none; display: inline-block;">
                      <a class="dropdown-toggle" data-toggle="dropdown" href="#"><font style="font-size: 15pt; font-weight: bold;">예매</font></a>
                      <ul class="dropdown-menu">
+                        <li><a href="/ticket">실시간예매</a></li>
                         <li><a href="/timetable">상영시간표</a></li>
                      </ul>
                   </li>

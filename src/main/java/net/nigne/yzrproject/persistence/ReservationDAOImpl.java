@@ -239,4 +239,18 @@ public class ReservationDAOImpl implements ReservationDAO {
 		entityManager.remove(vo);
 	}
 
+	@Override
+	public void reservationPersist(ReservationVO vo) {
+		// TODO Auto-generated method stub
+		System.out.println("12131312413123124122414");
+		try{
+			entityManager.persist(vo);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
 }

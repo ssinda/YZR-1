@@ -5,6 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@include file="./include/header.jsp" %>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.0.js"></script>
+<c:if test="${ member_id == null }">
+	<script>
+		<%response.sendRedirect("/login");%>
+	</script>
+</c:if>
 	<style>
 <!--
 	
@@ -978,6 +983,9 @@
 		var plexNum = "";
 		var seat_count = 0;
 		var totalPrice = 0;
+		var startTime = "";
+		var veiwDay = "";
+		var reservationDay = "";
 		
 		function backStep(){
 			$("#reservation1").show();
@@ -1002,9 +1010,42 @@
 		
 		function payment(){
 			
-			var IMP = window.IMP;
-			IMP.init('iamport');
+			var viewYear = frm.years.value;
+			var viewMonth = frm.months.value;
+			var viewDate = frm.dates.value;
+	
+			if(frm.months.value < 10 && frm.months.value.length < 2 ){
+				viewMonth = '0' + frm.months.value;
+			}
 			
+			if(frm.dates.value < 10 && frm.dates.value.length < 2){
+				viewDate = '0' + frm.dates.value;
+			}
+			
+			var viewHour = frm.start_time.value.substr(0,2);
+			var viewMinute = frm.start_time.value.substr(3,2);
+			
+			veiwDay = viewYear + '-' + viewMonth + '-' + viewDate + ' ' + viewHour + ":" + viewMinute;
+
+			var reservationNow = new Date();
+			var reservationYear = reservationNow.getFullYear();
+			var reservationMonth = reservationNow.getMonth()+1;
+			var reservationDate = reservationNow.getDate();
+			var reservationHour = reservationNow.getHours();
+			var reservationMinute = reservationNow.getMinutes();
+			alert(reservationMonth);
+			if(reservationMonth < 10){
+				alert("222");
+				reservationMonth = '0' + reservationMonth;
+			}
+			alert(reservationDate);
+			if(reservationDate < 10){
+				reservationDate = '0' + reservationDate;
+			}
+			
+			reservationDay = reservationYear + '-' + reservationMonth + '-' + reservationDate + ' ' + reservationHour + ":" + reservationMinute;
+			
+			var memberId = '${member_id}';
 			var payMethod = $("#payMethod").val();
 			var reservationCode = $("#reservationCode").val();
 			var movieName = $("#movieName").val();
@@ -1014,7 +1055,35 @@
 			var tel = $("#tel").val();
 			var addr = $("#address").val();
 			var post = $("#post").val();
-			alert(payMethod);
+			var seatAll = "";
+			for(var i = 1; i <= 8; i++){
+				if($("#seat"+i).val() != ""){
+					seatAll += $("#seat"+i).val()
+					if($("#seat"+(i+1)).val() != "")
+					seatAll	+= ', ';
+				}
+			}			
+
+			//여기
+			$.ajax({
+				type:'get',
+				url:'/ticket/reservation/' + reservationCode,
+				headers: {
+					"Content-Type" : "application/json",
+				},
+				dataType:'json',
+				data : {"memberId":memberId, "movieId":movieId, "theaterId":theaterId, "plexNumber":plexNum, "startTime":veiwDay,
+						"ticketCnt":totalSeat, "seat":seatAll, "pay":pay, "payMethod":payMethod, "reservationDate":reservationDay},
+				success : function(result){
+					
+				}
+			});		
+			
+			
+			
+			
+			var IMP = window.IMP;
+			IMP.init('iamport');
 			
 			IMP.request_pay({
 				//이니시스만 됨
@@ -1095,8 +1164,8 @@
 				seat7 = frm.seat7.value;
 				seat8 = frm.seat8.value;
 				
-				reservationCodeGenerater();
-				payGenerater();
+				reservationCodeGenerator();
+				payGenerator();
 				
 				$("#reservation1").hide();
 				$("#reservation2").hide();
@@ -1111,7 +1180,7 @@
 			
 		}
 		
-		function reservationCodeGenerater() {
+		function reservationCodeGenerator() {
 			var codeYear = frm.years.value;
 			var codeMonth = frm.months.value;
 			var codeDate = frm.dates.value;
@@ -1135,7 +1204,7 @@
 
 		}
 		
-		function payGenerater() {
+		function payGenerator() {
 			
 			var economy = 0;
 			var standard = 0;
@@ -1187,7 +1256,7 @@
 				frm.dates.value = '0' + frm.dates.value;
 			}
 			
-			var startTime = frm.years.value +'-' + frm.months.value + '-' + frm.dates.value + ' ' + frm.start_time.value;
+			startTime = frm.years.value +'-' + frm.months.value + '-' + frm.dates.value + ' ' + frm.start_time.value;
 			
 			$.ajax({
 				type:'get',
@@ -1508,11 +1577,11 @@
 				frm.dates.value = '0' + frm.dates.value;
 			}
 			
-			var startTime = frm.years.value +'-' + frm.months.value + '-' + frm.dates.value + ' ' + frm.start_time.value;
+			var startDay = frm.years.value +'-' + frm.months.value + '-' + frm.dates.value + ' ' + frm.start_time.value;
 
 			$.ajax({
 				type:'get',
-				url:'/ticket/plex/' + plexNum + '/' + startTime,
+				url:'/ticket/plex/' + plexNum + '/' + startDay,
 				headers: {
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "GET",

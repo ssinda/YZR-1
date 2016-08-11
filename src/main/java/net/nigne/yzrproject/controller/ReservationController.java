@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.PlexVO;
+import net.nigne.yzrproject.domain.ReservationVO;
 import net.nigne.yzrproject.domain.SeatVO;
 import net.nigne.yzrproject.domain.TempLocal;
 import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
 import net.nigne.yzrproject.service.MovieService;
 import net.nigne.yzrproject.service.PlexService;
+import net.nigne.yzrproject.service.ReservationService;
 import net.nigne.yzrproject.service.SeatService;
 import net.nigne.yzrproject.service.TheaterService;
 import net.nigne.yzrproject.service.TimetableService;
@@ -51,6 +53,9 @@ public class ReservationController {
 	
 	@Autowired
 	private SeatService seatService;
+	
+	@Autowired
+	private ReservationService reservationService;
 
 	/** 
 	* @Method Name : home  
@@ -271,6 +276,54 @@ public class ReservationController {
 		}
 		
 		return entity;
+	}
+	
+	@RequestMapping(value = "/ticket/reservation/{reservationCode}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> ReservationCode(
+			@PathVariable("reservationCode") String reservationCode,
+			@RequestParam(value="memberId",required=false) String memberId,
+			@RequestParam(value="movieId",required=false) String movieId,
+			@RequestParam(value="theaterId",required=false) String theaterId,
+			@RequestParam(value="plexNumber",required=false) String plexNumber,
+			@RequestParam(value="startTime",required=false) String startTime,
+			@RequestParam(value="ticketCnt",required=false) String ticketCnt,
+			@RequestParam(value="seat",required=false) String seat,
+			@RequestParam(value="pay",required=false) String pay,
+			@RequestParam(value="payMethod",required=false) String payMethod,
+			@RequestParam(value="reservationDate",required=false) String reservationDate
+			) {
+
+		ResponseEntity<Map<String, Object>> entity = null;
+		System.out.println("ajkdfhakjvnkljzhfkjahdfkjahklfhadlkfalkjdalkfjalkfj");
+		int ticketCntInt = Integer.parseInt(ticketCnt);
+		int payInt = Integer.parseInt(pay);
+
+		try{
+			
+			ReservationVO vo = new ReservationVO();
+			vo.setReservation_code(reservationCode);
+			vo.setMember_id(memberId);
+			vo.setMovie_id(movieId);
+			vo.setTheater_id(theaterId);
+			vo.setPlex_number(plexNumber);
+			vo.setStart_time(startTime);
+			vo.setTicket_cnt(ticketCntInt);
+			vo.setView_seat(seat);
+			vo.setPay(payInt);
+			vo.setPay_method(payMethod);
+			vo.setReservation_date(reservationDate);
+			
+			reservationService.reservationPersist(vo);
+
+			//브라우저로 전송한다
+			entity = new ResponseEntity<>(HttpStatus.OK);
+			
+		} catch(Exception e){
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+		
 	}
 
 }
