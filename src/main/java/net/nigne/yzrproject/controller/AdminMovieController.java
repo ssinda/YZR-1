@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.GenreVO;
+import net.nigne.yzrproject.domain.GpaVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.PageMaker;
 import net.nigne.yzrproject.service.AdminMovieService;
@@ -51,7 +52,6 @@ public class AdminMovieController {
 		}
 		return entity;
 	}
-
 	@RequestMapping(value = "/admin/movie/{page}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> movieList(@PathVariable("page") Integer page, @RequestParam("keyword") String keyword,
 															@RequestParam("search") String search) {
@@ -111,15 +111,44 @@ public class AdminMovieController {
 		vo.setSite(site);
 		vo.setStory(story);
 		vo.setPoster(fileName);
+		vo.setStatus("schedule");
 		
 		GenreVO gvo=new GenreVO();
 		gvo.setMovie_id(movie_id);
 		gvo.setMovie_genre(movie_genre);
 		
-		service.persist(vo, gvo);
+		GpaVO gpavo=new GpaVO();
+		gpavo.setMovie_id(movie_id);
+		gpavo.setActing(0);
+		gpavo.setAvg(0);
+		gpavo.setBeauty(0);
+		gpavo.setDirection(0);
+		gpavo.setFemale(0);
+		gpavo.setForties(0);
+		gpavo.setMale(0);
+		gpavo.setOst(0);
+		gpavo.setStory(0);
+		gpavo.setTeenager(0);
+		gpavo.setThirties(0);
+		gpavo.setTwenties(0);
+		
+		service.persist(vo, gvo, gpavo);
 		
 		ModelAndView view=new ModelAndView();
 		view.setViewName("admin/movie");
 		return view;
+	}
+	@RequestMapping(value = "/admin/movie/{movie_id}/{status}", method = RequestMethod.PUT)
+	public ResponseEntity<String> statusMovie(@PathVariable("movie_id") String movie_id, @PathVariable("status") String status) throws Exception{
+
+		ResponseEntity<String> entity = null;
+		
+		try{
+			service.statusMovie(movie_id, status);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e){
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
 }

@@ -20,7 +20,7 @@ th{
 	background-color: ivory;
 }
 </style>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<div>
 		<label style="font-size: 15pt;">단체/대관 문의</label><br>
 		개인이나 단체를 위한 대관서비스로 YZR의 넓고 쾌적한 극장에서 즐거운 추억을 만드실 수 있습니다.<br><br><br>
@@ -66,7 +66,7 @@ th{
 				</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th style="vertical-align: top; padding-top: 20px;">내용</th>
 				<td colspan="3">
 					<textarea id="rent_content" name="rent_content" rows="5" cols="100"></textarea>
 				</td>

@@ -51,10 +51,11 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		
 		dao.persist(vo);
 	}
-	@Transactional(readOnly=true)
+	@Transactional(rollbackFor={Exception.class})
 	@Override
 	public NoticeVO getNoticeDetail(int no) {
 		// TODO Auto-generated method stub
+		dao.updateView_cnt(no);
 		return dao.getNoticeDetail(no);
 	}
 	@Transactional(rollbackFor={Exception.class})
@@ -63,5 +64,10 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
 		// TODO Auto-generated method stub
 		dao.updateNotice(vo);
 	}
-
+	@Transactional(rollbackFor={Exception.class})
+	@Override
+	public void updateView_cnt(int no) {
+		// TODO Auto-generated method stub
+		dao.updateView_cnt(no);
+	}
 }

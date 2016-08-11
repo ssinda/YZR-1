@@ -38,10 +38,11 @@ public class SupportNoticeServiceImpl implements SupportNoticeService {
 		// TODO Auto-generated method stub
 		return dao.getNoticeSearchCount(keyword, search);
 	}
-	@Transactional(readOnly=true)
+	@Transactional(rollbackFor={Exception.class})
 	@Override
 	public NoticeVO getNoticeDetail(int no) {
 		// TODO Auto-generated method stub
+		dao.updateView_cnt(no);
 		return dao.getNoticeDetail(no);
 	}
 }

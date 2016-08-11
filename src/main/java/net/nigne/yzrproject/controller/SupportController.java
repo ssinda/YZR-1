@@ -22,11 +22,5 @@ public class SupportController {
 	
 	@Autowired
 	private SupportNoticeService noticeService;
-	
-	@RequestMapping(value = "/support/faq", method = RequestMethod.GET)
-	public ModelAndView supportFaqPage() throws Exception {
-		ModelAndView view=new ModelAndView();
-		view.setViewName("support/faq");
-		return view;
-	}
+
 }

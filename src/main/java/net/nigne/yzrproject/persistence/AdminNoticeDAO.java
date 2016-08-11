@@ -13,5 +13,6 @@ public interface AdminNoticeDAO {
 	public Long getNoticeSearchCount(String keyword, String search);
 	public NoticeVO getNoticeDetail(int no);
 	public void updateNotice(NoticeVO vo);
+	public void updateView_cnt(int no);
 
 }

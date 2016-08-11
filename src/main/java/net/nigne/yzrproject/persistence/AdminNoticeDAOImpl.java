@@ -42,7 +42,7 @@ public class AdminNoticeDAOImpl implements AdminNoticeDAO {
 		CriteriaQuery<NoticeVO> cq=cb.createQuery(NoticeVO.class);
 		Root<NoticeVO> root = cq.from(NoticeVO.class);
 		cq.select(root);
-		cq.where(cb.equal(root.get(keyword), search));
+		cq.where(cb.like(root.get(keyword),"%" + search + "%"));
 		cq.orderBy(cb.desc(root.get("no")));
 		try{
 			TypedQuery<NoticeVO> tq = entityManager.createQuery(cq).setFirstResult(cri.getStartPage()).setMaxResults(cri.getArticlePerPage());
@@ -77,7 +77,7 @@ public class AdminNoticeDAOImpl implements AdminNoticeDAO {
 		CriteriaQuery<Long> cq=cb.createQuery(Long.class);
 		Root<NoticeVO> root = cq.from(NoticeVO.class);
 		cq.select(cb.count(root));
-		cq.where(cb.equal(root.get(keyword), search));
+		cq.where(cb.like(root.get(keyword),"%" + search + "%"));
 		try{
 			TypedQuery<Long> tq = entityManager.createQuery(cq);
 			noticeSearchTotal=tq.getSingleResult();
@@ -122,5 +122,12 @@ public class AdminNoticeDAOImpl implements AdminNoticeDAO {
 		mergevo.setNotice_category(vo.getNotice_category());
 		mergevo.setNotice_title(vo.getNotice_title());
 		mergevo.setNotice_content(vo.getNotice_content());
+	}
+	@Override
+	public void updateView_cnt(int no) {
+		// TODO Auto-generated method stub
+		NoticeVO findvo=entityManager.find(NoticeVO.class, no);
+		NoticeVO mergevo=entityManager.merge(findvo);
+		mergevo.setNotice_view_cnt(findvo.getNotice_view_cnt() + 1);
 	}
 }
