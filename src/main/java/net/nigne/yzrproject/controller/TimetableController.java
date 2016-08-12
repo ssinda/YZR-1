@@ -36,15 +36,12 @@ public class TimetableController {
 	private TimetableService tt_service;
 	
 	@RequestMapping(value = "/timetable", method = RequestMethod.GET)
-	public String timetable(HttpSession session) throws Exception {
-		
-		session.setAttribute("menu", "TIMETABLE");
-		
 	public String timetable(Model model, HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
 		String member_id = (String)session.getAttribute("member_id");
 		List<TheaterVO> like_th = tt_service.getLike_theater(member_id);
 		model.addAttribute("like_th", like_th);
+		session.setAttribute("menu", "TIMETABLE");
 		return "timetable";
 	}
 	
