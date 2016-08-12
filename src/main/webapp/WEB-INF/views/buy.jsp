@@ -63,13 +63,14 @@
 
 <script>
 	function store(){
-		location.href = "/culture_shop"
+		location.href = "/store"
 	}
 	
 	function buy(){
 		var frm = document.getElementById("frm");
-		alert(product_name + " 을 구매하였습니다")
+		alert(product_name.value + " 을 구매하였습니다")
 		frm.submit();
 	}
 </script>
+<% session.setAttribute("menu", null);%>
 <%@include file="./include/footer.jsp" %>

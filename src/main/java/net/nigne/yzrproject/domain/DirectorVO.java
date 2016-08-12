@@ -35,10 +35,12 @@ public class DirectorVO {
 	@Column(name="director_company")
 	String director_company;
 	
-	public DirectorVO(String director_name, String director_age, String director_photo){
+	public DirectorVO(String director_name, String director_age, String director_photo, String director_debut, String director_company){
 		this.director_name = director_name;
 		this.director_age = director_age;
 		this.director_photo = director_photo;
+		this.director_debut = director_debut;
+		this.director_company = director_company;
 	}
 	
 	public DirectorVO(){

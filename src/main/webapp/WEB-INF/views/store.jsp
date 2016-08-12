@@ -11,7 +11,7 @@
 			<div style="border-top:1px solid #000; border-bottom:1px solid #000; width:475px; height:5px; float:left; margin-top:22px;"></div>
 		</h2>
 		
-		<form id="frm" name="frm" action="/culture_shop/buy" method="post">
+		<form id="frm" name="frm" action="/store/buy" method="post">
 			<input type="hidden" id="menu_name" name="menu_name" value="" />
 			<input type="hidden" id="menu_price" name="menu_price" value="" />
 			<input type="hidden" id="menu_img" name="menu_img" value="" />
@@ -34,7 +34,7 @@
 					<button class="btn btn-danger" style="margin-top:15px;" onclick="buy('더블치즈팝콘','6,000원','popcorn.png')">구매</button>
 				</div>
 				<span style="float:right; font-size:30px; margin-right:7px;">6,000 원</span>
-				<img src="/resources/images/product/popcorn.png" style="width:525px; height:503px; margin-top:5px;">
+				<img src="/resources/images/product/popcorn.png" style="width:525px; height:490px; margin-top:5px;">
 			</div>
 			<div class="product" style="width:530px; height:614px; float:left; margin-left:27px; margin-top:50px; border-radius: 20px; border:2px solid #FF7E7E;">
 				<div style="width:350px; float:left; margin-left:7px;">
@@ -95,5 +95,5 @@
 		location.href = "/login";
 	}
 </script>
-
+<% session.setAttribute("menu", null);%>
 <%@include file="./include/footer.jsp" %>

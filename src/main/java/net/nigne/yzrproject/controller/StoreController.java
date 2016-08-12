@@ -23,13 +23,13 @@ public class StoreController {
 	@Autowired
 	private PurchaseService service;
 
-	@RequestMapping(value = "/culture_shop", method = RequestMethod.GET)
-	public String store(Locale locale, Model model) throws Exception {
-		
-		return "culture_shop";
+	@RequestMapping(value = "/store", method = RequestMethod.GET)
+	public String store(HttpSession session) throws Exception {
+		session.setAttribute("menu", "EVENT&CULTURE");
+		return "store";
 	}
 	
-	@RequestMapping(value = "/culture_shop/buy", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/buy", method = RequestMethod.POST)
 	public String snackBar(HttpServletRequest request, Model model) throws Exception {
 	
 		String product_name = request.getParameter("menu_name");
@@ -58,7 +58,7 @@ public class StoreController {
 		vo.setMember_id(member_id);
 		service.payPersist(vo);
 		
-		return new ModelAndView("redirect:/culture_shop");
+		return new ModelAndView("redirect:/store");
 	}
 	
 }
