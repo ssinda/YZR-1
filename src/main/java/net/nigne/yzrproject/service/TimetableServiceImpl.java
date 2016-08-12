@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.PlexVO;
+import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
 import net.nigne.yzrproject.persistence.TimetableDAO;
 
@@ -41,6 +42,12 @@ public class TimetableServiceImpl implements TimetableService {
 	@Override
 	public List<PlexVO> getPlexInfo(String theater_id, String day) {
 		return dao.getPlexInfo(theater_id, day);
+	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public List<TheaterVO> getLike_theater(String member_id) {
+		return dao.getLike_theater(member_id);
 	}
 
 }

@@ -1,28 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%  %>
 <%@include file="./include/header.jsp" %>
 <div id="wrap_content" style="min-height: 100%; position: relative;">
 	<div id="content" style="padding-bottom: 150px; float: left; width:100%">
 		<div id="theater_table" style="border:2px solid gray; border-radius:20px; height:400px; background-color:#4B4B4B;">
 			<span style="font-weight:bold; color:white; font-size:30px; margin-top:35px; margin-left:110px; float:left;">자주가는 CGV</span>
-			<div style="float:left; margin-top:25px; margin-left:20px;">
-				<div id="th1" style="border:5px double white; width:130px; height:60px; float:left;">
-					<span></span>
-				</div>
-				<div id="th2" style="border:5px double white; width:130px; height:60px; float:left; margin-left:5px;">
-					<span></span>
-				</div>
-				<div id="th3" style="border:5px double white; width:130px; height:60px; float:left; margin-left:5px;">
-					<span></span>
-				</div>
-				<div id="th4" style="border:5px double white; width:130px; height:60px; float:left; margin-left:5px;">
-					<span></span>
-				</div>
-				<div id="th5" style="border:5px double white; width:130px; height:60px; float:left; margin-left:5px;">
-					<span></span>
-				</div>
+			<div id="like_th_place" style="float:left; margin-top:25px; margin-left:20px;">
+				<c:forEach items="${like_th}" var="like_th" begin="0" end="4" varStatus="i">
+					<div class="th_group" style="text-align:center; line-height:50px;">
+						<span class="th_name" style="color:white; font-weight:bold; font-size:20px;" value="${like_th.theater_id}">
+							${like_th.theater_name}
+						</span>
+					</div>
+				</c:forEach>
+				<c:if test="${fn:length(like_th) < 5}">
+					<c:forEach begin="0" end="${4-fn:length(like_th)}">
+						<div class="th_group">
+							<span style="color:white; font-weight:bold; font-size:20px;">
+							</span>
+						</div>
+					</c:forEach>
+				</c:if>
 			</div>
 			
 			<ul id="location" class="nav nav-tabs list-inline" style="clear:both; width:1140px; text-align:center; margin-top:20px; float:left;">
@@ -112,15 +113,26 @@
 	
 	function setTheater_name(theater_name, theater_id){
 		document.getElementById("theater_name").innerHTML = theater_name;
-		document.getElementById("theater_id").innerHTML = theater_id;
 		document.getElementById("theater_id").value = theater_id;
 		
+		viewDate();
+		$(".date_div").css("color", "black");
+		$("#0d").css("color", "red");
+		getTimetable(theater_id, $("#month0").val()+"-"+$("#day0").val());
+	}
+	
+	setTheater_name("CGV강남","T001");
+	
+	function setViewDate(){
 		var cal_date = "";
 		
 		for(var cd=0; cd<5; cd++){
 			cal_date += '<div id="'+cd+'d" class="date_div">'
 				+ '<div style="float:left;">'
 				+ '<span id="month'+cd+'" style="margin-top:8px; float:left;">'
+				+ '</span>'
+				+ '<span style="margin-top:8px; float:left;">'
+				+ '월'
 				+ '</span>'
 				+ '<br/>'
 				+ '<span id="dayoftheweek'+cd+'" style="margin-left:6px;">'
@@ -130,14 +142,14 @@
 				+ '</span>'
 				+ '</div>';
 		}
+		
 		document.getElementById("date_group").innerHTML = cal_date;
-
+		$("#0d").css("color", "red");
 	}
-	
-	setTheater_name("CGV강남","T001");
-	
+	setViewDate();
 	
 	$(document).ready(function(){
+		
 		for(var a=0; a<5; a++){
 			day = date.getDate();
 			month = date.getMonth() + 1;
@@ -145,11 +157,13 @@
 			if(month < 10){
 				month = "0" + month;
 			}
-			$("#month"+a).html(month+"월");
+			$("#month"+a).html(month);
+			$("#month"+a).val(month);
 			if(day < 10){
 				day = "0" + day;
 			}
 			$("#dayoftheweek"+a).html(getDay(dayOfWeek));
+			$("#dayoftheweek"+a).val(getDay(dayOfWeek));
 			
 			$("#day"+a).html(day);
 			$("#day"+a).val(day);
@@ -159,6 +173,26 @@
 			date.setDate(date.getDate()+1);
 		}
 	})
+	
+	function viewDate(){
+		
+		var nday = "";
+		var ndayoftheweek = "";
+		var nmonth = "";
+		
+		for(var a=0; a<5; a++){
+			nday = $("#day"+a).val();
+			ndayoftheweek = $("#dayoftheweek"+a).val();
+			nmonth = $("#month"+a).val();
+			
+			$("#day"+a).html(nday);
+			$("#day"+a).val(nday);
+			$("#dayoftheweek"+a).html(ndayoftheweek);
+			$("#dayoftheweek"+a).val(ndayoftheweek);
+			$("#month"+a).html(nmonth);
+			$("#month"+a).val(nmonth);
+		}
+	}
 	
 	function getDay(dayOfWeek){
 		var date = "";
@@ -180,10 +214,11 @@
 		return date;
 	}
 	
-	var cday = "";
-	var ti = document.getElementById("theater_id").value;
 	
 	$(".date_div").click(function(){
+		var cday = "";
+		var ti = document.getElementById("theater_id").value;
+		
 		$(".date_div").css("color","black");
 		$(this).css("color","red");
 		var temp = $(this).attr('id').substring(0, 1);
@@ -191,6 +226,13 @@
 			getTimetable(ti, cday);
 	})
 	
+	$(".th_name").click(function(){
+		var ti = $(this).attr("value");
+		var tn = $(this).text();
+		$(".th_name").css("color","white");
+		$(this).css("color","red");
+		setTheater_name(tn, ti);
+	})
 	
 	if(day<10){
 		getTimetable("T001", month+"-0"+day);
@@ -237,7 +279,7 @@
 				+ '<span id="movie_status'+a+'" style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">'
 				+ '</span>'
 				+ '<span>'
-				+ ' <span id="genre'+a+'"></span> / <span id="runtime'+a+'"></span> / <span id="open_date'+a+'"></span> 개봉'
+				+ '&nbsp <span id="genre'+a+'"></span> / <span id="runtime'+a+'"></span> / <span id="open_date'+a+'"></span> 개봉'
 				+ '</span>'
 				+ '<br/>'
 				+ '<i class="fa fa-caret-right" aria-hidden="true" style="margin-top:10px;">'
@@ -277,13 +319,13 @@
 			}
 			$("#time_table"+a).html(timetable);
 			for(var c=0; c < tt[a].length; c++){
-				var tempHour = parseInt(tt[a][c].start_time.substring(11,13)); 
+				var tempHour = tt[a][c].start_time.substring(11,13); 
 				
-				if(tempHour < 10){
+				if(tempHour > 06 && tempHour < 10){
 					$("#pt"+a+c).html(mor);
-				}else if(tempHour >= 10 && tempHour < 23){
+				}else if(tempHour >= 10 && tempHour < 24){
 					$("#pt"+a+c).html(nor);
-				}else if(tempHour >= 23 && tempHour <= 28){
+				}else if(tempHour == 24 || (tempHour >= 01 && tempHour <= 06)){
 					$("#pt"+a+c).html(night);
 				}
 			}
@@ -380,7 +422,17 @@
 </script>
 
 <style>
-	
+	#th1{
+		margin-left:0px;
+	}
+	.th_group{
+		border:5px double white; 
+		width:130px; 
+		height:60px; 
+		float:left; 
+		margin-left:5px;
+		cursor:pointer;
+	}
 	.time_li:FIRST-CHILD{
 		border-left:1px solid #BDBDBD;
 	}

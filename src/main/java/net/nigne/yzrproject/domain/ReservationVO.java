@@ -20,8 +20,8 @@ public class ReservationVO {
 	@Column(name="movie_id")
 	String movie_id;
 	
-	@Column(name="theater_name")
-	String theater_name;
+	@Column(name="theater_id")
+	String theater_id;
 	
 	@Column(name="plex_number")
 	String plex_number;
@@ -68,12 +68,12 @@ public class ReservationVO {
 		this.movie_id = movie_id;
 	}
 
-	public String getTheater_name() {
-		return theater_name;
+	public String gettheater_id() {
+		return theater_id;
 	}
 
-	public void setTheater_name(String theater_name) {
-		this.theater_name = theater_name;
+	public void settheater_id(String theater_id) {
+		this.theater_id = theater_id;
 	}
 
 	public String getPlex_number() {

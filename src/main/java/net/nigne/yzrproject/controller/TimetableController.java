@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,10 +36,11 @@ public class TimetableController {
 	private TimetableService tt_service;
 	
 	@RequestMapping(value = "/timetable", method = RequestMethod.GET)
-	public String timetable(Locale locale, Model model) throws Exception {
-		
-		
-		
+	public String timetable(Model model, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		String member_id = (String)session.getAttribute("member_id");
+		List<TheaterVO> like_th = tt_service.getLike_theater(member_id);
+		model.addAttribute("like_th", like_th);
 		return "timetable";
 	}
 	

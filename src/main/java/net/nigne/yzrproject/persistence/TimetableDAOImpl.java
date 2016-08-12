@@ -12,12 +12,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 import org.springframework.stereotype.Repository;
 
 import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.PlexVO;
+import net.nigne.yzrproject.domain.ReservationVO;
+import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
 
 @Repository
@@ -140,6 +143,29 @@ public class TimetableDAOImpl implements TimetableDAO {
 		}
 		
 		return plist;
+	}
+
+	@Override
+	public List<TheaterVO> getLike_theater(String member_id) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<TheaterVO> cq = cb.createQuery(TheaterVO.class);
+		Root<TheaterVO> root = cq.from(TheaterVO.class);
+		
+		Subquery<ReservationVO> subQuery = cq.subquery(ReservationVO.class);
+		Root<ReservationVO> subRoot = subQuery.from(ReservationVO.class);
+		
+		subQuery.select(subRoot.get("theater_id"));
+		subQuery.where(cb.equal(subRoot.get("member_id"), member_id));
+		
+		cq.multiselect(root.get("theater_id"), root.get("theater_name"));
+		cq.where(root.get("theater_id").in(subQuery));
+		cq.groupBy(root.get("theater_id"), root.get("theater_name"));
+		cq.orderBy(cb.desc(cb.countDistinct(root.get("theater_id"))));
+		
+		TypedQuery<TheaterVO> tq = entityManager.createQuery(cq);
+		List<TheaterVO> list = tq.getResultList();
+		
+		return list;
 	}
 	
 	
