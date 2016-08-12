@@ -144,36 +144,6 @@
         $('#notice').carousel('cycle');
     });
 
-	function setEventImg(list){
-		var result = "";
-		
-		for(var i=0; i<4; i++){
-			result += '<div style="float:left; margin-left:2.5px; margin-right:2.5px;">'
-			+ '<a href="">'
-			+ '<img src="' + list[i] + '" style="width:280px; height:280px;"/>'
-			+ '</a>'
-			+ '</div>';
-		}
-			document.getElementById("event_img").innerHTML = result;
-	}
-	
-	function getEventImg(category){
-		$.ajax({
-			type : 'get',
-			url : '/index/' + category,
-			headers : {
-			"Content-Type" : "application/json",
-			//"X-HTTP-Method-Override" : "GET",  ----  POST 이거나 GET인경우는 생략가능
-			},
-			dataType : 'json',
-			data : '',
-			success : function(list){
-				setEventImg(list);
-			}
-		});
-	}
-	
-	getEventImg(1);
 </script>
 			
 <style>
