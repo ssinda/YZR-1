@@ -78,18 +78,25 @@ function qna_read(no){
 getQnaList(1);
 function setQnaList(data){
 	var result = "<tr>";
-		$(data).each(function(){
-			result += "<td style='text-align: center;'>" 
-			+this.no
-			+"</td>"
-			+"<td  style='text-align: center;'>"
-			+this.qnatype
-			+"</td>"
-			+"<td>"
-			+"<a href='javascript:qna_read("+this.no+")'style='text-decoration:none;'>"+this.title+"</a>"
-			+"</td>"
-			+"</tr>"
-		});
+		if(data.length >0){
+			$(data).each(function(){
+				result += "<td style='text-align: center;'>" 
+				+this.no
+				+"</td>"
+				+"<td  style='text-align: center;'>"
+				+this.qnatype
+				+"</td>"
+				+"<td>"
+				+"<a href='javascript:qna_read("+this.no+")'style='text-decoration:none;'>"+this.title+"</a>"
+				+"</td>"
+				+"</tr>"
+			});
+		}else{
+			result+='<td colspan="3" style="text-align: center; font-size:20px;">'
+			+'문의 내역이 없습니다.'
+			+'</td>'
+			+'</tr>'
+		}
 	document.getElementById("qna_table").innerHTML = result;
 }
 

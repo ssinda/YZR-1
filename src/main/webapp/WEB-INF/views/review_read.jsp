@@ -94,20 +94,12 @@ hr.hrone, hr.hrtwo {
 			<div style="width: 100%;min-height:200px; margin-top: 20px;">
 				<div style="text-align: center;">	
 					<c:if test="${reviewvo.review_file != null }">
-<<<<<<< HEAD
-						<img style="width:700px;height: 800px;" src="/resources/images/review_photo/${reviewvo.review_file }">
-=======
 						<img style="width:700px;height: 1000px;" src="/resources/images/review/${reviewvo.review_file }">
->>>>>>> master
 						<br>
 					</c:if>		
 				</div>
 				<br>				
-<<<<<<< HEAD
-				<div style="margin-left: 40px; min-height: 200px; padding: 30px;">	
-=======
 				<div style="margin-left: 40px; padding: 50px;">	
->>>>>>> master
 					 ${reviewvo.review_content }	
 				</div>
 					
@@ -128,8 +120,8 @@ hr.hrone, hr.hrtwo {
 					<input type="hidden" id="review_no" name="review_no" value="${reviewvo.no }" />
 				</div>
 				<div class="reply_write_submit" id="1">
-					<button id="reply_submit" class="reply_submit btn btn-primary"
-						onclick="insertReply(${reviewvo.no})" style="margin-right: 0px;">댓글 등록</button>
+						<button id="reply_submit" class="reply_submit btn btn-primary"
+							onclick="insertReply(${reviewvo.no})" style="margin-right: 0px;">댓글 등록</button>
 				</div>
 			</div>
 				<hr class="hrone">
@@ -152,29 +144,32 @@ function insertReply(no) {
 	var user_id = $("#user_id").val();
 	var reply_content = $("#reply_content").val();
 	var reply_no = $("#review_no").val();
-		
-	$.ajax({
-		type : 'post',
-		url : ' /review/new/reply/'+no,
-		headers : {
-			"Content-Type" : "application/json",
-			"X-HTTP-Method-Override" : "POST"
-		},
-		data : JSON.stringify({
-			"user_id" : user_id,
-			"reply_content" : reply_content,
-			"reply_no" : reply_no,
-			"reply_reply" : reply_reply,
-			"review_no" : review_no
-		}),
-		dataType : 'text',
-		success : function(result) {
-			if (result == "SUCCESS") {
-				getReplyList();
-				$('#reply_content').val('');
+	if(login_id == null || login_id==""){	
+		location.href = "/login";
+	}else{
+		$.ajax({
+			type : 'post',
+			url : ' /review/new/reply/'+no,
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			data : JSON.stringify({
+				"user_id" : user_id,
+				"reply_content" : reply_content,
+				"reply_no" : reply_no,
+				"reply_reply" : reply_reply,
+				"review_no" : review_no
+			}),
+			dataType : 'text',
+			success : function(result) {
+				if (result == "SUCCESS") {
+					getReplyList();
+					$('#reply_content').val('');
+				}
 			}
-		}
-	});
+		});
+	}
 }
 
 function insertReply2(no) {
@@ -184,27 +179,31 @@ function insertReply2(no) {
 	var user_id2 = $("#user_id2").val();
 	var reply_content = $("#reply_content2").val();
 	var reply_no = $("#reply_no").val();
-	$.ajax({
-		type : 'post',
-		url : ' /review/new/reply_reply/'+no,
-		headers : {
-			"Content-Type" : "application/json",
-			"X-HTTP-Method-Override" : "POST"
-		},
-		data : JSON.stringify({
-			"user_id" : user_id2,
-			"reply_content" : reply_content,
-			"reply_no" : reply_no,
-			"reply_reply" : reply_reply2,
-			"review_no" : review_no
-		}),
-		dataType : 'text',
-		success : function(result) {
-			if (result == "SUCCESS") {
-				getReplyList();
+	if(login_id == null || login_id==""){	
+		location.href = "/login";
+	}else{
+		$.ajax({
+			type : 'post',
+			url : ' /review/new/reply_reply/'+no,
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			data : JSON.stringify({
+				"user_id" : user_id2,
+				"reply_content" : reply_content,
+				"reply_no" : reply_no,
+				"reply_reply" : reply_reply2,
+				"review_no" : review_no
+			}),
+			dataType : 'text',
+			success : function(result) {
+				if (result == "SUCCESS") {
+					getReplyList();
+				}
 			}
-		}
-	});
+		});
+	}
 }
 
 function delete_review(){
@@ -322,8 +321,11 @@ function setReplyList(data){
 				+ "<div class='div_re_uid' id='div_re_uid' name='div_re_uid'>"
 				+ "<input type='hidden' name='aa' value='"+reply_list.no+"'/>"
 				+ "<div style='margin-bottm: 5px; margin-left:20px; font-size:15px'>"
-				+"<b><span> 아이디 : "+ reply_list.user_id +"</span><span style=' margin-left:20px;'> 등록일  :"+ reply_list.reply_date+"</span></b></div>"
-				+"<button class='reply_write_submit_2 btn btn-info btn-xs' name='reply_write_submit_2' id='reply_write_submit_2' style='float: right; padding: 8px; margin-right:0px;'>"+"댓글"+"</button>";
+				+"<b><span> 아이디 : "+ reply_list.user_id +"</span><span style=' margin-left:20px;'> 등록일  :"+ reply_list.reply_date+"</span></b></div>";
+				if(login_id == null || login_id == ""){
+				}else{
+					result+="<button class='reply_write_submit_2 btn btn-info btn-xs' name='reply_write_submit_2' id='reply_write_submit_2' style='float: right; padding: 8px; margin-right:0px;'>"+"댓글"+"</button>";
+				};
 				if(login_id ==reply_list.user_id ){
 					result+="<button class='btn btn-info btn-xs' onclick='delete_reply("+ reply_list.no +")'; style='float: right; padding: 8px; margin-right:0px;' >"+"삭제"+"</button>"
 				};
@@ -422,7 +424,7 @@ $(document).on("click","div.div_re_uid button",function() {//동적으로 버튼
 			+ '<div class="reply_write_input">'
 			+ '<input type="hidden" id="reply_reply2" class="reply_reply2" name="reply_reply2" value="y"/>'
 			+ '<input type="hidden" id="reply_no" name="reply_no" value="'+a+'"/>'
-			+ '<input type="text" id="user_id2" name="user_id2" class="form-control col-lg-2" data-rule-required="true" value="${member_id}"  maxlength="10" style="width : 200px;" readonly="readonly" />'
+			+ '<input type="text" id="user_id2" name="user_id2" class="form-control col-lg-2" data-rule-required="true" value="${member_id}"  maxlength="10" style="width : 200px;" readonly="readonly background-color="white" />'
 			+ '<button id="reply_submit_2" class="reply_submit_2 btn btn-primary" onclick="insertReply2('+${ reviewvo.no }+')" style="margin-left:10px;">댓글 등록</button>'
 			+ '<textarea id="reply_content2" name="reply_content2" class="inputreply2 form-control col-lg-12" rows="4" style=""placeholder="내용을 입력하세요"></textarea>'
 			+ '<input type="hidden" id="review_no" name="review_no" value="' + ${ reviewvo.no } + '" />'

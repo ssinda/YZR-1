@@ -37,7 +37,7 @@
 		
 		<table class="table table-bordered">
 			<tr height="100px;">
-				<td width="50%">
+				<td width="50%" >
 					<div style="display: inline-block; height: 48px; width: 58px; margin-top: 15px; float: left; margin-left: 30px;">
 						<i class="fa fa-question-circle-o fa-4x" aria-hidden="true"></i>
 					</div>
@@ -55,7 +55,7 @@
 					<div style="display: inline-block; height: 48px; width: 58px; margin-top: 15px; float: left; margin-left: 30px;">
 						<i class="fa fa-commenting-o fa-4x"></i>
 					</div>
-					<div style="display: inline-block; height: 50px;float: left; margin-top:15px; margin-left: 10px;">
+					<div style="inline-block; height: 50px;float: left; margin-top:15px; margin-left: 10px;">
 						<font size="4px;">
 							<b>고객의 말씀 </b>
 							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;">바로가기</button><br/>
@@ -79,21 +79,28 @@ function lost_read(no){
 getLostList(1);
 function setLostList(data){
 	var result = "<tr>";
-		$(data).each(function(){
-			result += "<td style='text-align: center;'>" 
-			+this.no
-			+"</td>"
-			+"<td>"
-			+"<a href='javascript:lost_read("+this.no+")'style='text-decoration:none;'>"+this.lost_content+"</a>"
-			+"</td>"
-			+"<td  style='text-align: center;'>"
-			+this.lost_date
-			+"</td>"
-			+"<td  style='text-align: center;'>"
-			+this.complete
-			+"</td>"
-			+"</tr>"
-		});
+		if(data.length >0){
+			$(data).each(function(){
+				result += "<td style='text-align: center;'>" 
+				+this.no
+				+"</td>"
+				+"<td>"
+				+"<a href='javascript:lost_read("+this.no+")'style='text-decoration:none;'>"+this.lost_content+"</a>"
+				+"</td>"
+				+"<td  style='text-align: center;'>"
+				+this.lost_date
+				+"</td>"
+				+"<td  style='text-align: center;'>"
+				+this.complete
+				+"</td>"
+				+"</tr>"
+			});
+		}else{
+			result+='<td colspan="4" style="text-align: center; font-size:20px;">'
+			+'문의 내역이 없습니다.'
+			+'</td>'
+			+'</tr>'
+	}
 	document.getElementById("lost_table").innerHTML = result;
 }
 
