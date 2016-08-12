@@ -592,16 +592,17 @@
 		width: 100%;
 	}
 	
-	#discount_coupon, #discount_point {
-		width: 50%;
+	#discount_coupon{
+		width: 100%;
 		height: 300px;
 		float: left;
 		margin-top: 10px;
 		padding-left: 2.5%;
+		padding-right: 2.5%;
 		
 	}
 	
-	#discount_coupon>div>span, #discount_point>div>span {
+	#discount_coupon>div>span{
 		height: 30px;
 		color: #02283D;
 		font-size: 20px;
@@ -631,7 +632,7 @@
 	}
 	
 	#coupon_title2 {
-		width: 30%;
+		width: 40%;
 	}
 	
 		
@@ -854,21 +855,23 @@
 		<div id="discount_title" class="discount_title">CGV 할인쿠폰 <span>/</span> CJ ONE 포인트</div>
 		<div id="discount_content">
 			<div id="discount_coupon">
-				<div><span>●CGV 할인쿠폰</span><div><button>등록하기</button><button>전체 쿠폰</button></div></div>
+				<div><span>●CGV 할인쿠폰</span></div>
 					<div id="coupon_title1" class="coupon_title">사용가능 쿠폰</div><div id="coupon_title2" class="coupon_title">유효기간</div>
-				<div id="coupon_content">사용 가능한 CGV할인쿠폰이 없습니다.</div>
-			</div>
-			<div id="discount_point">
-				<div>
-					<span>●CJ ONE 포인트</span>
-					<div>
-						<ul id="point_ul">
-							<li>현재 보유 포인트: <span>0p</span></li>
-							<li><span>사용할 포인트:</span><span><input type="text" />p</span><span>모두사용<input type="checkbox"/></span></li>
-							<li>CJ ONE 포인트는 <span>1,000P</span> 이상부터 <span>10P</span>단위로 사용 가능합니다.</li>
-						</ul>
-					</div>
-				</div>
+						<c:choose>
+							<c:when test="${fn:length(couponList)>0 }">
+								<c:forEach items="${ couponList }" var="coupon_list">
+
+									<c:when test="${coupon_list.member_id == member_id && coupon_list.used == 'N'}">
+											<div>${coupon_list.coupon_code} / ${coupon_list.coupon_amount}% 할인쿠폰 </div>
+									</c:when>
+	
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<div id="coupon_content">사용 가능한 CGV할인쿠폰이 없습니다.</div>
+							</c:otherwise>
+						</c:choose>
+				
 			</div>
 		</div>
 		
@@ -986,6 +989,27 @@
 		var startTime = "";
 		var veiwDay = "";
 		var reservationDay = "";
+		var reservationFlag = true;
+		
+		function couponExist() {
+			
+			var memberId = '${member_id}';
+			alert(memberId);
+			
+			$.ajax({
+				type:'get',
+				url:'/ticket/coupon/'+ memberId,
+				headers: {
+					"Content-Type" : "application/json",
+				},
+				dataType:'json',
+				data : '',
+				success : function(result){
+					
+				}
+			});
+
+		}
 		
 		function backStep(){
 			$("#reservation1").show();
@@ -1009,6 +1033,119 @@
 		}
 		
 		function payment(){
+			
+			if(frm.months.value < 10 && frm.months.value.length < 2 ){
+				frm.months.value = '0' + frm.months.value;
+			}
+			
+			if(frm.dates.value < 10 && frm.dates.value.length < 2){
+				frm.dates.value = '0' + frm.dates.value;
+			}
+			
+			startTime = frm.years.value +'-' + frm.months.value + '-' + frm.dates.value + ' ' + frm.start_time.value;
+				
+			$.ajax({
+				type:'get',
+				url:'/ticket/seatIdentify/' + theaterId +'/' + plexNum + '/' + startTime,
+				headers: {
+					"Content-Type" : "application/json",
+				},
+				dataType:'json',
+				data : {"seat1":seat1, "seat2":seat2, "seat3":seat3, "seat4":seat4, "seat5":seat5, "seat6":seat6, "seat7":seat7, "seat8":seat8},
+				success : function(result){
+					paymentAction(result.l);
+				}
+			});
+
+			
+		}
+		
+		function paymentAction(reservationExist) {
+			
+			$(reservationExist).each(function() {
+	
+				if(this == 1) {
+					reservationFlag = false
+				}
+
+			});
+
+			
+			if(reservationFlag == true) {
+				
+				reservationSeat();
+				
+				var memberId = '${member_id}';
+				var payMethod = $("#payMethod").val();
+				var reservationCode = $("#reservationCode").val();
+				var movieName = $("#movieName").val();
+				var pay = parseInt($("#pay").val());
+				var email = $("#email").val();
+				var buyerName = $("#buyerName").val();
+				var tel = $("#tel").val();
+				var addr = $("#address").val();
+				var post = $("#post").val();
+				var seatAll = "";
+				for(var i = 1; i <= 8; i++){
+					if($("#seat"+i).val() != ""){
+						seatAll += $("#seat"+i).val()
+						if($("#seat"+(i+1)).val() != "")
+						seatAll	+= ', ';
+					}
+				}			
+
+				var IMP = window.IMP;
+				IMP.init('iamport');
+				
+				IMP.request_pay({
+					//이니시스만 됨
+					pg : 'inicis', // version 1.1.0부터 지원.
+																/*
+																	'kakao':카카오페이,
+																	'inicis':이니시스, 'html5_inicis':이니시스(웹표준결제),
+																	'nice':나이스,
+																	'jtnet':jtnet,
+																	'uplus':LG유플러스
+																
+																*/
+					 // 'card' : 신용카드 | 'trans' : 실시간계좌이체 | 'vbank' : 가상계좌 | 'phone' : 휴대폰소액결제
+					
+					merchant_uid : reservationCode,
+					name : movieName,
+					amount : pay,
+					buyer_email : email,
+					buyer_name : buyerName,
+					buyer_tel : tel,
+					buyer_addr : addr,
+					buyer_postcode : post,
+					app_scheme : 'iamporttest' //in app browser결제에서만 사용 
+				}, function(rsp) {
+					
+					if ( rsp.success ) {
+						
+						var msg = '결제가 완료되었습니다.';
+						msg += '상점 거래ID : ' + rsp.reservationCode;
+						msg += '결제 금액 : ' + rsp.pay;
+						reservationCodeInput();
+						
+					} else {
+						
+						var msg = '결제에 실패하였습니다.';
+						msg += '에러내용 : ' + rsp.error_msg;
+						reservationCancel();
+						
+					}
+					$('#responser').text(msg);
+					
+				});
+			}
+			
+			
+		}
+		
+		function reservationCodeInput() {
+			
+			var theaterName = frm.theater.value;
 			
 			var viewYear = frm.years.value;
 			var viewMonth = frm.months.value;
@@ -1075,57 +1212,11 @@
 				data : {"memberId":memberId, "movieId":movieId, "theaterId":theaterId, "plexNumber":plexNum, "startTime":veiwDay,
 						"ticketCnt":totalSeat, "seat":seatAll, "pay":pay, "payMethod":payMethod, "reservationDate":reservationDay},
 				success : function(result){
-					
+					alert("결제가 완료되었습니다.");
+					//location.href = "/ticket/" + theaterName
 				}
 			});		
-			
-			
-			
-			
-			var IMP = window.IMP;
-			IMP.init('iamport');
-			
-			IMP.request_pay({
-				//이니시스만 됨
-				pg : 'inicis', // version 1.1.0부터 지원.
-				/*
-					'kakao':카카오페이,
-					'inicis':이니시스, 'html5_inicis':이니시스(웹표준결제),
-					'nice':나이스,
-					'jtnet':jtnet,
-					'uplus':LG유플러스
-				*/
-				
-				pay_method : payMethod, // 'card' : 신용카드 | 'trans' : 실시간계좌이체 | 'vbank' : 가상계좌 | 'phone' : 휴대폰소액결제
-				
-				merchant_uid : reservationCode,
-				name : movieName,
-				amount : pay,
-				buyer_email : email,
-				buyer_name : buyerName,
-				buyer_tel : tel,
-				buyer_addr : addr,
-				buyer_postcode : post,
-				app_scheme : 'iamporttest' //in app browser결제에서만 사용 
-			}, function(rsp) {
-				
-				if ( rsp.success ) {
-					
-					var msg = '결제가 완료되었습니다.';
-					msg += '상점 거래ID : ' + rsp.reservationCode;
-					msg += '결제 금액 : ' + rsp.pay;
-					
-				} else {
-					
-					var msg = '결제에 실패하였습니다.';
-					msg += '에러내용 : ' + rsp.error_msg;
-					
-				}
-				$('#responser').text(msg);
-				
-			});
-			
-		};
+		}
 		
 		function nextStep(){
 			
@@ -1211,9 +1302,7 @@
 			var prime = 0;
 			var handicapped = 0;
 			var sweetbox = 0;
-			
-		
-		
+
 			for(var i = 1; i <= 8; i++){
 				
 				//alert('#'+($('#seat'+i).val()));
@@ -1242,7 +1331,6 @@
 			totalPrice = economy + standard + prime + handicapped + sweetbox - 1000*seatYouthCnt;
 			
 			$('#pay').val(totalPrice);
-			alert(totalPrice);
 			
 		}
 		
@@ -1267,12 +1355,37 @@
 				dataType:'json',
 				data : {"seat1":seat1, "seat2":seat2, "seat3":seat3, "seat4":seat4, "seat5":seat5, "seat6":seat6, "seat7":seat7, "seat8":seat8},
 				success : function(result){
-					alert(result);
-					alert(result.l);
-					alert(result.i);
 					setSeat(result.l, result.i);
 				}
 			});
+		}
+		
+		function reservationCancel() {
+
+			if(frm.months.value < 10 && frm.months.value.length < 2 ){
+				frm.months.value = '0' + frm.months.value;
+			}
+			
+			if(frm.dates.value < 10 && frm.dates.value.length < 2){
+				frm.dates.value = '0' + frm.dates.value;
+			}
+			
+			startTime = frm.years.value +'-' + frm.months.value + '-' + frm.dates.value + ' ' + frm.start_time.value;
+			alert(startTime);
+			
+			$.ajax({
+				type:'get',
+				url:'/ticket/cancel/' + theaterId +'/' + plexNum + '/' + startTime,
+				headers: {
+					"Content-Type" : "application/json",
+				},
+				dataType:'json',
+				data : {"seat1":seat1, "seat2":seat2, "seat3":seat3, "seat4":seat4, "seat5":seat5, "seat6":seat6, "seat7":seat7, "seat8":seat8},
+				success : function(result){
+					setSeat(result.l, result.i);
+				}
+			});
+			
 		}
 		
 		$(document).ready(function() {
@@ -1339,7 +1452,7 @@
 			}
 
 		}
-		
+
 		function interval(){
 			var interval = setInterval(function(){
 				if(checkMovie && checkTheater && checkDate){
@@ -2823,7 +2936,6 @@
 			if(selectFlag == '0') {
 				countSum = Number(nomalCount) + Number(youthCount) + Number(advantageCount);
 			} else if(selectFlag == '1' && countSum != totalSeat) {
-				alert("11");
 				countSum += Number(nomalCount);
 				selectFlag = 0;
 			}

@@ -93,13 +93,9 @@ public class SeatDAOImpl implements SeatDAO {
 		
 		try{
 			for(int i = 0; i < 8; i++) {
-				System.out.println("2");
 				if(seat[i] != ""){
-					System.out.println("333333333");
 					SeatIndex = seat[i].substring(0,1);
 					SeatNumber = Integer.parseInt(seat[i].substring(1));
-					System.out.println("-----------------------------------------" + SeatIndex);
-					System.out.println("-----------------------------------------" + SeatNumber);
 					mainQuery.select(mainQueryroot.get("no"));
 					mainQuery.where(cb.equal(mainQueryroot.get("plex_number"), plexNum),
 									cb.equal(mainQueryroot.get("theater_id"), theaterId),
@@ -118,6 +114,61 @@ public class SeatDAOImpl implements SeatDAO {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<String> getReservationExist(String theaterId, String plexNum, String seat1, String seat2, String seat3,
+			String seat4, String seat5, String seat6, String seat7, String seat8) {
+		// TODO Auto-generated method stub
+		String seat[] = new String[8];
+		seat[0] = seat1;
+		seat[1] = seat2;
+		seat[2] = seat3;
+		seat[3] = seat4;
+		seat[4] = seat5;
+		seat[5] = seat6;
+		seat[6] = seat7;
+		seat[7] = seat8;
+
+		String SeatIndex = "";
+		int SeatNumber = 0;
+		List<String> list = new ArrayList<String>();
+		
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> mainQuery = cb.createQuery(String.class);
+		Root<SeatVO> mainQueryroot = mainQuery.from(SeatVO.class);
+		
+		try{
+			for(int i = 0; i < 8; i++) {
+				if(seat[i] != ""){
+					SeatIndex = seat[i].substring(0,1);
+					SeatNumber = Integer.parseInt(seat[i].substring(1));
+					mainQuery.select(mainQueryroot.get("reservation_exist"));
+					mainQuery.where(cb.equal(mainQueryroot.get("plex_number"), plexNum),
+									cb.equal(mainQueryroot.get("theater_id"), theaterId),
+									cb.equal(mainQueryroot.get("seat_index"), SeatIndex),
+									cb.equal(mainQueryroot.get("seat_number"), SeatNumber));
+	
+					TypedQuery<String> tq = entityManager.createQuery(mainQuery);
+					//System.out.println("SingleResult = " + tq.getSingleResult());
+					list.add(tq.getSingleResult());
+
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public void reservationCancel(int SeatNo) {
+		// TODO Auto-generated method stub
+		SeatVO seatVO = entityManager.find(SeatVO.class, SeatNo);
+		
+		SeatVO mergeVO = entityManager.merge(seatVO);
+		mergeVO.setReservation_exist("0");
 	}
 
 }

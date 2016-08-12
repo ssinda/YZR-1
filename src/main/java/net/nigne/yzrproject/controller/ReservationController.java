@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.nigne.yzrproject.domain.CouponVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.PlexVO;
 import net.nigne.yzrproject.domain.ReservationVO;
@@ -23,6 +28,7 @@ import net.nigne.yzrproject.domain.SeatVO;
 import net.nigne.yzrproject.domain.TempLocal;
 import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
+import net.nigne.yzrproject.service.CouponService;
 import net.nigne.yzrproject.service.MovieService;
 import net.nigne.yzrproject.service.PlexService;
 import net.nigne.yzrproject.service.ReservationService;
@@ -56,6 +62,9 @@ public class ReservationController {
 	
 	@Autowired
 	private ReservationService reservationService;
+	
+	@Autowired
+	private CouponService couponService;
 
 	/** 
 	* @Method Name : home  
@@ -66,12 +75,18 @@ public class ReservationController {
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/ticket", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) throws Exception {
+	public String home(Locale locale, Model model, HttpServletRequest request) throws Exception {
+		
+		HttpSession session= request.getSession();
+		String memberId = (String)session.getAttribute("member_id");
+		System.out.println("111111111 = " + memberId);
 		
 		List<MovieVO> movieList = movieService.getMovieList("reservation_rate");
 		List<TheaterVO> theaterList = theaterService.getList("서울");
 		List<String> localList = theaterService.getLocal();
 		List<Long> localTheaterNum = theaterService.getLocalTheaterNum();
+		List<CouponVO> couponList = couponService.getCouponList(memberId);
+		
 		
 		
 		List<TempLocal> local = new ArrayList<>();
@@ -87,6 +102,7 @@ public class ReservationController {
 		model.addAttribute("movieList", movieList);
 		model.addAttribute("theaterList", theaterList);
 		model.addAttribute("localList", local);
+		model.addAttribute("couponList", couponList);
 						
 		return "ticket";
 	}
@@ -253,12 +269,55 @@ public class ReservationController {
 			List<Integer> getPrimary = seatService.getPrimary(theaterId, plexNum, seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8);
 			
 			int SeatNo = 0;
-			String SeatIndex = "";
-			int SeatNumber = 0;
 			
 			for(int i = 0; i < getPrimary.size(); i++){
 				SeatNo = getPrimary.get(i);
 				seatService.updateReservation(SeatNo);
+			}
+
+			List<SeatVO> list = seatService.getList(plexNum, startTime);
+			List<SeatVO> getIndex = seatService.getIndex(plexNum, startTime);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("l", list);
+			map.put("i", getIndex);
+			
+			entity = new ResponseEntity<>(map, HttpStatus.OK);
+			
+		} catch(Exception e){
+			
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/ticket/cancel/{theaterId}/{plexNum}/{startTime}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> SeatCancel(
+			@PathVariable("theaterId") String theaterId,
+			@PathVariable("plexNum") String plexNum,
+			@PathVariable("startTime") String startTime,
+			@RequestParam(value="seat1",required=false) String seat1,
+			@RequestParam(value="seat2",required=false) String seat2,
+			@RequestParam(value="seat3",required=false) String seat3,
+			@RequestParam(value="seat4",required=false) String seat4,
+			@RequestParam(value="seat5",required=false) String seat5,
+			@RequestParam(value="seat6",required=false) String seat6,
+			@RequestParam(value="seat7",required=false) String seat7,
+			@RequestParam(value="seat8",required=false) String seat8
+			) {
+
+		
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		try{
+			List<Integer> getPrimary = seatService.getPrimary(theaterId, plexNum, seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8);
+			
+			int SeatNo = 0;
+			
+			for(int i = 0; i < getPrimary.size(); i++){
+				SeatNo = getPrimary.get(i);
+				seatService.reservationCancel(SeatNo);
 			}
 
 			List<SeatVO> list = seatService.getList(plexNum, startTime);
@@ -294,7 +353,7 @@ public class ReservationController {
 			) {
 
 		ResponseEntity<Map<String, Object>> entity = null;
-		System.out.println("ajkdfhakjvnkljzhfkjahdfkjahklfhadlkfalkjdalkfjalkfj");
+
 		int ticketCntInt = Integer.parseInt(ticketCnt);
 		int payInt = Integer.parseInt(pay);
 
@@ -324,6 +383,63 @@ public class ReservationController {
 		
 		return entity;
 		
+	}
+	
+	@RequestMapping(value = "/ticket/seatIdentify/{theaterId}/{plexNum}/{startTime}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> SeatIdenfy(
+			@PathVariable("theaterId") String theaterId,
+			@PathVariable("plexNum") String plexNum,
+			@PathVariable("startTime") String startTime,
+			@RequestParam(value="seat1",required=false) String seat1,
+			@RequestParam(value="seat2",required=false) String seat2,
+			@RequestParam(value="seat3",required=false) String seat3,
+			@RequestParam(value="seat4",required=false) String seat4,
+			@RequestParam(value="seat5",required=false) String seat5,
+			@RequestParam(value="seat6",required=false) String seat6,
+			@RequestParam(value="seat7",required=false) String seat7,
+			@RequestParam(value="seat8",required=false) String seat8
+			) {
+
+		
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		try{
+			List<String> list = seatService.getReservationExist(theaterId, plexNum, seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("l", list);
+			
+			entity = new ResponseEntity<>(map, HttpStatus.OK);
+			
+		} catch(Exception e){
+			
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/ticket/coupon/{memberId}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> CouponPage(
+			@PathVariable("memberId") String memberId
+			) {
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		
+		try{
+			List<CouponVO>list = couponService.getCouponList(memberId);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("l", list);
+
+			//브라우저로 전송한다
+			entity = new ResponseEntity<>(map, HttpStatus.OK);
+			
+		} catch(Exception e){
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
 	}
 
 }
