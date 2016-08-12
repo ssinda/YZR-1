@@ -30,6 +30,9 @@ public class SeatVO {
 	@Column(name="reservation_exist")
 	String reservation_exist;
 
+	@Column(name="start_time")
+	String start_time;
+	
 	public int getNo() {
 		return no;
 	}
@@ -84,5 +87,13 @@ public class SeatVO {
 
 	public void setReservation_exist(String reservation_exist) {
 		this.reservation_exist = reservation_exist;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
 	}
 }
