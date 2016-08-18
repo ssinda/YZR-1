@@ -45,7 +45,7 @@
 					<div style="display: inline-block; height: 50px;float: left; margin-top:15px; margin-left: 10px;">
 						<font size="4px;">
 							<b>자주하시는 질문</b>
-							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;">바로가기</button><br/>
+							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;" onclick="faq()">바로가기</button><br/>
 						</font>
 						<font size="3px;">
 							고객님들께서 주로 하시는 질문에 대한 <br/> 답변을 한곳에 모아두었습니다.
@@ -71,6 +71,14 @@
 	</div>		
 </div>
 <script>
+var currentPage = 1;
+var startPage = 1; 
+var endPage = 1; 
+var totalPage; 
+
+function faq(){
+	location.href="/support/faq"
+}
 function rent_read(no){
 	location.href = "/user/rent/read/" + no;
 }
