@@ -27,7 +27,7 @@ public class TheaterDAOImpl implements TheaterDAO {
 		Root<TheaterVO> root = cq.from(TheaterVO.class);
 		
 		cq.where(cb.equal(root.get("theater_area"), location));
-		
+		cq.orderBy(cb.asc(root.get("theater_name")));
 		TypedQuery<TheaterVO> tq = entityManager.createQuery(cq);
 		List<TheaterVO> theater_list = tq.getResultList();
 		return theater_list;

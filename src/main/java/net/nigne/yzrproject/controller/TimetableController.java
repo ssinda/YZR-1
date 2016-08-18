@@ -34,7 +34,7 @@ public class TimetableController {
 	@RequestMapping(value = "/timetable", method = RequestMethod.GET)
 	public String timetable(HttpSession session) throws Exception {
 		
-		session.setAttribute("menu", "TIMETABLE");
+		session.setAttribute("menu", "RESERVATION");
 		
 		return "timetable";
 	}

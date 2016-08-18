@@ -104,7 +104,7 @@
 			<div id="movie" style="float:left; margin-top:20px; margin-left:20px;">
 				<div id="grade_circle" style="margin-top:3px; float:left; border:1px solid orange; border-radius:20px; width:25px; height:25px; text-align:center; padding-top:1px; background-color:orange; color:white;">15</div>
 				<span style="margin-left:20px; font-size:20px;">제임스 본</span>
-				<span style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">상영중</span>
+				<span style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px; padding: 3px;">상영중</span>
 				<span>장르 / 상영시간 / 2016-08-02 개봉</span>
 				<br/>
 				
