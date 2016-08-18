@@ -8,7 +8,6 @@
 		<%response.sendRedirect("/login");%>
 	</script>
 </c:if>
-<div class="content" style="margin-left: 250px;">
 <div class="content" style="margin-left: 120px; width: 890px;">
 	<div>
 		<h3>기프트콘 관리 </h3>
