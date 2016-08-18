@@ -32,5 +32,4 @@ public class TheaterDAOImpl implements TheaterDAO {
 		List<TheaterVO> theater_list = tq.getResultList();
 		return theater_list;
 	}
-
 }

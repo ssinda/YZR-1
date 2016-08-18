@@ -32,6 +32,17 @@ public class NoticeVO {
 	
 	@Column(name="notice_content")
 	String notice_content;
+	
+	@Column(name="notice_image")
+	String notice_image;
+
+	public String getNotice_image() {
+		return notice_image;
+	}
+
+	public void setNotice_image(String notice_image) {
+		this.notice_image = notice_image;
+	}
 
 	public int getNo() {
 		return no;

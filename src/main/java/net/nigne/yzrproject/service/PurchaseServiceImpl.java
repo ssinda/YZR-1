@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.nigne.yzrproject.domain.MemberVO;
 import net.nigne.yzrproject.domain.PurchaseVO;
 import net.nigne.yzrproject.persistence.PurchaseDAO;
 
@@ -19,6 +20,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public void payPersist(PurchaseVO vo) throws Exception{
 		dao.payPersist(vo);
+	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public MemberVO getUser_Info(String member_id) {
+		return dao.getUser_Info(member_id);
 	}
 
 }

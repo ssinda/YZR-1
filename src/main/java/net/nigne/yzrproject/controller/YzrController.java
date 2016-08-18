@@ -207,8 +207,10 @@ public class YzrController {
 		}
 		
 		List<NoticeVO> notice_list = notice_service.getNotice();
-		
 		model.addAttribute("notice", notice_list);
+		
+		List<NoticeVO> event_list = notice_service.getEvent();
+		model.addAttribute("event_list", event_list);
 		
 		return "index";
 	}
