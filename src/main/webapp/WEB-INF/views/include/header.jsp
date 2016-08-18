@@ -121,7 +121,7 @@ font {
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font
 								style="font-size: 15pt; font-weight: bold;">예매</font></a>
 							<ul class="dropdown-menu">
-								<li><a href="/timetable">빠른 예매</a></li>
+								<li><a href="/ticket">빠른 예매</a></li>
 								<li><a href="/timetable">상영시간표</a></li>
 							</ul>
 						</li>
