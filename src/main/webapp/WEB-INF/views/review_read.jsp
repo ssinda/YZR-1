@@ -94,7 +94,7 @@ hr.hrone, hr.hrtwo {
 			<div style="width: 100%;min-height:200px; margin-top: 20px;">
 				<div style="text-align: center;">	
 					<c:if test="${reviewvo.review_file != null }">
-						<img style="width:700px;height: 1000px;" src="/resources/images/review/${reviewvo.review_file }">
+						<img style="width:850px;height: 1000px;" src="/resources/images/review/${reviewvo.review_file }">
 						<br>
 					</c:if>		
 				</div>
@@ -105,8 +105,13 @@ hr.hrone, hr.hrtwo {
 					
 				<div id="listbtdiv" style="margin-right: 0px;" >
 					<button type="button" class="btn btn-danger" onclick="toList()">목록</button>
-					<button type="button" class="btn btn-danger" onclick="eidt_review()" >수정</button>
-					<button type="button" class="btn btn-danger" onclick="delete_review()">삭제</button>
+					<c:if test="${member_id == reviewvo.member_id }">
+						<button type="button" class="btn btn-danger" onclick="eidt_review()" >수정</button>
+						<button type="button" class="btn btn-danger" onclick="delete_review()">삭제</button>
+					</c:if>
+					<c:if  test="${member_id == 'admin'}">
+						<button type="button" class="btn btn-danger" onclick="delete_review()">삭제</button>
+					</c:if>
 				</div>
 			</div>
 			<hr class="hrone">
@@ -115,13 +120,19 @@ hr.hrone, hr.hrtwo {
 			<div id="reply_write_wrap" class="reply_write_wrap">
 				<div id="reply_write_input" class="reply_write_input">
 					<input type="hidden" id="reply_reply" class="reply_reply" name="reply_reply" value="n" /> 
-					<input type="text" id="user_id"	name="user_id" class="form-control" data-rule-required="true" value="${member_id}" maxlength="20" readonly="readonly" style="background-color: white;" />
-					<textarea id="reply_content" name="reply_content" class="form-control col-lg-12" rows="4" style="resize: none;"placeholder="내용을 입력하세요"></textarea>
+						<c:choose>	
+							<c:when test="${member_id == null || member_id == '' }">
+								<textarea id="reply_content" name="reply_content" class="form-control col-lg-12" rows="4" style="resize: none; background-color: white" placeholder="로그인하세요" readonly="readonly" ></textarea>
+								<button id="reply_submit" class="reply_submit btn btn-primary" onclick="login()" style="margin-right: 0px;">로그인</button>
+								
+							</c:when>
+							<c:when test="${member_id != null || member_id != '' }">
+								<input type="text" id="user_id"	name="user_id" class="form-control" data-rule-required="true" value="${member_id}" maxlength="20" readonly="readonly" style="background-color: white;" />
+								<textarea id="reply_content" name="reply_content" class="form-control col-lg-12" rows="4" style="resize: none;" placeholder="내용을 입력하세요"></textarea>
+								<button id="reply_submit" class="reply_submit btn btn-primary" onclick="insertReply(${reviewvo.no})" style="margin-right: 0px;">댓글 등록</button>
+							</c:when>	
+						</c:choose>	
 					<input type="hidden" id="review_no" name="review_no" value="${reviewvo.no }" />
-				</div>
-				<div class="reply_write_submit" id="1">
-						<button id="reply_submit" class="reply_submit btn btn-primary"
-							onclick="insertReply(${reviewvo.no})" style="margin-right: 0px;">댓글 등록</button>
 				</div>
 			</div>
 				<hr class="hrone">
@@ -131,6 +142,9 @@ hr.hrone, hr.hrtwo {
 			<div id="reply_page" style="margin-top:40px; text-align: center;"></div>
 		</div>
 <script type="text/javascript">
+function login(){
+	location.href = "/login";
+}
 var review_no = "${reviewvo.no}";
 var movie_id =  "${reviewvo.movie_id}";
 var review_title ="${reviewvo.review_title}";
@@ -207,7 +221,6 @@ function insertReply2(no) {
 }
 
 function delete_review(){
-	if(login_id == member_id){
 		$.ajax({
 			type : 'delete',
 			url : '/movie/review_delete/' + review_no ,
@@ -220,9 +233,6 @@ function delete_review(){
 				 delete_review_reply()
 			}
 		});
-	}else {
-		alert("아이디를 확인하세요");
-	}
 }
 
 function delete_reply(r_no){
@@ -319,16 +329,19 @@ function setReplyList(data){
 			if(reply_list.reply_reply == "n"){
 				result += "<div>"
 				+ "<div class='div_re_uid' id='div_re_uid' name='div_re_uid'>"
-				+ "<input type='hidden' name='aa' value='"+reply_list.no+"'/>"
+				
 				+ "<div style='margin-bottm: 5px; margin-left:20px; font-size:15px'>"
 				+"<b><span> 아이디 : "+ reply_list.user_id +"</span><span style=' margin-left:20px;'> 등록일  :"+ reply_list.reply_date+"</span></b></div>";
+				if(login_id ==reply_list.user_id || login_id == "admin"){
+					result+="<button class='btn btn-info btn-xs' onclick='delete_reply("+ reply_list.no +")'; style='float: right; padding: 8px; margin-right:0px; margin-left:3px;'>"+"삭제"+"</button>"
+				};
 				if(login_id == null || login_id == ""){
+					result+="";
 				}else{
-					result+="<button class='reply_write_submit_2 btn btn-info btn-xs' name='reply_write_submit_2' id='reply_write_submit_2' style='float: right; padding: 8px; margin-right:0px;'>"+"댓글"+"</button>";
+					result+= "<input type='hidden' name='aa' value='"+reply_list.no+"'/>"
+					+"<button class='reply_write_submit_2 btn btn-info btn-xs' name='reply_write_submit_2' id='reply_write_submit_2' style='float: right; padding: 8px; margin-right:0px;'>"+"댓글"+"</button>";
 				};
-				if(login_id ==reply_list.user_id ){
-					result+="<button class='btn btn-info btn-xs' onclick='delete_reply("+ reply_list.no +")'; style='float: right; padding: 8px; margin-right:0px;' >"+"삭제"+"</button>"
-				};
+
 				result+="<div><textarea disabled readonly='readonly' style='10px; padding: 2px; border: 0px;width: 840px; height: 70px; font-size:18px;"
 				+"resize: none; margin-top: 5px; margin-left: 20px; background-color: white'>" + reply_list.reply_content
 				+"</textarea></div>" 
@@ -346,7 +359,7 @@ function setReplyList(data){
 				+ "</div>"
 				+"<div style='margin-left:30px;'>"
 				+"<b><span style='margin-left:20px;'> 아이디 : "+ reply_reply_list.user_id +"</span><span style=' margin-left:20px;'> 등록일  :"+ reply_reply_list.reply_date+"</span></b></div>";
-				if(login_id == reply_reply_list.user_id ){
+				if(login_id == reply_reply_list.user_id || login_id == "admin" ){
 					result+= "<button class='btn btn-info btn-xs' onclick='delete_reply("+ reply_reply_list.no +")'; style='float: right; padding: 8px;'>"+"삭제"+"</button>"
 				};
 				result+="<div><textarea disabled readonly='readonly' style='padding: 2px; border: 0px;width: 840px; height: 70px; font-size:18px;"
@@ -414,12 +427,11 @@ $(document).on("click","div.div_re_uid button",function() {//동적으로 버튼
 	if ($(this).attr("name") == "reply_write_submit_2") {
 		//자기 부모의 tr을 알아낸다.
 		var parentElement = $(this).parent();
-		var a = $(this).prev().prev().val();
+		var a = $(this).prev().val();
 		var no =  ${ reviewvo.no };
 		//댓글달기 창을 없앤다.
 		$("#commentEditor").remove();
 			//부모의 하단에 댓글달기 창을 삽입
-		alert(a);
 		var commentEditor = '<div id="commentEditor" class="reply_write_wrap">'
 			+ '<div class="reply_write_input">'
 			+ '<input type="hidden" id="reply_reply2" class="reply_reply2" name="reply_reply2" value="y"/>'
@@ -428,7 +440,7 @@ $(document).on("click","div.div_re_uid button",function() {//동적으로 버튼
 			+ '<button id="reply_submit_2" class="reply_submit_2 btn btn-primary" onclick="insertReply2('+${ reviewvo.no }+')" style="margin-left:10px;">댓글 등록</button>'
 			+ '<textarea id="reply_content2" name="reply_content2" class="inputreply2 form-control col-lg-12" rows="4" style=""placeholder="내용을 입력하세요"></textarea>'
 			+ '<input type="hidden" id="review_no" name="review_no" value="' + ${ reviewvo.no } + '" />'
-			+'<br/><br/>'
+			+'<br/><br/>'	
 			+ '</div>' + '</form>' + '</div><br/><br/>';
 		parentElement.after(commentEditor);
 	}
