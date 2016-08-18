@@ -1,1125 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@include file="./include/header.jsp" %>
-<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.0.js"></script>
-<c:if test="${ member_id == null }">
-	<script>
-		<%response.sendRedirect("/login");%>
-	</script>
-</c:if>
-	<style>
-
-	.nonInput>div{
-		border:1px solid #000;
-		background-color: white;
-	}
-	
-	.content1 {
-		border-left:2px solid #999;
-		border-right:2px solid #999;
-		background-color: #F2F0E4;
-		padding-top: 15px;
-		float: left;
-		height: 420px;
-		overflow: scroll;
-	}
-	
-	#menu1{
-		width: 1140px;
-		height: 40px;
-	}
-	
-	#content1{
-		width: 1140px;
-		height: 420px;
-		clear: both;
-	}
-	
-	.menu1{
-		border-left:2px solid #999;
-		border-right:2px solid #999;
-		background-color: #404040;
-		color: rgba(255,255,255,0.75);
-		text-align: center;
-		font-size: 13pt;
-		padding: 5px;
-		float:left;
-		height: 40px;
-	}
-	
-	#menu1-1, #content1-1 {
-		width: 27%;
-	}
-	
-	#content1-1>div{
-		
-		clear:none;
-		margin-left:20px;
-		margin-top:15px;
-	}
-	
-	#menu1-2, #content1-2 {
-		width: 28%;
-	}
-	
-	#menu1-3, #content1-3 {
-		width: 19%;		
-	}
-	
-	#menu1-4, #content1-4 {
-		width: 26%;
-	}
-	
-	#title2-1 {
-		 color: #fff;
-		 font-weight: bolder;
-		 width: 400px;
-		 padding-left: 20px;
-	}
-	
-	#title2-2 {
-		 color: rgba(230,230,230,0.75);
-		 padding-left: 120px;
-		 font-size: 14pt;
-		 width: 400px;
-	}
-	
-	#title2-3 {
-		color: rgba(230,230,230,0.75);
-		font-weight: bolder;
-		text-align: right;
-		padding-right:20px;
-		width: 800px;
-	}
-	
-	.movie_menu{
-		float:left;
-		padding-right:7px;
-		padding-left:7px;
-		text-align: center;
-		cursor:pointer;
-	}
-	
-	.movie_second_menu{
-		float:left;
-		padding-right:8px;
-		padding-left:8px;
-		border-bottom:2px solid #999;
-		text-align: center;
-		width: 80px;
-		cursor:pointer;
-	}
-	
-	#movie_second_menu1{
-		border-bottom: 2px solid #000;
-		cursor:pointer;
-	}
-	
-	#theater_state{
-		margin-top:15px;
-		float:left;
-		text-align: right;
-		width:130px;
-	}
-	
-	#time{
-		cursor:pointer;
-	}
-	
-	#theater_state_num{
-		margin-top:15px;
-		margin-left:-20px;
-		float:left;
-		text-align: left;
-		width:20px;	
-	}
-	
-	ul#theater_state {
-		width: 50%;
-	}
-	
-	ul#theater_state>li {
-		
-		width: 100%;
-		margin-bottom: 3px;
-		padding: 8px;
-		
-		cursor:pointer;
-	}
-	
-	.theater_state {
-		background-color: #E6E4D9;
-	}
-	
-	.select_theater_state{
-		background-color: #F2F0E4;
-	}
-	
-	ul#theater_state_num>li>div {
-		background-color: rgba(166,166,166,0.2);
-		margin-bottom: 3px;
-		padding: 8px;
-		margin-left: -20px;
-		width:35px;
-		
-	}
-	
-	.theater_city{
-		margin-top:15px;
-		width: 50%;
-		float:left;
-		text-align: left;
-	}
-	
-	#theater_detail>div{
-		margin-bottom: 3px;
-		padding: 8px;
-		width: 100%;
-		
-	}
-	
-	.timetable_time{
-		border: 1px solid #999;
-		float: left;
-		margin-left: 15px;
-		margin-right: 3px;
-		margin-bottom: 5px;
-	}
-	
-	.timetable_seat{
-		color: #6B9900;
-		margin-right: 10px;
-		float: left;
-	}
-	
-	.calender{
-		height: 30px;
-		width: 80%;
-		padding-left: 30%;
-		margin: 0px auto;
-		text-align:center;
-		cursor:pointer;
-	}
-	
-	#movie_list{
-		cursor:pointer;
-	}
-	
-	#movie_list>div {
-		width: 240px;
-		margin: 0px auto;
-		margin-top: 15px;
-	 	float: none;
-	}
-	
-	#theater_detail{
-		width:100%;
-		cursor:pointer;
-	}
-	
-	#reset {
-		float:left;
-		padding-left:5px;
-	}
-	
-	#timetableBtn {
-		float:left;
-		padding-left:5px;
-	}
-	
-	.glyphicon{
-		clear: both;
-	}
-	
-	#favoriteCGV1 {
-		float:left;
-		border-top:2px solid #999;
-		border-bottom:2px solid #999;
-		width:120px;
-		margin-left:45px;
-		color: red; font-weight: bold;
-	}
-	
-	#favoriteCGV2 {
-		float:left;
-		border-top:2px solid #999;
-		border-bottom:2px solid #999;
-		width:120px;
-	}
-	
-	#info_box {
-		background-color: #1D1D1C;
-		width: 1140px;
-		height: 200px;
-		clear:both;
-		border: 1px solid #1D1D1C;
-	}
-	
-	#screen {
-		width: 600px;
-		height: 25px;
-		background-color: #bbb;
-		margin: 0px auto;
-		text-align: center;
-		font-size: 14pt;
-		font-weight: bold;
-		color: #555;
-	}
-	
-	
-
-	
-	
-	th{
-		background-color: rgba(0,0,0,0.9);
-		border: 1px solid gba(0,0,0,0.9);;
-		padding-top: 5px;
-		height: 40px;
-	}
-	
-	td{
-		background-color: #FFFFE6;
-		padding: 5px;
-		border: 2px solid #999;
-	}
-	
-	.seat_num{
-		margin-bottom:3px;
-		
-	}
-	
-	.seat_number{
-		float: left;
-		margin-left: 5px;
-	}
-	
-	.box{
-		float: left;
-		width: 18px;
-		height: 18px;
-		border: 1px solid #000;
-	}
-	
-	#seat_table>table ,#seat{
-		margin: 0px auto;
-	}
-	
-	.seat_header{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		background-color: #FFFFE6;
-		border-top: 2px solid #ddd;
-		border-bottom: 2px solid #ddd;
-		border-spacing: 0px;
-	}
-	
-	.seat_prime{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 2px solid #f00;
-		border-spacing: 0px;
-		cursor:pointer;
-	}
-	
-	.seat_standard{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 2px solid #477500;
-		cursor:pointer;
-	}
-	
-	.seat_economy{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 2px solid #FF4500;
-		cursor:pointer;
-	}
-	
-	.seat_sweetbox{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 2px solid #FF4500;
-		
-		cursor:pointer;
-	}
-	
-	.sweet_color {
-		background-color: #FF007F;
-	}
-	
-	.seat_handicapped{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 0px solid #FF4500;
-		background-color: #597812;
-		cursor:pointer;
-	}
-	
-	.seat_reservation{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;border: 2px0solid #FF4500;
-		
-		background-color: #C2C2C2;
-		cursor:pointer;
-	}
-	
-	.seat_clicked{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 2px solid #999;
-		background-color: #980000;
-	}
-	
-	.seat_over{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 2px solid #999;
-		background-color: #980000;
-	}
-	
-	.seat_empty{
-		width: 25px;
-		height: 25px;
-		font-size: 2pt;
-		text-align: center;
-		border: 0px solid #FF4500;
-		background-color: #FFFFE6;
-		
-	}
-	
-	.seat_count_nomal,.seat_count_youth,.seat_count_advantage{
-		border: 1px solid #000;
-		height: 20px;
-		width: 20px;
-		background-color: #333;
-		color: white;
-	}
-	
-	.seat_nomal,.seat_youth,.seat_advantage,.seat_title{
-		margin-right: 5px;
-		float:left;
-		text-align: center;
-	}
-	.seat_nomal,.seat_youth,.seat_advantage{
-		cursor: pointer;
-		border: 1px solid #000;
-		height: 20px;
-		width: 20px;
-	}
-	
-	.seat_title {
-		width: 80px;
-		height: 20px;
-		margin-left:10px;
-		text-align: left;
-		float:none;
-	}
-	
-	#prime {
-		width: 18px;
-		height: 18px;
-		border: 2px solid #f00;
-		float: left;
-	}
-	
-	#standard {
-		 width: 18px;
-		 height: 18px;
-		 border: 2px solid #477500;
-		 float: left;
-	}
-	
-	#economy {
-		 width: 18px;
-		 height: 18px;
-		 border: 2px solid #FF4500;
-		 float: left;
-	}
-	
-	#handicapped {
-		width: 18px;
-		height: 18px;
-		border: 0px solid #FF4500;
-		background-color: #597812;
-		float: left;
-	}
-	
-	#sweetbox {
-		width: 18px;
-		height: 18px;
-		border: 0px solid #999;
-		background-color: #FF007F;
-		float: left;
-	}
-	
-	#reservationed {
-		width: 18px;
-		height: 18px;
-		background-color: #C2C2C2;
-		float: left;
-	}
-	
-	#selected {
-		width: 18px;
-		height: 18px;
-		border: 2px solid #999;
-		background-color: #980000;
-		float: left;
-	}
-	
-	#backArea, #backArea2 {
-		float: left;
-	}
-	
-	#backBtn, #backBtn2 {
-		 margin-top: 50px;
-		 margin-left: 50px;
-		 background-color: #999;
-		 color: #fff;
-	}
-	
-	#nextBtn1, #nextBtn2, #nextBtn3 {
-	 	margin-top: 50px;
-		margin-right: 50px;
-		background-color: #999;
-		color: #fff;
-	 }
-	
-	#backBtn > span, #nextBtn1 > span, #nextBtn2 > span, #backBtn2 > span, #nextBtn3 > span {
-		font-size: 35pt;
-		color: #fff;
-		font-weight: bolder;
-	}
-	
-	#selected_movie {
-		color: #fff;
-		font-weight: bold;
-		font-size: 30pt;
-		margin-top: 80px;
-		float: left;
-		margin-right: 15px;
-		padding-right: 20px;
-		margin-left: 50px;
-		border-right: 2px solid #fff;
-	}
-	
-	#selected_theater	{
-		 color: #fff;
-		 font-weight: bold;
-		 font-size: 30pt;
-		 margin-top: 80px;
-		 float: left;
-		 margin-right: 15px;
-		 padding-right: 20px;
-		 border-right: 2px solid #fff;
-	}
-	
-	#etc {
-		 color: #fff;
-		 font-weight: bold;
-		 font-size: 30pt;
-		 margin-top: 80px;
-		 float: left;
-	}
-	
-	#nextArea1, #nextArea2, #nextArea3 {
-		float: right;
-	}
-	
-	.discount_method, .payment {
-		font-size: 30px;
-		height: 50px;
-		background-color: #333; 
-		color: #E0E0E0; 
-		font-weight: bold;
-		float: left;
-		padding-top: 5px;
-	}
-	
-	#discount_method1, #payment_method1 {
-		width: 30%;
-		padding-left: 20px;
-	}
-	
-	#discount_method2, #payment_method2 {
-		width: 40%;
-		text-align: center;
-	}
-	
-	#discount_method3, #payment_method3 {
-		width: 30%;
-		text-align: right;
-		padding-right: 20px;
-	}
-	
-	#discount_method3 {
-		cursor: pointer;
-	}
-	
-	#discount_title {
-		background-color: #DEDED6;
-		color: #333;
-		clear: both;
-		width: 100%;
-		height: 70px;
-		font-size: 30px;
-		padding-top: 15px;
-		padding-left: 15px;
-	}
-	
-	#discount_content {
-		background-color: #FEF0E4;
-		height: 300px;
-		width: 100%;
-	}
-	
-	#payment_content {
-		clear: both;
-		padding-top: 30px;
-		background-color: #FEF0E4;
-		height: 500px;
-		width: 100%;
-	}
-	
-	#discount_coupon{
-		width: 100%;
-		float: left;
-		margin-top: 10px;
-		padding-left: 2.5%;
-		padding-right: 2.5%;
-		
-	}
-	
-	#discount_coupon>div>span{
-		height: 30px;
-		color: #02283D;
-		font-size: 20px;
-		font-weight: bold;
-	}
-	
-	#discount_coupon>div>div {
-		float: right;
-		margin-right: 10%;
-	}
-	
-	#discount_coupon>div>div>button {
-		margin-left: 5px;
-	}
-	
-	
-	
-	.coupon_title {
-		border-bottom: 1px solid #DEDED6;
-		float: left;
-		margin-top: 20px;
-	}
-	
-	#coupon_title1 {
-		width: 60%;
-		
-	}
-	
-	#coupon_title2 {
-		width: 40%;
-	}
-	
-		
-	#coupon_content {
-		clear: both;
-		padding-top: 20px;
-	}
-	
-	#point_ul>li {
-		clear: both;
-	}
-	
-	.select {
-		background-color: #333;
-		color: white;
-	}
-	
-	.movie_section {
-		margin-left : -15px;
-		width : 100%;
-		height : 35px;
-		margin-bottom : 5px;
-		
-	}
-	
-	.Saturday {
-		color: blue;
-	}
-	
-	.movie_section>span {
-		height:100%;
-		width: 180px;
-		font-size: 12pt;
-		overflow: hidden;
-		padding-top:2px;
-		line-height: 35px;
-	}
-	
-	.Sunday {
-		color: red;
-	}
-	
-	label {
-		float:left;
-		margin-right: 5px;
-	}
-	
-	.couponList>input {
-		float:left;
-	}
-	
-	.couponList {
-		clear:both;
-	}
-	
-	.couponList>div {
-		width:300px;
-	}
-	
-	#button_group {
-		float:right;
-	}
-	
-	.grade {
-		float:left;
-		border-radius:30px;
-		width:25px;
-		height:25px;
-		text-align:center;
-		padding-top:1px;
-		color:white;
-		font-size:10pt;
-		margin-top: 5px;
-	}
-	
-	.grade전체 {
-		font-size:7pt;
-		border:1px solid green;
-		background-color: green;
-		padding-top:5px;
-	}
-	
-	.grade청불 {
-		font-size:7pt;
-		border:1px solid red;
-		background-color: red;
-		padding-top:5px;
-	}
-	
-	.grade12 {
-		border:1px solid blue;
-		background-color: blue;
-	}
-	
-	.grade15 {
-		border:1px solid orange;
-		background-color: orange;
-	}
-	
-	.sideMenu{
-		width: 30%;
-		float:right;
-		padding-left: 50px;
-	}
-	
-	#demo {
-		float:left;
-		width: 60%;
-	}
-	
-	.payTitle {
-		background-color: black;
-		color: white;
-		font-size: 10pt;
-		font-weight: bold;
-		border-top-left-radius: 15px;
-		border-top-right-radius: 15px;
-		width: 200px;
-		text-align: center;
-	}
-	
-	.payContent {
-		background-color: white;
-		border-radius: 15px;
-		text-align: center;
-		height: 100%;
-	}
-	
-	.sideGroup {
-		border: 1px solid #000;
-		border-radius: 15px;
-		height: 50px;
-		width: 200px;
-		margin-bottom: 25px;
-	}
-	
-	#pay {
-		width: 180px;
-		margin: 0px auto;
-	}
-	
-	#reservation1, #reservation2, #reservation {
-		width: 1140px;
-		margin: 0px auto;
-	}
-
-
-	</style>
-
-	
-	<div id="reservation1">
-		<div id="button_group">
-			<button class="btn btn-warning btn-md" onclick="resetFirst();"><span class="glyphicon glyphicon-repeat" /><div id="reset">예매다시하기</div></button>
-		</div>
-		
-		<br>
-		<br>
-		<div id="menu1">
-			<div id="menu1-1" class="menu1">영화</div>
-			<div id="menu1-2" class="menu1">극장</div>
-			<div id="menu1-3" class="menu1">날짜</div>
-			<div id="menu1-4" class="menu1">시간</div>
-		</div>
-		
-		<div id="content1">
-			<div id="content1-1" class="content1">
-				<div>
-					<div id="movie_second_menu1" class="movie_second_menu" onclick="order_reservation()">예매율순</div>
-					<div id="movie_second_menu2" class="movie_second_menu" onclick="order_alphabet()">가나다순</div>
-					<div id="movie_second_menu3" class="movie_second_menu">&nbsp;</div>
-				</div>
-				<br>
-				<div id="movie_list"></div>
-			</div>
-			
-			<div id="content1-2" class="content1">
-				<div>
-					<div id="favoriteCGV1">
-						자주가는 CGV<br>
-						<br>
-						<br>
-					</div>
-					<div id="favoriteCGV2">
-						CGV1<br>
-						CGV2<br>
-						CGV3
-					</div>
-				</div>
-				<br>
-				<div style="height: 300px">
-					<ul id="theater_state">
-						<c:forEach items="${ localList }" var="local_list">
-							<c:choose>
-								<c:when test="${local_list.localName=='서울'}">
-									<li class="localName theater_state select_theater_state" style="float: none; display: inline-block; list-style: none;"  onclick="theater_local('${local_list.localName}')" >
-										<div>${local_list.localName} (${local_list.localCount})</div>
-									</li>
-								</c:when>
-	
-								<c:otherwise>
-									<li class="localName theater_state" style="float: none; display: inline-block; list-style: none;"  onclick="theater_local('${local_list.localName}')" >
-										<div>${local_list.localName} (${local_list.localCount})</div>
-									</li>
-								</c:otherwise>
-								
-							</c:choose>
-						</c:forEach>
-						
-					</ul>
-					<div class="theater_city">
-						<div id = "theater_detail"></div>
-					</div>
-				</div>
-			</div>
-			<div id="content1-3" class="content1">
-				<div style="text-align: center; font-size: 15pt;" id = "year"></div><br>
-				<div style="margin-top: -20px; text-align: center; font-size: 30pt;" id = "month"></div><br>
-				<div id="calender_date"></div>
-				
-			</div>
-			<div id="content1-4" class="content1">
-				<div id="timetable">
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div id="reservation2">
-		<table>
-			<tr>
-				<th id="title2-1">☞ 관람 할인 안내</th>
-				<th id="title2-2">인원/좌석</th>
-				<th id="title2-3">&nbsp;</th>
-			</tr>
-			<tr>
-				<td style="width: 500px;">
-					<div class="seat_num">
-						<div class="seat_title" style="float: left;">일반</div>
-						<div id="nomal_defalut" class="seat_nomal">0</div>
-						<div class="seat_nomal">1</div>
-						<div class="seat_nomal">2</div>
-						<div class="seat_nomal">3</div>
-						<div class="seat_nomal">4</div>
-						<div class="seat_nomal">5</div>
-						<div class="seat_nomal">6</div>
-						<div class="seat_nomal">7</div>
-						<div class="seat_nomal">8</div>
-					</div>
-					<div class="seat_num">
-						<div class="seat_title">청소년</div>
-						<div id="youth_defalut" class="seat_youth" style="margin-left:95px;">0</div>
-						<div class="seat_youth">1</div>
-						<div class="seat_youth">2</div>
-						<div class="seat_youth">3</div>
-						<div class="seat_youth">4</div>
-						<div class="seat_youth">5</div>
-						<div class="seat_youth">6</div>
-						<div class="seat_youth">7</div>
-						<div class="seat_youth">8</div>
-					</div>
-					<div class="seat_num">
-						<div class="seat_title">우대</div>
-						<div id="advantage_defalut" class="seat_advantage" style="margin-left:95px;">0</div>
-						<div class="seat_advantage">1</div>
-						<div class="seat_advantage">2</div>
-						<div class="seat_advantage">3</div>
-						<div class="seat_advantage">4</div>
-						<div class="seat_advantage">5</div>
-						<div class="seat_advantage">6</div>
-						<div class="seat_advantage">7</div>
-						<div class="seat_advantage">8</div>
-					</div>
-				</td>
-				<td style="width: 200px; text-align: center;">
-					<div>좌석붙임설정</div>
-					<div style="margin-left: 30px; height: 25px;">
-						<label onclick="seatFormClick(1);">
-							<input class ="seat_number" name="seat_num" type="radio" value="1">
-							<div class="box"></div>
-						</label>
-
-						<label onclick="seatFormClick(2);">
-							<input class ="seat_number" name="seat_num" type="radio" value="2">
-							<div class="box"></div><div class="box"></div>
-						</label>
-						
-						
-						<label onclick="seatFormClick(3);">
-							<input class ="seat_number" name="seat_num" type="radio" value="3">
-							<div class="box"></div><div class="box"></div><div class="box"></div>
-						</label>
-						
-						<label onclick="seatFormClick(4);">
-							<input class ="seat_number" name="seat_num" type="radio" value="4">
-							<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
-						</label>
-					</div>
-				</td>
-				<td>
-					<div>선택하신 상영관/시간</div>
-					<div style="margin-top: 10px;">
-						<span id="plex" style="font-size: 12pt; font-weight: bolder;"></span>
-						(총&nbsp;<span id="seat_totcnt">0</span>석)
-						<span style="font-size: 12pt;">21:30 - 23:38</span>
-						(잔여 <span id="remainSeat">132석</span>)
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" style="border-right: 0px solid #999;">
-					<div id="screen">screen</div>
-					<div style="height:50px"><span></span></div>
-					<div id="seat_table"></div>
-				</td>
-				<td style="border-left: 0px solid #999;">
-					<div id="selected"></div><div>선택</div><br>
-					<div id="reservationed"></div><div>예매완료</div><br>
-					
-					<div id="prime"></div><div>Prime Zone</div><br>
-					<div id="standard"></div><div>Standard Zone</div><br>
-					<div id="economy"></div><div>Economy Zone</div><br>
-					<div id="handicapped"></div><div>장애인석</div><br>
-					<div id="sweetbox"></div><div>SweetBox</div><br>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div id="reservation3">
-		<div id="discount_method1" class="discount_method">STEP 1</div>
-		<div id="discount_method2" class="discount_method">할인수단 선택</div>
-		<div id="discount_method3" class="discount_method"><span id="resetBtn">다시하기</span></div>
-		<div id="discount_title" class="discount_title">CGV 할인쿠폰 <span>/</span> CJ ONE 포인트</div>
-		<div id="discount_content">
-			<div id="discount_coupon">
-				<div>
-					<span>●CGV 할인쿠폰</span><input type="button" class="btn btn-warning" onclick="discountApply()" style="margin-left: 5px;" value="사용하기"><input type="button" class="btn btn-warning" onclick="discountCancel()" style="margin-left: 5px;" value="취소하기">
-				</div>
-				<div id="coupon_title1" class="coupon_title">사용가능 쿠폰</div><div id="coupon_title2" class="coupon_title">&nbsp;</div>
-				<div id="coupon_content">
-				<c:choose>
-					<c:when test="${fn:length(couponList)>0 }">
-						<c:forEach items="${ couponList }" var="coupon_list">
-							<c:if test="${coupon_list.member_id == member_id && coupon_list.used == 'N'}">
-									<label class="couponList">
-										<input type="radio" class="coupon" name="coupon" value="${coupon_list.coupon_code}/${coupon_list.coupon_amount}">
-										<div>${coupon_list.coupon_amount}% 할인쿠폰 </div>
-									</label>
-							</c:if>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<div>사용 가능한 CGV할인쿠폰이 없습니다.</div>
-					</c:otherwise>
-				</c:choose>
-				</div>
-			</div>
-		</div>
-		
-		<div id="payment_method1" class="payment">STEP 2</div>
-		<div id="payment_method2" class="payment">결제정보 입력</div>
-		<div id="payment_method3" class="payment"></div>
-		<div id="payment_content">
-			
-			
-		
-			<div id="demo" class="col-md-8 col-md-offset-1 col-xs-11">
-
-				<form name="frm_payment" id="frm_payment" class="form-horizontal">
-					<div class="form-group nonInput" style="display: none;">
-						<label for="reservationCode" class="col-md-4 col-xs-4">예매번호</label>
-						<div type="text" name="reservationCode" id="reservationCode" value="" class="col-md-8 col-xs-8"/></div>
-					</div>
-					<div class="form-group nonInput" style="display: none;">
-						<label for="movieName" class="col-md-4 col-xs-4">영화명</label>
-						<div type="text" name="movieName" id="movieName" value="" class="col-md-8 col-xs-8"></div>
-					</div>
-					
-					
-					<div class="form-group">
-						<label for="payMethod" class="col-md-4 col-xs-4">결제수단</label>
-						<select name="payMethod" id="payMethod" class="col-md-8 col-xs-8">
-							<option value="card">신용카드</option>
-							<option value="trans">실시간 계좌이체</option>
-							<option value="vbank">가상계좌</option>
-							<option value="phone">휴대폰 소액결제</option>
-						</select>
-	                </div>
-
-					
-					<div class="form-group">
-						<label for="email" class="col-md-4 col-xs-4">이메일주소</label>
-						<input type="text" name="email" id="email" value="${ member.email }" class="col-md-8 col-xs-8"/>
-					</div>
-					<div class="form-group">
-						<label for="buyerName" class="col-md-4 col-xs-4">성함</label>
-						<input type="text" name="buyerName" id="buyerName" value="${ member.member_name }" class="col-md-8 col-xs-8"/>
-					</div>
-					<div class="form-group">
-						<label for="tel" class="col-md-4 col-xs-4">전화번호</label>
-						<input type="text" name="tel" id="tel" value="${ member.tel }" class="col-md-8 col-xs-8"/>
-					</div>
-					<div class="form-group">
-						<label for="address" class="col-md-4 col-xs-4">주소</label>
-						<input type="text" name="address" id="address" value="${ member.address } " class="col-md-8 col-xs-8"/>
-					</div>
-					<div class="form-group" style="display: none;">
-						<label for="post" class="col-md-4 col-xs-4">우편번호</label>
-						<input type="text" name="post" id="post" value="" class="col-md-8 col-xs-8"/>
-					</div>
-					<div class="form-group" style="display: none;">
-						<label for="vbank_due" class="col-md-4 col-xs-4">가상계좌 입금일자<br>(YYYYMMDD)</label>
-						<input type="text" name="vbank_due" id="vbank_due" value="" class="col-md-8 col-xs-8"/>
-					</div>
-					
-					
-				</form>
-				<div id="responser"></div>
-			</div>
-			<div class="sideMenu">
-				<div class="sideGroup">
-					<label for="originPay" class="payTitle">금액</label>
-					<div id="originPay" class="payContent"></div>
-				</div>
-				<div class="sideGroup">
-					<label for="discountPay" class="payTitle">총 할인금액</label>
-					<div id="discountPay" class="payContent">0</div>
-				</div>
-				<div class="sideGroup">
-					<label for="pay" class="payTitle">결제내역</label>
-					<div class="payContent"><input type="text" name="pay" id="pay" value="1000"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="info_box">
-		<div id="backArea"><button id="backBtn" onclick="backStep()"><span>&lt;</span><br/>영화선택</button></div>
-		<div id="backArea2"><button id="backBtn2" onclick="backStep2()"><span>&lt;</span><br/>좌석선택</button></div>
-		<div id="selected_movie">
-			영화선택
-		</div>
-		<div id="selected_theater">
-			극장선택
-		</div>
-		<div id="etc">
-			> 좌석선택 > 결제
-		</div>
-		<div id="nextArea1"><button id="nextBtn1" onclick="nextStep();"><span>&gt;</span><br/>좌석선택</button></div>
-		<div id="nextArea2"><button id="nextBtn2" onclick="lastStep()"><span>&gt;</span><br/>결제선택</button></div>
-		<div id="nextArea3"><button id="nextBtn3" onclick="payment()"><span>&gt;</span><br/>결제하기</button></div>
-	</div>
-	
-	<form id="frm" name="frm" method="post" action="/reservation">
-		<input type="text" id="movie" name="movie" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="theater" name="theater" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="years" name="year" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="months" name="month" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="dates" name="date" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="start_time" name="start_time" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="plex" name="plex" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat_cnt" name="seat_cnt" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat1" name="seat1" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat2" name="seat2" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat3" name="seat3" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat4" name="seat4" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat5" name="seat5" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat6" name="seat6" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat7" name="seat7" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="seat8" name="seat8" size="50" maxlength="100" style="display:none;">
-	</form>
-	
-	<form id="finalFrm" name="finalFrm" method="post" action="/ticket">
-		<input type="text" id="theaterid" name="theaterid" size="50" maxlength="100" style="display:none;">
-		<input type="text" id="reservationcode" name="reservationcode" size="50" maxlength="100" style="display:none;">
-	</form>
-	
-	<script type="text/javascript">
+/**
+ * 
+ */
 
 		var checkMovie = false;
 		var checkTheater = false;
@@ -1159,7 +40,7 @@
 			var couopnInfo = couponValue.split('/');
 			couponCode = couopnInfo[0];
 			var couponAmount = couopnInfo[1];
-		
+
 			
 			
 			disCountAmount = price * (couponAmount/100);
@@ -1167,12 +48,12 @@
 			disCountAmount += discountMoney;
 			
 			disCountPrice = totalPrice - disCountAmount;
-		
+
 			
 			couponApply = true;
 			$('#discountPay').text(disCountAmount);
 			$('#pay').val(disCountPrice);
-		
+
 		}
 		
 		function discountCancel() {
@@ -1182,7 +63,7 @@
 		}
 		
 		function couponUsed() {
-		
+
 			var couponNo = couponCode.split('-')[1];
 			
 			$.ajax({
@@ -1251,20 +132,20 @@
 					paymentAction(result.l);
 				}
 			});
-		
+
 			
 		}
 		
 		function paymentAction(reservationExist) {
 			
 			$(reservationExist).each(function() {
-		
+	
 				if(this == 1) {
 					reservationFlag = false
 				}
-		
+
 			});
-		
+
 			
 			if(reservationFlag == true) {
 				
@@ -1288,7 +169,7 @@
 						seatAll	+= ', ';
 					}
 				}			
-		
+
 				var IMP = window.IMP;
 				IMP.init('iamport');
 				
@@ -1350,7 +231,7 @@
 			var viewYear = frm.years.value;
 			var viewMonth = frm.months.value;
 			var viewDate = frm.dates.value;
-		
+	
 			if(frm.months.value < 10 && frm.months.value.length < 2 ){
 				viewMonth = '0' + frm.months.value;
 			}
@@ -1363,7 +244,7 @@
 			var viewMinute = frm.start_time.value.substr(3,2);
 			
 			veiwDay = viewYear + '-' + viewMonth + '-' + viewDate + ' ' + viewHour + ":" + viewMinute;
-		
+
 			var reservationNow = new Date();
 			var reservationYear = reservationNow.getFullYear();
 			var reservationMonth = reservationNow.getMonth()+1;
@@ -1400,7 +281,7 @@
 					seatAll	+= ', ';
 				}
 			}			
-		
+
 			//여기
 			$.ajax({
 				type:'get',
@@ -1427,7 +308,7 @@
 			if(frm.plex.value == "" || frm.plex.value == null) {
 				alert("시간을 선택해 주세요");	
 			} else {
-		
+
 				$("#reservation1").hide();
 				$("#reservation2").show();
 				$("#backArea").show();
@@ -1437,7 +318,7 @@
 				$("#plex").text(frm.plex.value + "관");
 				reservationCode = $("#years").val() + $("#months").val() 
 								+ $("#dates").val() + movieId + theaterId + frm.plex.value;
-		
+
 			}
 		}
 		
@@ -1496,7 +377,7 @@
 			
 			var codeHour = frm.start_time.value.substr(0,2);
 			var codeMinute = frm.start_time.value.substr(3,2);
-		
+
 			var seat = frm.seat1.value;
 			
 			reservationCode = codeYear + codeMonth + codeDate + codeHour + codeMinute + movieId + theaterId + plexNum + seat;
@@ -1515,7 +396,7 @@
 			var prime = 0;
 			var handicapped = 0;
 			var sweetbox = 0;
-		
+
 			for(var i = 1; i <= 8; i++){
 				
 				//alert('#'+($('#seat'+i).val()));
@@ -1560,7 +441,7 @@
 		}
 		
 		function reservationSeat() {
-		
+
 			if(frm.months.value < 10 && frm.months.value.length < 2 ){
 				frm.months.value = '0' + frm.months.value;
 			}
@@ -1586,7 +467,7 @@
 		}
 		
 		function reservationCancel() {
-		
+
 			if(frm.months.value < 10 && frm.months.value.length < 2 ){
 				frm.months.value = '0' + frm.months.value;
 			}
@@ -1647,7 +528,7 @@
 			
 			var result = "";
 			
-			for(i=0;i<10;i++){
+			for(i=0;i<31;i++){
 				result += "<div class='calender' onclick='dateSelect("+ i +")'>" 
 						+ "<span style='float: left; font-size: 13pt; margin-right: 5px; font-weight: bold' id='day" + i 
 						+ "'></span>" + "<span style='float: left; font-size: 13pt; font-weight: bold;' id='date" + i 
@@ -1656,11 +537,11 @@
 			result += "";
 			document.getElementById("calender_date").innerHTML = result;
 			
-			for(i=0;i<10;i++){
+			for(i=0;i<31;i++){
 				date = now.getDate();
 				day = now.getDay();
 				month = now.getMonth()+1;
-		
+
 				document.getElementById("date"+i).innerHTML = date;
 				document.getElementById("date"+i).value = date;
 				document.getElementById("day"+i).innerHTML = week[now.getDay()];
@@ -1675,9 +556,9 @@
 					$("#date"+i).addClass("Sunday");
 				}
 			}
-		
+
 		}
-		
+
 		function interval(){
 			var interval = setInterval(function(){
 				if(checkMovie && checkTheater && checkDate){
@@ -1738,7 +619,7 @@
 			checkDate = true;
 			interval();
 		}
-		
+
 		function order_reservation() {
 			$('#order').val("reservation_rate");
 			getMovieList("reservation_rate");
@@ -1780,7 +661,7 @@
 				//alert(event.target.nodeName);
 				$(event.target).addClass("select");
 			}
-		
+
 			checkMovie = true;
 			interval();
 		}
@@ -1843,13 +724,13 @@
 			});
 			
 			result += "</div>";
-		
+
 			document.getElementById("movie_list").innerHTML = result;
 		}
 		
-		//$( "body" ).click(function( event ) {
-		//	alert(event.target.nodeName);
-		//});
+//		$( "body" ).click(function( event ) {
+//			alert(event.target.nodeName);
+//		});
 		
 		function setTimetableList(time, plex, extraSeatNum) {
 			
@@ -1881,6 +762,8 @@
 										$(extraSeatNum).each(function() {
 											if(timetableTime == this.startTime && number == this.plexNumber){
 												result += this.extraSeatCount +'석</div></div>';
+											} else if(timetableTime != this.startTime && number != this.plexNumber) {
+												result += '0석</div></div>';
 											}
 										});
 										
@@ -1892,7 +775,7 @@
 					number++;
 				});
 			}
-		
+
 		}
 		
 		
@@ -1918,7 +801,7 @@
 				
 			frm.start_time.value = time;
 			frm.plex.value = plex;
-		
+
 			getSeat(plex);
 			
 		}
@@ -1934,7 +817,7 @@
 			}
 			
 			var startDay = frm.years.value +'-' + frm.months.value + '-' + frm.dates.value + ' ' + frm.start_time.value;
-		
+
 			$.ajax({
 				type:'get',
 				url:'/ticket/plex/' + plexNum + '/' + startDay,
@@ -1955,7 +838,7 @@
 			var header_index = "";
 			var seat_index = "";
 			
-		
+
 			$(seatIndex).each(function() {
 			
 				result += "<tr>" + "<th class='seat_header'>" + this + "</th>";
@@ -1994,7 +877,7 @@
 			mouseout();
 			
 		}
-		
+
 		function getTheaterList(page) {
 			
 			if(page == null){
@@ -2025,7 +908,7 @@
 			});
 			
 			result += "";
-		
+
 			document.getElementById("theater_detail").innerHTML = result;
 		}
 		getTheaterList("서울");
@@ -2122,7 +1005,7 @@
 			totalSeat = Number(seatNomalCnt) + Number(seatYouthCnt) + Number(seatAdvantageCnt);
 			
 		}
-		
+
 		function seatClick() {
 			
 			$(".seat_standard, .seat_prime, .seat_economy, .seat_handicapped, .seat_sweetbox").click(function() {
@@ -2139,13 +1022,13 @@
 					
 					countSum = totalSeat;
 				} else if($(this).hasClass("seat_nonselect") && $(this).hasClass("seat_clicked") && selectFlag == 0) {
-		
+
 					if(currentCheckedValue == 1){
 						
 						$(this).removeClass("seat_clicked");
 						$(this).removeClass("seat_nonselect");
 						
-		
+
 						seat_row = $(this).parent().children("th").text();
 						seat_col = $(this).text();
 						seat = seat_row + seat_col;
@@ -2535,7 +1418,7 @@
 						
 						$(this).addClass("seat_clicked");
 						$(this).addClass("seat_nonselect");
-		
+
 						for(var i=1; i <=8; i++ ){
 							if($('#seat' + i).val() == ""){
 								
@@ -2618,7 +1501,7 @@
 									break;
 								}
 							}
-		
+
 						} else if(!($(this).next().hasClass("seat_nonselect"))){
 							$(this).addClass("seat_clicked");
 							$(this).next().addClass("seat_clicked");
@@ -2649,7 +1532,7 @@
 						countSum -= currentCheckedValue;
 						
 						seatSelect(2);
-		
+	
 					} else if(currentCheckedValue == 3){
 						
 						if($(this).next().hasClass("seat_nonselect") && 
@@ -2704,7 +1587,7 @@
 							$(this).prev().addClass("seat_nonselect");
 							$(this).next().addClass("seat_nonselect");
 							
-		
+
 							for(var i=1; i <=8; i++ ){
 								if($('#seat' + i).val() == ""){
 									
@@ -2774,7 +1657,7 @@
 									break;
 								}
 							}
-		
+
 						}
 						
 						countSum -= currentCheckedValue;
@@ -2997,7 +1880,7 @@
 									break;
 								}
 							}
-		
+
 						}
 						
 						countSum -= currentCheckedValue;
@@ -3007,7 +1890,7 @@
 				}
 			});
 		}
-		
+
 		function mouseover() {
 			$(".seat_standard, .seat_prime, .seat_economy, .seat_handicapped, .seat_sweetbox").mouseover(function() {
 			
@@ -3035,7 +1918,7 @@
 							$(this).addClass("seat_over");
 							$(this).next().addClass("seat_over");
 						}
-		
+	
 					} else if(currentCheckedValue == 3){
 						
 						if($(this).next().hasClass("seat_nonselect") && 
@@ -3329,7 +2212,7 @@
 				$('input[name="seat_num"]:radio[value="'+ currentCheckedValue +'"]').parent().children('div').addClass("select");
 				seatFormClick(currentCheckedValue);
 			}
-		
+
 		}
 		
 		function seatFormClick(value) {
@@ -3367,5 +2250,4 @@
 			alert("종료 시간 : " + endTime);
 		}
 
-	</script>
-<%@include file="./include/footer.jsp" %>
+		

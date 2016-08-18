@@ -10,4 +10,5 @@ public interface TheaterDAO {
 	public List<Long> getLocalTheaterNum();
 	public List<String> getLocal();
 	public List<TheaterVO> getTheaterId(String theaterName);
+	public List<TheaterVO> getTheaterList(String theaterId);
 }

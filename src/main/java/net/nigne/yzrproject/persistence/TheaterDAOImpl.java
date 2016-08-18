@@ -119,4 +119,20 @@ public class TheaterDAOImpl implements TheaterDAO {
 		return list;
 	}
 
+	@Override
+	public List<TheaterVO> getTheaterList(String theaterId) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<TheaterVO> mainQuery = cb.createQuery(TheaterVO.class);
+		Root<TheaterVO> mainQueryroot = mainQuery.from(TheaterVO.class);
+		
+		mainQuery.select(mainQueryroot);
+		mainQuery.where(cb.equal(mainQueryroot.get("theater_id"), theaterId));
+		
+		TypedQuery<TheaterVO> tq = entityManager.createQuery(mainQuery);
+		List<TheaterVO> list = tq.getResultList();
+
+		return list;
+	}
+
 }

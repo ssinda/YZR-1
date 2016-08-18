@@ -81,4 +81,16 @@ public class ReservationServiceImpl implements ReservationService {
 		dao.reservationPersist(vo);
 	}
 
+	@Override
+	public List<ReservationVO> getReservationInfo(String reservationCode) {
+		// TODO Auto-generated method stub
+		return dao.getReservationInfo(reservationCode);
+	}
+
+	@Override
+	public Map<String, Object> getReservationEndPage(String reservationCode) {
+		// TODO Auto-generated method stub
+		return dao.getReservationEndPage(reservationCode);
+	}
+
 }

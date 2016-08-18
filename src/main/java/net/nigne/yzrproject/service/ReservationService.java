@@ -13,4 +13,6 @@ public interface ReservationService {
 	public long getReservationTotal(String member_id);
 	public void reservationCancel(String reservation_code);
 	public void reservationPersist(ReservationVO vo);
+	public List<ReservationVO> getReservationInfo(String reservationCode);
+	public Map<String, Object> getReservationEndPage(String reservationCode);
 }

@@ -253,4 +253,56 @@ public class ReservationDAOImpl implements ReservationDAO {
 		
 	}
 
+	@Override
+	public List<ReservationVO> getReservationInfo(String reservationCode) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<ReservationVO> mainQuery = cb.createQuery(ReservationVO.class);
+		Root<ReservationVO> mainQueryroot = mainQuery.from(ReservationVO.class);
+		
+		mainQuery.select(mainQueryroot);
+		mainQuery.where(cb.equal(mainQueryroot.get("reservation_code"), reservationCode));
+		
+		TypedQuery<ReservationVO> tq = entityManager.createQuery(mainQuery);
+		List<ReservationVO> list = tq.getResultList();
+
+		return list;
+	}
+	
+	@Override
+	public Map<String, Object> getReservationEndPage(String reservationCode) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<ReservationVO> cq = cb.createQuery(ReservationVO.class);
+		Root<ReservationVO> root = cq.from(ReservationVO.class);
+		Predicate p = cb.equal(root.get("reservation_code"), reservationCode);
+		cq.where(p);
+		
+		TypedQuery<ReservationVO> tq = entityManager.createQuery(cq);
+		ReservationVO reservation = tq.getSingleResult();
+	
+		//예매한 영화 관련 Query
+		CriteriaQuery<MovieVO> movieQuery = cb.createQuery(MovieVO.class);
+        Root<MovieVO> movieRoot = movieQuery.from(MovieVO.class);
+        movieQuery.select(movieRoot);
+        movieQuery.where(cb.equal(movieRoot.get("movie_id"), reservation.getMovie_id()));
+        
+        TypedQuery<MovieVO> movieTq = entityManager.createQuery(movieQuery);
+		MovieVO movie = movieTq.getSingleResult();
+       
+        //예매한 극장 관련 Query
+  		CriteriaQuery<TheaterVO> theaterQuery = cb.createQuery(TheaterVO.class);
+        Root<TheaterVO> theaterRoot = theaterQuery.from(TheaterVO.class);
+        theaterQuery.select(theaterRoot);
+        theaterQuery.where(cb.equal(theaterRoot.get("theater_id"), reservation.getTheater_id()));
+       
+        TypedQuery<TheaterVO> theaterTq = entityManager.createQuery(theaterQuery);
+		TheaterVO theater = theaterTq.getSingleResult();
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("reservation", reservation);
+		map.put("movie", movie);
+		map.put("theater", theater);
+		
+		return map;
+	}
+
 }

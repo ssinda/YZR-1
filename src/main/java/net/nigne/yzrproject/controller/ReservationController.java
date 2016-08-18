@@ -21,14 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.nigne.yzrproject.domain.CouponVO;
+import net.nigne.yzrproject.domain.MemberVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.PlexVO;
 import net.nigne.yzrproject.domain.ReservationVO;
 import net.nigne.yzrproject.domain.SeatVO;
 import net.nigne.yzrproject.domain.TempLocal;
+import net.nigne.yzrproject.domain.TempSeatTime;
 import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
 import net.nigne.yzrproject.service.CouponService;
+import net.nigne.yzrproject.service.MemberService;
 import net.nigne.yzrproject.service.MovieService;
 import net.nigne.yzrproject.service.PlexService;
 import net.nigne.yzrproject.service.ReservationService;
@@ -65,6 +68,9 @@ public class ReservationController {
 	
 	@Autowired
 	private CouponService couponService;
+	
+	@Autowired
+	private MemberService memberService;
 
 	/** 
 	* @Method Name : home  
@@ -81,12 +87,18 @@ public class ReservationController {
 		String memberId = (String)session.getAttribute("member_id");
 		System.out.println("111111111 = " + memberId);
 		
+		MemberVO member = new MemberVO();
+		List<CouponVO> couponList = new ArrayList<>();
+		
 		List<MovieVO> movieList = movieService.getMovieList("reservation_rate");
 		List<TheaterVO> theaterList = theaterService.getList("서울");
 		List<String> localList = theaterService.getLocal();
 		List<Long> localTheaterNum = theaterService.getLocalTheaterNum();
-		List<CouponVO> couponList = couponService.getCouponList(memberId);
-		
+		if(memberId != null){
+			
+			couponList = couponService.getCouponList(memberId);
+			member = memberService.getMember(memberId);
+		}
 		
 		
 		List<TempLocal> local = new ArrayList<>();
@@ -103,21 +115,25 @@ public class ReservationController {
 		model.addAttribute("theaterList", theaterList);
 		model.addAttribute("localList", local);
 		model.addAttribute("couponList", couponList);
+		model.addAttribute("member", member);
 						
 		return "ticket";
 	}
 	
-	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
-	public String reservaion_get(Locale locale, Model model) throws Exception {
+	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
+	public String reservation(Locale locale, Model model,
+							  @RequestParam("theaterid") String theater_id,
+							  @RequestParam("reservationcode") String resrevationCode) throws Exception {
 		
-		return "reservation";
-	}
-	
-	@RequestMapping(value = "/reservation", method = RequestMethod.POST)
-	public String reservation(Locale locale, Model model) throws Exception {
+		List<TheaterVO> theaterList = theaterService.getTheaterList(theater_id);		
+		List<ReservationVO> reservationList = reservationService.getReservationInfo(resrevationCode);
+		Map<String,Object> reservationMap = reservationService.getReservationEndPage(resrevationCode);
 		
+		model.addAttribute("theaterList", theaterList);
+		model.addAttribute("reservationList", reservationList);
+		model.addAttribute("reservationMap", reservationMap);
 		
-		return "reservation";
+		return "map";
 	}
 	
 	@RequestMapping(value = "/ticket/movie/{page}", method = RequestMethod.GET)
@@ -187,27 +203,45 @@ public class ReservationController {
 			List<TimetableVO> timetableList = new ArrayList<>();
 			List<String> plexNumList = timetableService.getPlexNum(movieId, theaterId, date);
 			List<PlexVO> plexTypeList = new ArrayList<>();
-			//timetableService.getList(movieId, theaterId, date);
+			List<TempSeatTime> extraSeatNum = new ArrayList<>();
 			
+			//timetableService.getList(movieId, theaterId, date);
 			int plexNumCount = 0;
 			int timetableNum = 0;
 			
 			String plexNum[] = new String[plexNumList.size()];
-			
+
 			while(plexNumList.size() > plexNumCount){				
 				plexNum[plexNumCount] = plexNumList.get(plexNumCount);
-				System.out.println(plexNum[plexNumCount]);
 				plexTypeList.addAll(plexService.getList(plexNum[plexNumCount], theaterId));
 				timetableList.addAll(timetableService.getList(movieId, theaterId, date, plexNum[plexNumCount]));
+				
+				for(int i = 0; seatService.getExtraSeatTime(theaterId, plexNum[plexNumCount]) > i; i++) {
+										
+					TempSeatTime vo = new TempSeatTime();
+					
+					String startTime = timetableList.get(i).getStart_time();
+					
+					vo.setExtraSeatCount(seatService.getExtraSeatNum(theaterId, plexNum[plexNumCount], startTime));
+					
+					vo.setStartTime(timetableList.get(i).getStart_time());
+					
+					vo.setPlexNumber(plexNum[plexNumCount]);
+					
+					extraSeatNum.add(i, vo);
+				}
 				while(timetableList.size() > timetableNum){
 					timetableNum++;
 				}
 				plexNumCount++;
 			}
 			
+			
+			
 			Map<String, Object> map = new HashMap<>();
 			map.put("l", timetableList);
 			map.put("t", plexTypeList);
+			map.put("n", extraSeatNum);
 			
 
 			//브라우저로 전송한다
@@ -419,21 +453,21 @@ public class ReservationController {
 		return entity;
 	}
 	
-	@RequestMapping(value = "/ticket/coupon/{memberId}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> CouponPage(
-			@PathVariable("memberId") String memberId
+	@RequestMapping(value = "/ticket/coupon/{couponNo}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> CouponUsed(
+			@PathVariable("couponNo") String couponNo
 			) {
 		ResponseEntity<Map<String, Object>> entity = null;
 		
-		
+		int couponNumber = Integer.parseInt(couponNo);
 		try{
-			List<CouponVO>list = couponService.getCouponList(memberId);
+			System.out.println("되냐?");
+			couponService.couponUsed(couponNumber);
+			System.out.println("안되냐?");
 			
-			Map<String, Object> map = new HashMap<>();
-			map.put("l", list);
 
 			//브라우저로 전송한다
-			entity = new ResponseEntity<>(map, HttpStatus.OK);
+			entity = new ResponseEntity<>(HttpStatus.OK);
 			
 		} catch(Exception e){
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

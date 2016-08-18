@@ -13,4 +13,5 @@ import net.nigne.yzrproject.domain.TimetableVO;
 
 public interface CouponService {
 	public List<CouponVO> getCouponList(String memberId);
+	public void couponUsed(int couponNo);
 }

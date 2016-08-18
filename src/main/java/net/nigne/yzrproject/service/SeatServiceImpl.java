@@ -54,4 +54,16 @@ public class SeatServiceImpl implements SeatService {
 		dao.reservationCancel(SeatNo);
 	}
 
+	@Override
+	public Long getExtraSeatNum(String theaterId, String plexNum, String startTime) {
+		// TODO Auto-generated method stub
+		return dao.getExtraSeatNum(theaterId, plexNum, startTime);
+	}
+
+	@Override
+	public Long getExtraSeatTime(String theaterId, String plexNum) {
+		// TODO Auto-generated method stub
+		return dao.getExtraSeatTime(theaterId, plexNum);
+	}
+
 }

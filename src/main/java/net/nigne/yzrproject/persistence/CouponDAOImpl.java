@@ -22,7 +22,7 @@ public class CouponDAOImpl implements CouponDAO {
 	@Override
 	public List<CouponVO> getCouponList(String memberId) {
 		// TODO Auto-generated method stub
-		System.out.println("DAO ID = " + memberId);
+		
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<CouponVO> mainQuery = cb.createQuery(CouponVO.class);
 		Root<CouponVO> mainQueryroot = mainQuery.from(CouponVO.class);
@@ -35,6 +35,18 @@ public class CouponDAOImpl implements CouponDAO {
 		
 		return list;
 		
+	}
+
+	@Override
+	public void couponUsed(int couponNo) {
+		// TODO Auto-generated method stub
+		System.out.println("11");
+		CouponVO couponVO = entityManager.find(CouponVO.class, couponNo);
+		System.out.println("22");
+		CouponVO mergeVO = entityManager.merge(couponVO);
+		System.out.println("33");
+		mergeVO.setUsed("Y");
+		System.out.println("44");
 	}
 	
 	

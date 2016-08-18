@@ -171,4 +171,43 @@ public class SeatDAOImpl implements SeatDAO {
 		mergeVO.setReservation_exist("0");
 	}
 
+	@Override
+	public Long getExtraSeatNum(String theaterId, String plexNum, String startTime) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> mainQuery = cb.createQuery(Long.class);
+		Root<SeatVO> mainQueryroot = mainQuery.from(SeatVO.class);
+
+		mainQuery.select(cb.count(mainQueryroot));
+		mainQuery.where(cb.equal(mainQueryroot.get("theater_id"), theaterId),
+						cb.equal(mainQueryroot.get("plex_number"), plexNum),
+						cb.equal(mainQueryroot.get("start_time"), startTime),
+						cb.equal(mainQueryroot.get("reservation_exist"), "0"),
+						cb.notEqual(mainQueryroot.get("seat_type"), "empty"));
+		
+		TypedQuery<Long> tq = entityManager.createQuery(mainQuery);
+
+		return tq.getSingleResult();
+
+	}
+
+	@Override
+	public Long getExtraSeatTime(String theaterId, String plexNum) {
+		// TODO Auto-generated method stub
+		Long extraSeatTimeNum = 0l;
+
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> mainQuery = cb.createQuery(Long.class);
+		Root<SeatVO> mainQueryroot = mainQuery.from(SeatVO.class);
+
+		mainQuery.select(cb.countDistinct(mainQueryroot.get("start_time")));
+		mainQuery.where(cb.equal(mainQueryroot.get("theater_id"), theaterId),
+						cb.equal(mainQueryroot.get("plex_number"), plexNum));
+		
+		TypedQuery<Long> tq = entityManager.createQuery(mainQuery);
+		extraSeatTimeNum = tq.getSingleResult();
+
+		return extraSeatTimeNum;
+	}
+
 }
