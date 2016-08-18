@@ -987,7 +987,7 @@
 						<c:forEach items="${ couponList }" var="coupon_list">
 							<c:if test="${coupon_list.member_id == member_id && coupon_list.used == 'N'}">
 									<label class="couponList">
-										<input type="radio" class="coupon" name="coupon" value="${coupon_list.coupon_code}/${coupon_list.coupon_amount}">
+										<input type="radio" class="coupon" name="coupon" value="${coupon_list.no}/${coupon_list.coupon_amount}">
 										<div>${coupon_list.coupon_amount}% 할인쿠폰 </div>
 									</label>
 							</c:if>
@@ -1137,7 +1137,7 @@
 		var veiwDay = "";
 		var reservationDay = "";
 		var reservationFlag = true;
-		var couponCode = "";
+		var couponNo = "";
 		var couponApply = false;
 		var timeStatus = 0;
 		var disCountPrice = 0;
@@ -1157,7 +1157,7 @@
 		
 			var couponValue = $("input[name=coupon]:checked").val();
 			var couopnInfo = couponValue.split('/');
-			couponCode = couopnInfo[0];
+			couponNo = couopnInfo[0];
 			var couponAmount = couopnInfo[1];
 		
 			
@@ -1182,8 +1182,6 @@
 		}
 		
 		function couponUsed() {
-		
-			var couponNo = couponCode.split('-')[1];
 			
 			$.ajax({
 				type:'get',
@@ -1222,13 +1220,11 @@
 		}
 		
 		function goLastpage() {
-			
 			finalFrm.submit();
-			
 		}
 		
 		function payment(){
-						
+									
 			if(frm.months.value < 10 && frm.months.value.length < 2 ){
 				frm.months.value = '0' + frm.months.value;
 			}
