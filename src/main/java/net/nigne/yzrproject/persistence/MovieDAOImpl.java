@@ -473,5 +473,40 @@ public class MovieDAOImpl implements MovieDAO {
 	}
 	
 	
+	@Override
+	public List<MovieVO> getMovieList(String order) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MovieVO> mainQuery = cb.createQuery(MovieVO.class);
+		Root<MovieVO> mainQueryroot = mainQuery.from(MovieVO.class);
+		
+		if("reservation_rate".equals(order)) {
+			mainQuery.select(mainQueryroot).orderBy(cb.desc(mainQueryroot.get("reservation_rate")));
+		} else {
+			mainQuery.select(mainQueryroot).orderBy(cb.asc(mainQueryroot.get("title")));
+		}
+		
+		TypedQuery<MovieVO> tq = entityManager.createQuery(mainQuery);
+		List<MovieVO> list = tq.getResultList();
+		
+		return list;
+	}
+
+	@Override
+	public List<MovieVO> getMovieId(String movieName) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MovieVO> mainQuery = cb.createQuery(MovieVO.class);
+		Root<MovieVO> mainQueryroot = mainQuery.from(MovieVO.class);
+		
+		// select * from theater where theater_area = '지역이름'
+		mainQuery.select(mainQueryroot);
+		mainQuery.where(cb.equal(mainQueryroot.get("title"), movieName));
+		
+		TypedQuery<MovieVO> tq = entityManager.createQuery(mainQuery);
+		List<MovieVO> list = tq.getResultList();
+		
+		return list;
+	}
+	
 
 }

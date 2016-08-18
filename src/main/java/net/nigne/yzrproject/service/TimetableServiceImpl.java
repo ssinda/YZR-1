@@ -20,5 +20,17 @@ public class TimetableServiceImpl implements TimetableService {
 	public List<TimetableVO> getTimetable(String theater_id, String day) {
 		return dao.getTimetable(theater_id, day);
 	}
+	
+	@Override
+	public List<TimetableVO> getList(String movie, String theater, String date, String plex_number) {
+		// TODO Auto-generated method stub
+		return dao.getList(movie, theater, date, plex_number);
+	}
+
+	@Override
+	public List<String> getPlexNum(String movie, String theater, String date) {
+		// TODO Auto-generated method stub
+		return dao.getPlexNum(movie, theater, date);
+	}
 
 }
