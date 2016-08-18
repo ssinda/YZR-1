@@ -57,7 +57,7 @@
 					<div style="display: inline-block; height: 50px;float: left; margin-top:15px; margin-left: 10px;">
 						<font size="4px;">
 							<b>고객의 말씀 </b>
-							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;">바로가기</button><br/>
+							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;"onclick="qna()">바로가기</button><br/>
 						</font>
 						<font size="3px;">
 							불만사항이나 문의사항을 남겨주시면 <br/>친절히답변드리겠습니다. 
@@ -71,6 +71,9 @@
 <script>
 function faq(){
 	location.href="/support/faq"
+}
+function qna(){
+	location.href="/support/qna"
 }
 function qna_read(no){
 	location.href = "/user/qna/read/" + no;
