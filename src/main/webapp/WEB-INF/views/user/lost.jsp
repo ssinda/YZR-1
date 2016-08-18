@@ -44,7 +44,7 @@
 					<div style="display: inline-block; height: 50px;float: left; margin-top:15px; margin-left: 10px;">
 						<font size="4px;">
 							<b>자주하시는 질문</b>
-							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;" onblur="faq()">바로가기</button><br/>
+							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;" onclick="faq()">바로가기</button><br/>
 						</font>
 						<font size="3px;">
 							고객님들께서 주로 하시는 질문에 대한 <br/> 답변을 한곳에 모아두었습니다.
@@ -58,7 +58,7 @@
 					<div style="inline-block; height: 50px;float: left; margin-top:15px; margin-left: 10px;">
 						<font size="4px;">
 							<b>고객의 말씀 </b>
-							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;">바로가기</button><br/>
+							<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;"onclick="lost()">바로가기</button><br/>
 						</font>
 						<font size="3px;">
 							불편사항과 문의사항을 남겨주시면 <br/>친절히답변드리겠습니다. 
@@ -71,7 +71,10 @@
 </div>
 <script>
 function faq(){
-	location.href="/support/faq"
+	location.href="/support/faq";
+}
+function lost(){
+	location.href = "/support/lost";
 }
 function lost_read(no){
 	location.href = "/user/lost/read/" + no;

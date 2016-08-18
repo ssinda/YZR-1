@@ -77,11 +77,15 @@ var endPage = 1;
 var totalPage; 
 
 function faq(){
-	location.href="/support/faq"
+	location.href="/support/faq";
 }
 function rent_read(no){
 	location.href = "/user/rent/read/" + no;
 }
+function rent(){
+	location.href = "/support/rent";
+}
+
 getRentList(1);
 function setRentList(data){
 	var result = "<tr>";
