@@ -9,7 +9,7 @@
 		<%response.sendRedirect("/login");%>
 	</script>
 </c:if>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<h2>배우 등록</h2><br><br>
 	<form id="actorWritefrm" role="form" action="/admin/actor/new" method="post" enctype="multipart/form-data">
 		<label class="col-sm-1">이름</label>
@@ -37,8 +37,10 @@
 			</select>
 		</div>
 		<label class="col-sm-1">사진</label>
-			<input type="file" id="file" name="file" size="60" />
-		<div style="clear: both; margin-left: 300px;">
+		<div>
+			<input type="file" id="file" name="file" size="60" style="padding-left: 20px;"/>
+		</div>
+		<div style="clear: both; margin-top: 50px; text-align: center;">
 			<button type="submit" class="btn btn-primary">등록</button>
 		</div>
 	</form>
