@@ -1300,7 +1300,7 @@
 																
 																*/
 					 // 'card' : 신용카드 | 'trans' : 실시간계좌이체 | 'vbank' : 가상계좌 | 'phone' : 휴대폰소액결제
-					
+					pay_method : payMethod,
 					merchant_uid : reservationCode,
 					name : movieName,
 					amount : pay,
