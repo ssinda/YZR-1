@@ -102,7 +102,7 @@
 			
 			});
 		}else{
-			result += '<div style="height: 140px; line-height: 130px; text-align: center;">'
+			result += '<div style="height: 140px; line-height: 130px; text-align: center; border-top: 1px solid #aaa;">'
 					+ '<span style="height: 138px; margin: 0; font-size: 20px;">예매내역이 없습니다</span>'
 					+ '</div>';
 		}
