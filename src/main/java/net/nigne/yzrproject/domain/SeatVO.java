@@ -2,13 +2,18 @@ package net.nigne.yzrproject.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="seat")
 public class SeatVO {
 	@Id
+	@GeneratedValue(generator="NoSequence", strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="NoSequence", sequenceName="SEAT_NO_SEQ", allocationSize=1)
 	@Column(name="no")
 	int no;
 	
@@ -30,6 +35,9 @@ public class SeatVO {
 	@Column(name="reservation_exist")
 	String reservation_exist;
 
+	@Column(name="start_time")
+	String start_time;
+	
 	public int getNo() {
 		return no;
 	}
@@ -84,5 +92,13 @@ public class SeatVO {
 
 	public void setReservation_exist(String reservation_exist) {
 		this.reservation_exist = reservation_exist;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
 	}
 }
