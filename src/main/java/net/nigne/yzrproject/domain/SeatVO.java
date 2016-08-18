@@ -1,27 +1,19 @@
-/** 
-*
-*/
 package net.nigne.yzrproject.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/** 
-* @FileName : SeatVO.java 
-* @Package  : net.nigne.yzrproject.domain 
-* @Date     : 2016. 8. 3. 
-* @작성자		: 강대성
-* @프로그램 	: 설명...
-*/
 @Entity
 @Table(name="seat")
 public class SeatVO {
-	
-	/*----------------Columns----------------*/
-	
 	@Id
+	@GeneratedValue(generator="NoSequence", strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="NoSequence", sequenceName="SEAT_NO_SEQ", allocationSize=1)
 	@Column(name="no")
 	int no;
 	
@@ -43,8 +35,8 @@ public class SeatVO {
 	@Column(name="reservation_exist")
 	String reservation_exist;
 
-	
-	/*----------Getters and Setters----------*/
+	@Column(name="start_time")
+	String start_time;
 	
 	public int getNo() {
 		return no;
@@ -66,7 +58,7 @@ public class SeatVO {
 		return plex_number;
 	}
 
-	public void setPlex_nember(String plex_number) {
+	public void setPlex_number(String plex_number) {
 		this.plex_number = plex_number;
 	}
 
@@ -101,5 +93,12 @@ public class SeatVO {
 	public void setReservation_exist(String reservation_exist) {
 		this.reservation_exist = reservation_exist;
 	}
-	
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
 }

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../include/header.jsp"%>
 <%@include file="./sidebar.jsp"%>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<div>
 		<label style="font-size: 15pt;">자주찾는 질문</label><br>
 		회원님들께서 가장 자주하시는 질문을 모았습니다.<br>

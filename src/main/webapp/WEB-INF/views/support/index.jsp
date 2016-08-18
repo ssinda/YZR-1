@@ -28,7 +28,7 @@ th, td{
    padding-left: 5px;
 }
 </style>
-<div class="content" style="margin-left: 250px; height: 540px;">
+<div class="content" style="margin-left: 120px; height: 540px;">
 	<div style="width: 890px; float: left;">
 		<div style="width: 33%; height: 270px; float: left; background-color: red; text-align: center;">
 			<span class="glyphicon glyphicon-search" style="margin-top: 70px;"></span><br><br>

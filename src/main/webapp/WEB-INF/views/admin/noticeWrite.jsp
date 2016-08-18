@@ -39,7 +39,7 @@
 			<tr>
 				<th style="vertical-align: top; padding-top: 20px;">내용</th>
 				<td colspan="3">
-					<textarea id="notice_content" name="notice_content" rows="5" cols="100"></textarea>
+					<textarea id="notice_content" name="notice_content" rows="5" cols="85"></textarea>
 				</td>
 			</tr>
 		</table><br><br>
