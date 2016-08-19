@@ -8,9 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="notice")
@@ -38,17 +35,6 @@ public class NoticeVO {
 	
 	@Column(name="notice_image")
 	String notice_image;
-	
-	@Transient
-	MultipartFile file;
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
 
 	public String getNotice_image() {
 		return notice_image;

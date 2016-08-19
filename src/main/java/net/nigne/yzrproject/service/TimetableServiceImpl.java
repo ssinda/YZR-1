@@ -48,6 +48,8 @@ public class TimetableServiceImpl implements TimetableService {
 	@Override
 	public List<TheaterVO> getLike_theater(String member_id) {
 		return dao.getLike_theater(member_id);
+	}
+	
 	@Override
 	public List<TimetableVO> getList(String movie, String theater, String date, String plex_number) {
 		// TODO Auto-generated method stub
