@@ -4,7 +4,7 @@
 <%@include file="./include/header.jsp"%>
 <div id="wrap_content" style="min-height: 100%; position: relative;">
    <div id="content" style="padding-bottom: 50px; float: left;">
-      <div id="notice" style="border-bottom:2px solid #000; margin-top:10px;" class="carousel up" data-ride="carousel" data-interval="3000">
+      <div id="notice" style="border-bottom:2px solid #000; margin-top:10px; margin-bottom:10px;" class="carousel up" data-ride="carousel" data-interval="3000">
          <c:forEach begin="0" end="4" varStatus="n">
             <ol class="carousel-indicators">
                  <li data-target="#myCarousel" data-slide-to="${n.index}"></li>

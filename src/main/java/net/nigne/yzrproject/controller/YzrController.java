@@ -79,12 +79,11 @@ public class YzrController {
 			return "login";
 		}else{
 			MemberVO vo = userInfoService.getMemberInfo(member_id);
-			long couponTotal = userCouponService.getCouponTotal(member_id);
+			long couponTotal = userCouponService.getNotUseCouponTotal(member_id);
 			
 			model.addAttribute("userInfo", vo);
 			model.addAttribute("couponTotal", couponTotal);
 			model.addAttribute("today", new Date());
-			session.setAttribute("menu", "MY PAGE");
 			
 			return "user/index";
 		}

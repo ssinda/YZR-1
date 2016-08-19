@@ -84,6 +84,7 @@ public class ReservationController {
 	public String home(Locale locale, Model model, HttpServletRequest request) throws Exception {
 		
 		HttpSession session= request.getSession();
+		session.setAttribute("menu", "RESERVATION");
 		String memberId = (String)session.getAttribute("member_id");
 		System.out.println("111111111 = " + memberId);
 		

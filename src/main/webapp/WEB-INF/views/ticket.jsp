@@ -3364,4 +3364,5 @@
 		}
 
 	</script>
+	<% session.setAttribute("menu", null);%>
 <%@include file="./include/footer.jsp" %>
