@@ -17,6 +17,7 @@ import net.nigne.yzrproject.domain.Criteria;
 */
 public interface UserCouponDAO {
 	public long getCouponTotal(String member_id);
+	public long getNotUseCouponTotal(String member_id);
 	public List<CouponVO> getCouponList(Criteria cri, String member_id);
 
 }

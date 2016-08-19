@@ -27,6 +27,11 @@ public interface MovieDAO {
 			int female, int teenager, int twenties, int thirties, int forties) throws Exception;
 	public List<GenreVO> getGenre(String movie_id);
 	
+	public List<MovieVO> getMovieList(String order);	// 예매율순, 가나다순
+	public List<MovieVO> getMovieId(String movieName);	// 무비아이디 가져오기
+	
+	
+	
 	
 	
 }
