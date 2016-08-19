@@ -40,6 +40,12 @@ public class UserCouponServiceImpl implements UserCouponService {
 	}
 	@Override
 	@Transactional(readOnly = true)
+	public long getNotUseCouponTotal(String member_id) {
+		
+		return dao.getNotUseCouponTotal(member_id);
+	}
+	@Override
+	@Transactional(readOnly = true)
 	public List<CouponVO> getCouponList(Criteria cri, String member_id) {
 		
 		return dao.getCouponList(cri, member_id);

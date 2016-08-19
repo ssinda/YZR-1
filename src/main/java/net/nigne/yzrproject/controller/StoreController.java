@@ -31,7 +31,8 @@ public class StoreController {
 	
 	@RequestMapping(value = "/store/buy", method = RequestMethod.POST)
 	public String snackBar(HttpServletRequest request, Model model) throws Exception {
-	
+		HttpSession session=request.getSession();
+		session.setAttribute("menu", "EVENT&CULTURE");
 		String product_name = request.getParameter("menu_name");
 		String product_content = request.getParameter("menu_content");
 		String product_price = request.getParameter("menu_price");
