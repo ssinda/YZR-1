@@ -103,7 +103,6 @@
 	})
 	
 	function initialize(theater_name, address, xpoint, ypoint) {
-		alert(theater_name);
 		var Y_point = parseFloat(ypoint); // Y 좌표
 		var X_point = parseFloat(xpoint); // X 좌표
 		var zoomLevel = 16; // 지도의 확대 레벨 : 숫자가 클수록 확대정도가 큼
