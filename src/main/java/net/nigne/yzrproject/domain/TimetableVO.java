@@ -28,7 +28,14 @@ public class TimetableVO {
 	
 	@Column(name="start_time")
 	String start_time;
-
+	
+	public TimetableVO(String theater_id, String plex_number){
+		this.theater_id = theater_id;
+		this.plex_number = plex_number;
+	}
+	
+	public TimetableVO(){}
+	
 	public int getNo() {
 		return no;
 	}
