@@ -20,5 +20,36 @@ public class TheaterServiceImpl implements TheaterService {
 	public List<TheaterVO> getTheater(String location) {
 		return dao.getTheater(location);
 	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public List<TheaterVO> getList(String theater) {
+		// TODO Auto-generated method stub
+		return dao.getList(theater);
+	}
+
+	@Override
+	public List<Long> getLocalTheaterNum() {
+		// TODO Auto-generated method stub
+		return dao.getLocalTheaterNum();
+	}
+
+	@Override
+	public List<String> getLocal() {
+		// TODO Auto-generated method stub
+		return dao.getLocal();
+	}
+
+	@Override
+	public List<TheaterVO> getTheaterId(String theaterName) {
+		// TODO Auto-generated method stub
+		return dao.getTheaterId(theaterName);
+	}
+
+	@Override
+	public List<TheaterVO> getTheaterList(String theaterId) {
+		// TODO Auto-generated method stub
+		return dao.getTheaterList(theaterId);
+	}
 
 }

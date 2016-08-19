@@ -46,7 +46,9 @@ public class SearchController {
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String SearchIndex() throws Exception {
+	public String SearchIndex(HttpSession session) throws Exception {
+		
+		session.setAttribute("menu", "MOVIE");
 		
 		return "search";
 	}
@@ -60,8 +62,9 @@ public class SearchController {
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String Search(@RequestParam("search") String search, Model model) throws Exception {
+	public String Search(@RequestParam("search") String search, Model model, HttpSession session) throws Exception {
 		
+		session.setAttribute("menu", "MOVIE");
 		model.addAttribute("search", search);
 		
 		return "search";

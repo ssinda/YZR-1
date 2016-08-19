@@ -104,4 +104,16 @@ public class MovieServiceImpl implements MovieService {
 		return dao.getGenre(movie_id);
 	}
 
+	@Override
+	public List<MovieVO> getMovieList(String order) {
+		// TODO Auto-generated method stub
+		return dao.getMovieList(order);
+	}
+
+	@Override
+	public List<MovieVO> getMovieId(String movieName) {
+		// TODO Auto-generated method stub
+		return dao.getMovieId(movieName);
+	}
+
 }

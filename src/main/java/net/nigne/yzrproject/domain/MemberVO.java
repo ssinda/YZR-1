@@ -23,7 +23,7 @@ public class MemberVO {
 	String gender;
 	
 	@Column(name="birthday")
-	Timestamp birthday;
+	String birthday;
 	
 	@Column(name="address")
 	String address;
@@ -75,11 +75,11 @@ public class MemberVO {
 		this.gender = gender;
 	}
 
-	public Timestamp getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Timestamp birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 

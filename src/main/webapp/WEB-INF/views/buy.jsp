@@ -63,7 +63,7 @@
 
 <script>
 	function store(){
-		location.href = "/store"
+		location.href = "/culture_shop"
 	}
 	
 	function buy(){
