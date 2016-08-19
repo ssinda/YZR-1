@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.nigne.yzrproject.domain.EmpVO;
+import net.nigne.yzrproject.domain.MemberVO;
 import net.nigne.yzrproject.domain.PurchaseVO;
 import net.nigne.yzrproject.service.EmpService;
 import net.nigne.yzrproject.service.PurchaseService;
@@ -33,6 +34,11 @@ public class StoreController {
 	public String snackBar(HttpServletRequest request, Model model) throws Exception {
 		HttpSession session=request.getSession();
 		session.setAttribute("menu", "EVENT&CULTURE");
+		String member_id = (String)session.getAttribute("member_id");
+		MemberVO vo = service.getUser_Info(member_id);
+		
+		model.addAttribute("member", vo);
+		
 		String product_name = request.getParameter("menu_name");
 		String product_content = request.getParameter("menu_content");
 		String product_price = request.getParameter("menu_price");
