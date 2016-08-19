@@ -20,9 +20,11 @@ th{
 	background-color: ivory;
 }
 </style>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px;">
 	<div>
 		<h3>나의 대관 문의</h3>
+	</div>
+		<div style="height: 40px;background-color: red;">
 	</div>
 
 	<table class="table">
@@ -46,14 +48,14 @@ th{
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td colspan="3">
-				<textarea style="resize:none;" readonly="readonly" id="rent_content" name="rent_content" rows="5" cols="100" >${rentvo.rent_content }
+			<td style="height: 200px;">
+			${rentvo.rent_content }
 				</textarea>
 			</td>
 		</tr>
 	</table><br><br>
 	<div style="float: right;">
-		<a href="/user/rent"><input type="button" class="btn btn-default" value="확인"></a>
+		<a href="/user/rent"><input type="button" class="btn btn-danger" value="목록"></a>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
