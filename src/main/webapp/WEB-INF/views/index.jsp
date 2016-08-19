@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@include file="./include/header.jsp"%>
 <div id="wrap_content" style="min-height: 100%; position: relative;">
 	<div id="content" style="padding-bottom: 50px; float:left;">
@@ -98,42 +99,32 @@
 			</div>
 		</c:forEach>
 		
-		<h2 id="event_line" style="margin-top:550px;">
+		<h2 id="event_line" style="margin-top:100px; float:left;">
 			<div style="border-top:1px solid #f00; border-bottom:1px solid #f00; width:503px; height:5px; float:left; margin-top:19px;"></div>
 				<span style="float:left; color:red; font-size:40px;"><a id="event_li" href="/event">EVENT</a></span>
 			<div style="border-top:1px solid #f00; border-bottom:1px solid #f00; width:503px; height:5px; float:left; margin-top:19px;"></div>
 		</h2>
 		
-		<div id="hold_img1" style="margin-top:25px; float:left;">
-			<div style="float:left; margin-right:6px;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0222/1318_web_listbanner_.jpg"></a>
-			</div>
-			<div style="float:left; margin-right:6px;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0309/web_special_day_listbanner.jpg"></a>
-			</div>
-			<div style="float:left; margin-right:6px;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0224/ARTHOUSECLUB_web_listbanner.jpg"></a>
-			</div>
-			<div style="float:left;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0224/ARTHOUSECLUB_web_listbanner.jpg"></a>
-			</div>
-		</div>
-		
-		<div style="clear:both; float:left; margin-top:25px; width:100%; border:1px solid #000;"></div>
-		
-		<div id="hold_img2" style="margin-top:25px; float:left;">
-			<div style="float:left; margin-right:6px;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0222/1318_web_listbanner_.jpg"></a>
-			</div>
-			<div style="float:left; margin-right:6px;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0309/web_special_day_listbanner.jpg"></a>
-			</div>
-			<div style="float:left; margin-right:6px;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0224/ARTHOUSECLUB_web_listbanner.jpg"></a>
-			</div>
-			<div style="float:left;">
-				<a href=""><img style="width:280px; height:280px;" src="http://img.cgv.co.kr/Event/Event/2016/0224/ARTHOUSECLUB_web_listbanner.jpg"></a>
-			</div>
+		<div id="hold_img1" style="clear:both; margin-top:25px; float:left; height:380px;">
+			<c:forEach items="${event_list}" var="event_list" begin="0" end="2">
+				<div style="width:320px; height:300px; float:left; margin-left:43px;">
+					<a href=""><img style="width:320px; height:300px;" src="${event_list.notice_image}"></a>
+					<div style="margin-top:5px; width:320px;">
+						<span style="color:#4374D9; font-weight:bold;">스페셜 이벤트</span> <br/>
+						<span style="font-size:12px;">${event_list.notice_title}</span> <br/>
+						<span style="font-size:12px; color:#5D5D5D;">${event_list.notice_date} ~</span>
+					</div>
+				</div>
+			</c:forEach>
+			<c:if test="${fn:length(event_list) > 3}">
+				<button type="button" id="more_btn" onclick="more()" style="float:right; margin-top:75px; margin-right:18px; border:0; background-color:white;">
+					<i class="fa fa-plus-square fa-1x" aria-hidden="true" style="color:gray;">
+					</i>
+					<span style="font-weight:bold; font-size:15px;">
+						더보기
+					</span>
+				</button>
+			</c:if>
 		</div>
 	</div>	
 </div>
@@ -143,37 +134,10 @@
     $(document).ready(function() {
         $('#notice').carousel('cycle');
     });
-
-	function setEventImg(list){
-		var result = "";
-		
-		for(var i=0; i<4; i++){
-			result += '<div style="float:left; margin-left:2.5px; margin-right:2.5px;">'
-			+ '<a href="">'
-			+ '<img src="' + list[i] + '" style="width:280px; height:280px;"/>'
-			+ '</a>'
-			+ '</div>';
-		}
-			document.getElementById("event_img").innerHTML = result;
-	}
 	
-	function getEventImg(category){
-		$.ajax({
-			type : 'get',
-			url : '/index/' + category,
-			headers : {
-			"Content-Type" : "application/json",
-			//"X-HTTP-Method-Override" : "GET",  ----  POST 이거나 GET인경우는 생략가능
-			},
-			dataType : 'json',
-			data : '',
-			success : function(list){
-				setEventImg(list);
-			}
-		});
-	}
-	
-	getEventImg(1);
+    function more(){
+    	location.href = "/event";
+    }
 </script>
 			
 <style>

@@ -99,7 +99,6 @@ th, td{
 		});
 	}
 	getNoticeList(currentPage);
-	
 	function setPagePrint(pm){
 		var str = "<ul class='pagination'>";
 		if(currentPage > pm.endPage && currentPage > 1){

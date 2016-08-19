@@ -20,7 +20,7 @@ th{
 	background-color: ivory;
 }
 </style>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<div>
 		<label style="font-size: 15pt;">분실물 문의</label><br>
 		분실물을 등록해주시면 확인 후 신속하게 답변 드리겠습니다.<br>
@@ -54,6 +54,7 @@ th{
 						</c:forEach>
 					</select>
 					<select id="theater_name" name="theater_name" style="height: 27px; width: 200px;">
+						<option value="basic">영화관 선택</option>
 					</select>
 					<input type="text" id="place" name="place" size="30">
 				</td>
@@ -82,7 +83,7 @@ th{
 				</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th style="vertical-align: top; padding-top: 20px;">내용</th>
 				<td colspan="3">
 					<textarea id="lost_content" name="lost_content" rows="5" cols="100"></textarea>
 				</td>
