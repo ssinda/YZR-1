@@ -7,105 +7,57 @@
 		<span style="font-weight:bold; font-size:36px; float:left; margin-top:10px;">EVENT</span>
 		<div style="border:1px solid #000; margin-top:60px;"></div>
 		
-		<div id="hold_img" style="margin-top:25px; float:left; height:400px;">
-			<div style="width:320px; height:300px; float:left; margin-left:43px;">
-				<a href=""><img style="width:320px; height:300px;" src="http://img.cgv.co.kr/Front/Main/2016/0707/insta_240x200.png"></a>
-				<div style="margin-top:5px;">
-					<span style="color:#4374D9; font-weight:bold;">스페셜 이벤트</span> <br/>
-					<span style="font-size:12px;">CGV IMAX 여권 어디까지 찍었니?</span> <br/>
-					<span style="font-size:12px; color:#5D5D5D;">기간: 2016.07.06 ~ 2016.07.31 </span>
-				</div>
-			</div>
-			<div style="width:320px; height:300px; float:left; margin-left:43px;">
-				<a href=""><img style="width:320px; height:300px;" src="http://img.cgv.co.kr/Front/Main/2016/0718/[CGV_1607_049]web_b_240X200.jpg"></a>
-				<div style="margin-top:5px;">
-					<span style="color:#4374D9; font-weight:bold;">스페셜 이벤트</span> <br/>
-					<span style="font-size:12px;">THANK YOU 40000 FOLLOWERS</span> <br/>
-					<span style="font-size:12px; color:#5D5D5D;">기간: 2016.07.18 ~ 2016.08.09 </span>
-				</div>
-			</div>
-			<div style="width:320px; height:300px; float:left; margin-left:43px;">
-				<a href=""><img style="width:320px; height:300px;" src="http://img.cgv.co.kr/Front/Main/2016/0727/web_list_240_200.jpg"></a>
-				<div style="margin-top:5px;">
-					<span style="color:#4374D9; font-weight:bold;">스페셜 이벤트</span> <br/>
-					<span style="font-size:12px;">도전! 탈출 영퀴왕</span> <br/>
-					<span style="font-size:12px; color:#5D5D5D;">기간: 2016.07.27 ~ 2016.08.16 </span>
-				</div>
-			</div>
-		</div>
-		
-		<div id="event_nav" style="text-align:center; border:2px dashed red; border-radius:20px; margin-left:360px; width:400px; height:45px; float:left;">
-			<ul class="nav nav-tabs" style="display:inline-block;">
-				<li style="font-weight:bold;"><a href="javascript:getEventImg(1)">CGV스페셜</a></li>
-				<li style="font-weight:bold;"><a href="javascript:getEventImg(2)">영화/예매</a></li>
-				<li style="font-weight:bold;"><a href="javascript:getEventImg(3)">제휴/할인</a></li>
-				<li style="font-weight:bold;"><a href="javascript:getEventImg(4)">멤버십</a></li>
-			</ul>
-		</div>
-		
 		<br/>
 		
 		<div id="event_img" style="margin-top:30px; float:left;">
-			
-			<!-- 이벤트 이미지 삽입될 영역 -->
+			<c:forEach items="${event_list}" var="event_list" varStatus="i">
+				<c:choose>
+					<c:when test="${i.index>2 && i.index<=6}">
+						<div style="float:left; margin-left:27px; margin-top:100px;">
+							<a href="">
+								<img src="${event_list.notice_image}" style="width:250px; height:250px;"/>
+							</a>
+						</div>
+					</c:when>
+					<c:when test="${i.index>6 && i.index<10}">
+						<div style="float:left; margin-left:27px; margin-top:40px;">
+							<a href="">
+								<img src="${event_list.notice_image}" style="width:250px; height:250px;"/>
+							</a>
+						</div>
+						<c:if test="${i.index==10}">
+							<button id="more_btn" name="more_btn" onclick="more()" style="width:150px; margin-left:490px; margin-top:40px; font-weight:bold; border-top:2px dotted gray; border-bottom:2px dotted gray; font-size:20px; color:gray;">
+								<i class="fa fa-chevron-circle-down fa-1x" aria-hidden="true" style="color:gray; margin-right:5px;">
+								</i> 더보기
+							</button>
+						</c:if>
+					</c:when>
+					<c:when test="${i.index>10}">
+						<div class="more_img" style="float:left; margin-left:27px; margin-top:40px;">
+							<a href="">
+								<img src="${event_list.notice_image}" style="width:250px; height:250px;"/>
+							</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="width:320px; height:300px; float:left; margin-left:43px;">
+							<a href=""><img style="width:320px; height:300px;" src="${event_list.notice_image}"></a>
+							<div style="margin-top:5px;">
+								<span style="color:#4374D9; font-weight:bold;">스페셜 이벤트</span> <br/>
+								<span style="font-size:12px;">${event_list.notice_title}</span> <br/>
+								<span style="font-size:12px; color:#5D5D5D;">${event_list.notice_date} ~</span>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 		</div>
 		
 	</div>	
 </div>
 
 <script>
-	function setEventImg(list){
-		var result = "";
-		
-		for(var i=0; i<list.length; i++){
-			if(i>3 && i<8){
-				result += '<div style="float:left; margin-left:25px; margin-top:40px;">'
-					+ '<a href="">'
-					+ '<img src="' + list[i] + '" style="width:250px; height:250px;"/>'
-					+ '</a>'
-					+ '</div>';
-				if(i==7){
-					result += '<button id="more_btn" name="more_btn" onclick="more()" style="width:150px; margin-left:490px; margin-top:40px; font-weight:bold; border-top:2px dotted gray; border-bottom:2px dotted gray; font-size:20px; color:gray;">'
-					+ '<i class="fa fa-chevron-circle-down fa-1x" aria-hidden="true" style="color:gray; margin-right:5px;">'
-					+ '</i>'
-					+ '더보기'
-					+ '</button>';
-				}
-			}else if(i>7){
-				result += '<div class="more_img" style="float:left; margin-left:25px; margin-top:40px;">'
-					+ '<a href="">'
-					+ '<img src="' + list[i] + '" style="width:250px; height:250px;"/>'
-					+ '</a>'
-					+ '</div>';
-			}else{
-				result += '<div style="float:left; margin-left:25px;">'
-				+ '<a href="">'
-				+ '<img src="' + list[i] + '" style="width:250px; height:250px;"/>'
-				+ '</a>'
-				+ '</div>';
-			}
-		}
-			document.getElementById("event_img").innerHTML = result;
-			$(".more_img").hide();
-	}
-	
-	function getEventImg(category){
-		$.ajax({
-			type : 'get',
-			url : '/event/' + category,
-			headers : {
-			"Content-Type" : "application/json",
-			//"X-HTTP-Method-Override" : "GET",  ----  POST 이거나 GET인경우는 생략가능
-			},
-			dataType : 'json',
-			data : '',
-			success : function(list){
-				setEventImg(list);
-			}
-		});
-	}
-	
-	getEventImg(1);
+	$(".more_img").hide();
 	
 	function more(){
 		$("#more_btn").hide();
