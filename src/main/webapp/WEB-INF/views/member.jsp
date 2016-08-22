@@ -2,12 +2,21 @@
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" session="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="./include/header.jsp"%>
+<style>
+	th{background-color:#bf4040; color:white;}	
+</style>
+
 <script>
 	var isIdCheck = false;
+	
+	// 취소버튼
 	function home(){
 		location.href="/index";
 	}
+	
+	// 회원가입버튼
 	function welcome(){
+		
 		var f = document.getElementById("f");
 			
 			if(
@@ -77,20 +86,20 @@
 				if(result == true){
 					$("#checkMsg").html("이미 등록된 아이디입니다.");
 				}else{
-					$("#checkMsg").html("사용하실 수 있는 아이디입니다");
+					$("#checkMsg").html("사용하실 수 있는 아이디입니다.");
 				}
 			}
 		});
 	}
+	
 	function email(){
 		document.getElementById("email2").value = document.getElementById("emailSelect").value;
 	}
-</script>
-<style>
 	
-</style>
+</script>
+
 <div id="wrap_content" style="min-height:100%; position:relative;">
-	<div id="content" style="padding-bottom:50px; width:890px; margin:0 auto; ">
+	<div id="content" style="padding-bottom:50px; width:860px; margin:0 auto; ">
 		<form action="/member" id="f" name="f" method="post" class="form-inline">
 		<br>
 		<h1 align="center" >회원가입</h1>
@@ -103,7 +112,6 @@
 						<input type="text" id="member_id" name="member_id" class="form-control" >
 						<input type="button" class="btn btn-danger" onclick="check()" value="중복체크" >
 					</td>
-					
 					<td id="checkMsg"></td>
 				</tr>
 				<tr>
@@ -132,12 +140,12 @@
 					<th>생년월일</th><td><input type="text" id="birthday" name="birthday" class="form-control" ></td><td id="checkBirthday"></td>
 				</tr>	
 				<tr>
-					<th >집주소</th><td><input type="text" id="address" name="address" class="form-control" ></td><td id="checkAddress"></td>
+					<th >집주소</th><td><input type="text" id="address" name="address" class="form-control" style="width:480px;"></td><td id="checkAddress"></td>
 				</tr>	
 				<tr>
 					<th>이메일</th>
 					<td>
-						<input class="form-control" id="email1" name="email1" type="text" style="width: 120px; float: left;">@
+						<input class="form-control" id="email1" name="email1" type="text" style="width: 120px; float: left; margin-right:4px;">@
 					    <input class="form-control" id="email2" name="email2" type="text" style="width: 120px;">
 					    <select class="form-control" id="emailSelect" name="emailSelect" onchange="email()" >
 							<option value="">직접입력</option>
@@ -153,7 +161,7 @@
 					</td>
 				</tr>	
 				<tr>
-					<th>연락처</th><td><input type="text" id="tel" name="tel" class="form-control" ></td><td id="checkTel"></td>
+					<th>연락처</th><td><input type="text" id="tel" name="tel" class="form-control" placeholder="'ㅡ' 없이 작성하세요." ></td><td id="checkTel"></td>
 				</tr>
 				<tr>
 					<th>비밀번호찾기 질문</th>

@@ -64,11 +64,8 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	public void userInfoUpdate(String member_id, MemberVO vo) {
 		MemberVO tempvo = new MemberVO();
 		tempvo.setMember_id(member_id);
-		System.out.println("11111111111111111111111111");
 		tempvo = em.find(MemberVO.class, tempvo.getMember_id());
-		System.out.println("222222222222222222222222222");
 		MemberVO mergevo = em.merge(tempvo);
-		System.out.println("33333333333333333333333333333");
 		mergevo.setAddress(vo.getAddress());
 		mergevo.setMember_name(vo.getMember_name());
 		mergevo.setEmail(vo.getEmail());

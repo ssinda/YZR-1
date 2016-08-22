@@ -20,16 +20,16 @@ public class LoginDAOImpl implements LoginDAO {
 	public MemberVO memberLogin(String member_id, String member_pw) {
 		// TODO Auto-generated method stub
 		MemberVO vo = null;
-		CriteriaBuilder cb=entityManager.getCriteriaBuilder();
-		CriteriaQuery<MemberVO> cq=cb.createQuery(MemberVO.class);
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MemberVO> cq = cb.createQuery(MemberVO.class);
 		Root<MemberVO> root = cq.from(MemberVO.class);
 		Predicate restrictions = cb.equal(root.get("member_id"), member_id);
 		cq.where(restrictions);
 		try{
 			TypedQuery<MemberVO> tq = entityManager.createQuery(cq);
-			vo=tq.getSingleResult();
+			vo = tq.getSingleResult();
 			if(!vo.getMember_pw().equals(member_pw)){
-				vo=null;
+				vo = null;
 			}
 			return vo;
 		}catch(Exception e){

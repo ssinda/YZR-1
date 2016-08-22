@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,7 @@ public class MemberDAOImpl implements MemberDAO {
     @PersistenceContext // 이건 또 뭐야?
 	private EntityManager entityManager;
 	
-	@Override // 왜 메서드는 다 오버라이드 어노테이션이 적용된게 기본값인 것인가?
+	@Override
 	public void insert(MemberVO vo) {
 		entityManager.persist(vo);
 
@@ -43,14 +44,6 @@ public class MemberDAOImpl implements MemberDAO {
 		}catch(Exception e){
 			return vo;
 		}
-		//select * from member where member_id = aaaa;
-		
-	}
-
-	@Override
-	public void update(String member_id) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -58,7 +51,8 @@ public class MemberDAOImpl implements MemberDAO {
 		MemberVO vo = entityManager.find(MemberVO.class, member_id);
 		entityManager.remove(vo);
 	}
-
+	
+	// 아이디 체크
 	@Override
 	public boolean idCheck(String member_id) {
 		String check=null;
@@ -76,6 +70,7 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 	}
 	
+	// 비밀번호 체크
 	@Override
 	public boolean pwCheck(String member_pw, String member_id) {
 		String check=null;
@@ -93,5 +88,106 @@ public class MemberDAOImpl implements MemberDAO {
 			return false;
 		}
 	}
+	
+	// 회원정보 얻어오기
+	@Override
+	public MemberVO getMemberInfo(String member_id) {
+		
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MemberVO> cq = cb.createQuery(MemberVO.class);
+		Root<MemberVO> root = cq.from(MemberVO.class);
+		Predicate p = cb.equal(root.get("member_id"), member_id);
+		cq.select(root).where(p);
+		TypedQuery<MemberVO> tq = entityManager.createQuery(cq);
+		MemberVO vo= tq.getSingleResult();
+		
+		return vo;
+	}
+	
+	//비밀번호변경
+	@Override
+	public void pwUpdate(String member_id, String newPw) {
+		
+		MemberVO vo = new MemberVO();
+		vo.setMember_id(member_id);
+		vo = entityManager.find(MemberVO.class, vo.getMember_id());
+		MemberVO mergevo = entityManager.merge(vo);
+		mergevo.setMember_pw(newPw);
+		
+	}
+	
+	
+	//회원정보변경
+	@Override
+	public void userInfoUpdate(String member_id, MemberVO vo) {
+		MemberVO tempvo = new MemberVO();
+		tempvo.setMember_id(member_id);
+		tempvo = entityManager.find(MemberVO.class, tempvo.getMember_id());
+		MemberVO mergevo = entityManager.merge(tempvo);
+		mergevo.setAddress(vo.getAddress());
+		mergevo.setMember_name(vo.getMember_name());
+		mergevo.setEmail(vo.getEmail());
+		mergevo.setTel(vo.getTel());
+	}
+	
+	//아이디찾기
+	
+	@Override
+	public String idSearch(String member_name, String email){
+		String check=null;
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<MemberVO> root = cq.from(MemberVO.class);
+		cq.select(root.get("member_id"));
+		cq.where(cb.equal(root.get("member_name"), member_name), cb.equal(root.get("email"), email));
+		try{
+			TypedQuery<String> tq = entityManager.createQuery(cq);
+			check = tq.getSingleResult();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return check;
+	}
+	
+	//비밀번호찾기
+	@Override
+	public boolean pwFind(MemberVO vo){
+		
+		boolean check = true;
+		try{
+			CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+			CriteriaQuery<String> cq = cb.createQuery(String.class);
+			Root<MemberVO> root = cq.from(MemberVO.class);
+			cq.select(root.get("member_id"));
+			Predicate mc = cb.equal(root.get("member_id"), vo.getMember_id());
+			Predicate qc = cb.equal(root.get("question"), vo.getQuestion());
+			Predicate ac = cb.equal(root.get("answer"), vo.getAnswer());
+			cq.where(cb.and(mc,qc,ac));
+		
+			TypedQuery<String> tq = entityManager.createQuery(cq);
+			check = tq.getSingleResult().isEmpty();
+			System.out.println(check);
+			return check;
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			return check;
+		}
+	}
+	
+	
+	
+	@Override
+	public void update(String member_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public MemberVO idSearchPost(String member_name, String email) {
+		// TODO Auto-generated method stub
+		
+		return null;
+	}
+
 
 }

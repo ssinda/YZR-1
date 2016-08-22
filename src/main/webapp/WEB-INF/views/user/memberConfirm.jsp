@@ -21,17 +21,18 @@
 </script>
 
 <style>
-
+	th{background-color:#bf4040; color:white;}
+	td{text-align:center;}
 </style>
 
 <div id="wrap_content" style="min-height:100%; position:relative;" align="center" >
-	<div id="content" style="padding-bottom:150px; width:400px;">
+	<div id="content" style="padding-bottom:150px; width:320px;">
 		<h1>회원가입을 축하합니다</h1>
 		<br>
 		
-		<table class="table">
+		<table class="table" style="width:400px;">
 			<tr>
-				<th class="col-xs-6">아이디</th><td>${vo.getMember_id()}</td>
+				<th>아이디</th><td>${vo.getMember_id()}</td>
 			</tr>
 			<tr>
 				<th>이름</th><td>${vo.getMember_name()}</td>

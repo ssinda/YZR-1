@@ -55,18 +55,19 @@
 </script>
 
 <style>
-
+	th{background-color:#bf4040; color:white; width:100px;}
+	h2{text-align:center;}
 </style>
 
-<div id="wrap_content" style="min-height:100%; position:relative;" align="center" >
-	<div id="content" style="padding-bottom:150px; width:400px;">
-		<h1>회원정보 수정페이지</h1>
+<div id="wrap_content" align="center">
+	<div id="content" style="width:480px;" >
+		<h2>회원정보 수정페이지</h2>
 		<br>
 		
-		<table class="table" style="width:600px;">
+		<table class="table" style="width:400px;">
 				<tr>
-					<th class="col-xs-3">아이디</th>
-					<td class="col-sm-2">${vo.getMember_id()}</td>
+					<th>아이디</th>
+					<td>${vo.getMember_id()}</td>
 				</tr>
 					
 				<tr>

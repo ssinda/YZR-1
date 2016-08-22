@@ -3,49 +3,51 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../include/header.jsp"%>
 <title>pwSearch</title>
-<script type="text/javascript">
+
+<style>
+	th{background-color:#bf4040; color:white;}	
+</style>
+
+<script>
 	function check(){
-		isIdCheck = true;
-		alert($("#member_id").val());
-		var member_id = $("#member_id").val();
-		var answer = $("#answer").val();
-		var question = $("#question").val();
+		alert("check!!!");
 		
-		if($("#member_id").val() == null || $("#member_id").val() == ""){
-			alert("아이디를 입력하세요.");
-		}else if( $("#question").val() == null || $("#question").val() == ""){
-			alert("질문을 선택하세요.");
-		}else if($("#answer").val() == null || $("#answer").val() == ""){
-			alert("질문에 대한 답변을 작성하세요.");
-		}else{
+		modalAjax();
+		
+	}
+	
+	function pwCheck(){
+		
+		var pwFind = document.getElementById("pwSearch");
+		
 			$.ajax({
 				type : 'post',
-				url : '/user/pwFind',
+				url : '/member/pwcheck',
 				headers : {"Content-Type" : "application/json"},
-				data : JSON.stringify({"member_id" : member_id, "question" : question, "answer" : answer}),
+				data : JSON.stringify({"member_id" : $("#member_id").val(),"question" : $("#question").val(),"answer" : $("#answer").val()}),
 				dataType : 'json',
 				success : function(result){
-					alert(result);
 					if(result == true){
-						alert("fail");
+						alert("정신차려 이친구야!!!");
 					}else{
-						alert("success");
-						$("#pwSearch").submit();
+						pwFind.submit();
 					}
 				}
 			});
-		}
 	}
 </script>
 </head>
 
 <div align="center" >
-	<h1>비밀번호 찾기</h1>
-	<form id="pwSearch" name="pwSearch" action="/user/memberPwEdit"  method="post">
-		<table class="table" style="width:400px;" >
+	<div style="margin:30px;" >
+		<h2>비밀번호 찾기</h2>
+	</div>
+	
+	<form id="pwSearch" name="pwSearch" action="/user/pwFind"  method="post">
+		<table class="table" style="width:540px;" >
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" id="member_id" class="form-control" name="member_id" placeholder="찾은 아이디 보여주기"></td>
+				<td><input type="text" id="member_id" class="form-control" name="member_id"></td>
 			</tr>
 			<tr>
 				<th>비밀번호찾기 질문</th>
@@ -67,7 +69,7 @@
 				<td id="checkAnswer"></td>
 			</tr>
 		</table>
-		<input type="button" onclick="check()" class="btn btn-danger" value="확인" >
+		<input type="button" onclick="pwCheck()" class="btn btn-danger btn-lg" value="확인" >
 	</form>
 </div>
 <hr>

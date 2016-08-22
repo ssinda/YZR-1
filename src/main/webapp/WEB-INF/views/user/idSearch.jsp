@@ -1,50 +1,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" session="true"%>
+<%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../include/header.jsp"%>
-<title>idSearch</title>
-<script type="text/javascript">
-	function check(){
-		var form = document.getElementById("idSearch");
-		submit();
+<style>
+	box1{
+		margin:50px;
+		border:1px;
 	}
-</script>
-</head>
+</style>
 
-<div align="center" >
-	<h1>아이디 찾기</h1>
-	<form id="idSearch" name="idSearch" action="/user/idSearch" method="post">
-		<table class="table" style="width:400px;" >
+<div id="box1" align="center" >
+	<div style="margin-top:30px;" >
+		<h2>아이디 찾기</h2>
+	</div>
+	
+	<br>
+	<form id="idSearch" name="idSearch" action="/user/idFind"  method="post">
+		<table class="table" style="width:240px;" >
 			<tr>
-				<th>이름</th>
-				<td><input type="text" id="member_name" class="form-control" name="member_name" ></td>
-				<td rowspan="2"><input type="button" class="btn btn-danger" onclick="check()" value="확인"></td>
+				<td><input type="text" id="member_name" class="form-control" name="member_name" placeholder="이름" /></td>
 			</tr>
 			<tr>
-				<th>이메일</th><td><input type="text" id="email" class="form-control" name="email" ></td>
+				<td><input type="text" id="email" name="email" class="form-control" placeholder="아이디" /></td>
 			</tr>
 		</table>
+		<input type="button" onclick="inputCheck()" class="btn btn-danger btn-lg" value="확인"/>
 	</form>
 </div>
-<hr>
 <script type="text/javascript">
-	function check(){
-		isIdCheck = true;
-		$.ajax({
-			type : 'get',
-			url : 'user/member/idSearch',
-			headers : {"Content-Type" : "application/json"},
-			data : {"member_id" : $("#member_id").val(), "email" : $("#email").val()},
-			dataType : 'json',
-			success : function(result){
-				if(result == true){
-					$("#checkMsg").html("이미 등록된 아이디입니다.");
-				}else{
-					$("#checkMsg").html("사용하실 수 있는 아이디입니다");
-				}
-			}
-		});
+	function inputCheck(){
+		
+		var form = document.getElementById("idSearch");
+		
+		if($("#member_name").val()==null||$("#member_name").val()==""){
+			alert("이름을 입력하세요.");
+		}else if($("#email").val()==null||$("#email").val()==""){
+			alert("이메일을 입력하세요.");
+		}else{
+			form.submit();
+		}
 	}
 </script>
-
 <%@include file="../include/footer.jsp"%>

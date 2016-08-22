@@ -42,30 +42,30 @@
 </script>
 	
 <style>
-
+	th{background-color:#bf4040; color:white;}
 </style>
 
 <div id="wrap_content" style="min-height:100%; position:relative;" align="center" >
-	<div id="content" style="padding-bottom:150px; width:600px;">
-		<h1>비밀번호 수정페이지${password}</h1>
+	<div id="content" style="padding-bottom:150px; width:420px;">
+		<h2>비밀번호 수정페이지</h2>
 		<br>
 		<form action="/user/member/pwChange" id="pwChange" name="pwChange" method="post" >
 			<table class="table">
 				<c:if test="${password != null || password != ''}">
 					<tr>
-						<th class="col-xs-3">기존 비밀번호</th>
-						<td class="col-sm-2"><input type="text" id="originPw" name="originPw"></td>
+						<th>기존 비밀번호</th>
+						<td><input type="password" id="originPw" name="originPw" class="form-control" ></td>
 						<td id="originPw_" name="originPw_" ></td>
 					</tr>
 				</c:if>
 				<tr>
 					<th>새 비밀번호</th>
-					<td><input type="text" id="newPw" name="newPw"></td>
+					<td><input type="password" id="newPw" name="newPw" class="form-control" ></td>
 					<td id="newPw_" name="newPw_" ></td>
 				</tr>
 				<tr>
 					<th>새 비밀번호 확인</th>
-					<td><input type="text" id="newPw2" name="newPw2"  ></td>
+					<td><input type="password" id="newPw2" name="newPw2" class="form-control" ></td>
 					</td><td id="newPw2_" name="newPw2_" ></td>
 				</tr>
 			</table>

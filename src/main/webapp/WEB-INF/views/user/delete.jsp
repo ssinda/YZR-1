@@ -43,7 +43,7 @@
 	
 </script>
 <div class="content" style="margin-left: 250px;">
-	delete
+	
 	
 	<h3>회원탈퇴 하시려면 비밀번호를 입력하세요.</h3>
 	<form id="del" name="del" action="/user/member/deleteConfirm" method="post">
