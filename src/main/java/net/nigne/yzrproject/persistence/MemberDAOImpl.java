@@ -189,7 +189,7 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return null;
 	}
-
+	
 	@Override
 	public MemberVO getMember(String member_id) {
 		// TODO Auto-generated method stub
@@ -205,4 +205,6 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return list.get(0);
 	}
+
+
 }
