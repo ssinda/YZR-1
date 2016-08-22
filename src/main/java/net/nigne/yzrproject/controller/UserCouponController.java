@@ -49,7 +49,7 @@ public class UserCouponController {
 			
 			Long couponTotal = service.getCouponTotal(member_id);
 			PageMaker pm = new PageMaker(cri, couponTotal);
-			
+			System.out.println(couponTotal);
 			map.put("coupon_list", list);
 			map.put("paging", pm);
 
