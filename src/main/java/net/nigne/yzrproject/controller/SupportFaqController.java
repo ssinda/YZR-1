@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.FaqVO;
+import net.nigne.yzrproject.domain.NoticeVO;
 import net.nigne.yzrproject.domain.PageMaker;
 import net.nigne.yzrproject.domain.QnaVO;
 import net.nigne.yzrproject.domain.RentVO;
@@ -57,7 +58,7 @@ public class SupportFaqController {
 			list = service.getFaqList(criteria, search, category);
 			
 			Long faqCount = service.getFaqCount(search, category);
-			
+			System.out.println(faqCount);
 			PageMaker pm = new PageMaker(criteria, faqCount);
 
 			map.put("faq_list", list);

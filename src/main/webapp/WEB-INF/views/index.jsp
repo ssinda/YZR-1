@@ -18,7 +18,7 @@
                      <div class="item active">
                         <i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
                         &nbsp [${notice.getNotice_category()}]
-                        &nbsp <a href=""> ${notice.getNotice_title()} </a>
+                        &nbsp <a href="/support/notice/read/${ notice.no }"> ${notice.getNotice_title()} </a>
                         <span style="float:right;"> ${notice.getNotice_date()} </span>
                      </div>
                   </c:when>
@@ -26,7 +26,7 @@
                      <div class="item">
                         <i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
                         &nbsp [${notice.getNotice_category()}]
-                        &nbsp <a href=""> ${notice.getNotice_title()} </a>
+                        &nbsp <a href="/support/notice/read/${ notice.no }"> ${notice.getNotice_title()} </a>
                         <span style="float:right;"> ${notice.getNotice_date()} </span>
                      </div>
                   </c:otherwise>
