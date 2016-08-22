@@ -73,28 +73,21 @@
          </div>
       </c:if>
       
-      <c:forEach items="${chart}" var="chart" begin="0" end="2" varStatus="i">
-         <div style="margin-top:20px; float:left; margin-left:92px; margin-right:92spx; ">
-            <div id="m1" style="margin-top:20px;">
-               <div id="rec_movie_title" style="border:2px solid #000; width:250px; height:28px; padding-top:2px; background-color:#ff3636; text-align:center;">
-                  <c:choose>
-                     <c:when test="${member_id !=null}">
-                        <span style="font-weight:bold; font-size:15px;">
-                     </c:when>
-                     <c:otherwise>
-                        <span style="font-weight:bold; font-size:15px;">
-                     </c:otherwise>
-                  </c:choose>
-                     <c:choose>
-                        <c:when test="${ member_id != null }">
-                           <c:set value="${ rec_title }" var="chart_title"></c:set>
-                        </c:when>
-                        <c:otherwise>
-                           <c:set value="${ basic_title }" var="chart_title"></c:set>
-                        </c:otherwise>
-                     </c:choose>
-                     ${chart_title[i.index]}
-                  </span>
+	<c:forEach items="${chart}" var="chart" begin="0" end="2" varStatus="i">
+    	<div style="margin-top:20px; float:left; margin-left:92px; margin-right:92spx; ">
+        	<div id="m1" style="margin-top:20px;">
+            	<div id="rec_movie_title" style="border:2px solid #000; width:250px; height:28px; padding-top:2px; background-color:#ff3636; text-align:center;">
+					<span style="font-weight:bold; font-size:15px;">
+                  	  <c:choose>
+	                      <c:when test="${ member_id != null }">
+	                     	 <c:set value="${ rec_title }" var="chart_title"></c:set>
+	                      </c:when>
+	                      <c:otherwise>
+	                      	<c:set value="${ basic_title }" var="chart_title"></c:set>
+	                      </c:otherwise>
+                      </c:choose>
+                      ${chart_title[i.index]}
+                    </span>
                </div>
                <div id="rec_movie" style="width:250px; height:380px; text-align:left; margin-top:5px;">
                   <a href="/movie/${ chart.movie_id }"><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
@@ -167,6 +160,7 @@
 		
 		frm.submit();
 	}
+    
 </script>
          
 <style>

@@ -91,10 +91,14 @@
                   + '관람등급 : '+ movie[i].rating +' <br/>'
                   + '예매율 : '+ movie[i].reservation_rate +'% <br/>'
                   + '개봉날짜 : '+ movie[i].open_date +' <br/>'
-                  + '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[i].movie_id + '\',\'' + movie[i].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
-                  + '</div>'
-                  + '</div>'
-                  + '</div>';
+               if(movie[i].status == "play"){
+            	  result += '<input type="button" id="res_btn'+i+'" name="res_btn'+i+'" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[i].movie_id + '\',\'' + movie[i].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'; 
+               }else if(movie[i].status == "schedule"){
+            	  result += '<input type="button" id="res_btn'+i+'" name="res_btn'+i+'" class="btn btn-primary btn-sm" style="width:250px; display:inline-block; margin-top:7px; cursor: default; letter-spacing: 25px;" value="&nbsp상영예정" />'; 
+               }   
+                  result += '</div>'
+	                  + '</div>'
+	                  + '</div>';
                if(i == 7){
                   result += '<button type="button" id="more_btn" onclick="more()" style="float:right; margin-top:55px; margin-right:18px; border:0; background-color:white;">'
                      + '<i class="fa fa-plus-square fa-1x" aria-hidden="true" style="color:gray;">'
@@ -119,12 +123,15 @@
                   + '관람등급 : '+ movie[i].rating +' <br/>'
                   + '예매율 : '+ movie[i].reservation_rate +'% <br/>'
                   + '개봉날짜 : '+ movie[i].open_date +' <br/>'
-                  + '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[i].movie_id + '\',\'' + movie[i].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
-                  + '</div>'
-                  + '</div>'
-                  + '</div>'
-                  + '</div>';
-               
+               if(movie[i].status == "play"){
+             	  result += '<input type="button" id="res_btn'+i+'" name="res_btn'+i+'" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[i].movie_id + '\',\'' + movie[i].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'; 
+               }else if(movie[i].status == "schedule"){
+             	  result += '<input type="button" id="res_btn'+i+'" name="res_btn'+i+'" class="btn btn-primary btn-sm" style="width:250px; display:inline-block; margin-top:7px; cursor: default; letter-spacing: 25px;" value="&nbsp상영예정" />'; 
+               }   
+                  result += '</div>'
+ 	                  + '</div>'
+ 	                  + '</div>';
+            
             }else{
                result += '<div id="movie_chart'+i+'" style="margin-top:100px;">'
                   + '<div id="chart" style="width:285px; height:380px; text-align:left; float:left;">'
@@ -136,10 +143,14 @@
                   + '관람등급 : '+ movie[i].rating +' <br/>'
                   + '예매율 : '+ movie[i].reservation_rate +'% <br/>'
                   + '개봉날짜 : '+ movie[i].open_date +' <br/>'
-                  + '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[i].movie_id + '\',\'' + movie[i].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
-                  + '</div>'
-                  + '</div>'
-                  + '</div>';
+                if(movie[i].status == "play"){
+              	  result += '<input type="button" id="res_btn'+i+'" name="res_btn'+i+'" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[i].movie_id + '\',\'' + movie[i].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'; 
+                }else if(movie[i].status == "schedule"){
+             	  result += '<input type="button" id="res_btn'+i+'" name="res_btn'+i+'" class="btn btn-primary btn-sm" style="width:250px; display:inline-block; margin-top:7px; cursor: default; letter-spacing: 25px;" value="&nbsp상영예정" />'; 
+                }   
+                   result += '</div>'
+ 	                  + '</div>'
+ 	                  + '</div>';
             }
             
             
@@ -167,7 +178,7 @@
                         + '관람등급 : '+ movie[j].rating +' <br/>'
                         + '예매율 : '+ movie[j].reservation_rate +'% <br/>'
                         + '개봉날짜 : '+ movie[j].open_date +' <br/>'
-                        + '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[j].movie_id + '\',\'' + movie[j].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
+                        + '<input type="button" id="res_btn'+j+'" name="res_btn'+j+'" class="btn btn-primary btn-sm" value="&nbsp상영예정" style="width:250px; display:inline-block; margin-top:7px; cursor: default; letter-spacing: 25px;"/>'
                         + '</div>'
                         + '</div>'
                         + '</div>';
@@ -182,7 +193,7 @@
                         + '관람등급 : '+ movie[j].rating +' <br/>'
                         + '예매율 : '+ movie[j].reservation_rate +'% <br/>'
                         + '개봉날짜 : '+ movie[j].open_date +' <br/>'
-                        + '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[j].movie_id + '\',\'' + movie[j].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
+                        + '<input type="button" id="res_btn'+j+'" name="res_btn'+j+'" class="btn btn-primary btn-sm" value="&nbsp상영예정" style="width:250px; display:inline-block; margin-top:7px; cursor: default; letter-spacing: 25px;"/>'
                         + '</div>'
                         + '</div>';
                   }
@@ -196,7 +207,7 @@
                      + '관람등급 : '+ movie[j].rating +' <br/>'
                      + '예매율 : '+ movie[j].reservation_rate +'% <br/>'
                      + '개봉날짜 : '+ movie[j].open_date +' <br/>'
-                     + '<input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation(\''+ movie[j].movie_id + '\',\'' + movie[j].title + '\')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>'
+                     + '<input type="button" id="res_btn'+j+'" name="res_btn'+j+'" class="btn btn-primary btn-sm" value="&nbsp상영예정" style="width:250px; display:inline-block; margin-top:7px; cursor: default; letter-spacing: 25px;"/>'
                      + '</div>'
                      + '</div>';
                }
