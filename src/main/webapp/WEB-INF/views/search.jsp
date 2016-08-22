@@ -136,6 +136,26 @@
 		getDirectorList(1);
 	}
 	
+	function goReservation(movie_id, title){
+		var frm = document.createElement("form");
+		frm.action = "/ticket";
+		frm.method = "post";
+		
+		var mi = document.createElement("input");
+		mi.type = "text";
+		mi.name = "movie_id";
+		mi.value = movie_id;
+		frm.appendChild(mi);
+		
+		var mt = document.createElement("input");
+		mt.type = "text";
+		mt.name = "title";
+		mt.value = title;
+		frm.appendChild(mt);
+		
+		frm.submit();
+	}
+	
 	
 	function setDefaultList(ml){
 		var a = $("#movie_list");
@@ -160,9 +180,9 @@
 					
 			
 			if(this.status == "play"){
-				result+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="'+ this.movie_id +'">예매</button></span>';
+				result+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="goReservation(\''+ this.movie_id + '\',\'' + this.title + '\')">예매</button></span>';
 			}else if(this.status == "schedule"){
-				result+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default;">&nbsp상영예정</button></span>';
+				result+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영예정</button></span>';
 			}
 			
 			result+= '</div>';
@@ -258,9 +278,9 @@
 					movie_list+= '</span>';
 					
 					if(this.status == "play"){
-						movie_list+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="'+ this.movie_id +'">예매</button></span>';
+						movie_list+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="goReservation(\''+ this.movie_id +'\',\''+this.title+'\')">예매</button></span>';
 					}else if(this.status == "schedule"){
-						movie_list+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default;">&nbsp상영예정</button></span>';
+						movie_list+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영예정</button></span>';
 					}
 					
 					movie_list+= '</div>';
@@ -388,9 +408,9 @@
 				result+= '</span>';
 				
 				if(this.status == "play"){
-					result+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="'+ this.movie_id +'">예매</button></span>';
+					result+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="goReservation(\''+ this.movie_id +'\',\''+this.title+'\')">예매</button></span>';
 				}else if(this.status == "schedule"){
-					result+= '<span style="text-align: center; color: #ff4859; font-weight: bold; letter-spacing: 25px;">&nbsp상영예정</span>';
+					result+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영예정</button></span>';
 				}
 				
 				result+= '</div>';
