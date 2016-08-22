@@ -1,3 +1,4 @@
+
 package net.nigne.yzrproject.service;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface MemberService {
 	public void userInfoUpdate(String member_id, MemberVO vo);
 	public boolean pwFind(MemberVO vo);
 	public String idSearch(String member_name, String email);
+	public MemberVO getMember(String member_id);
 	
 }

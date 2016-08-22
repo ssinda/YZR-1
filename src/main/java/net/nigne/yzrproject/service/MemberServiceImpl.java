@@ -1,3 +1,4 @@
+
 package net.nigne.yzrproject.service;
 
 import java.util.List;
@@ -84,5 +85,11 @@ public class MemberServiceImpl implements MemberService {
 	public String idSearch(String member_name, String email) {
 		
 		return dao.idSearch(member_name, email);
+	}
+	
+	@Override
+	public MemberVO getMember(String member_id) {
+		// TODO Auto-generated method stub
+		return dao.getMember(member_id);
 	}
 }

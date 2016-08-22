@@ -1,3 +1,4 @@
+
 package net.nigne.yzrproject.persistence;
 
 import java.util.List;
@@ -189,5 +190,19 @@ public class MemberDAOImpl implements MemberDAO {
 		return null;
 	}
 
-
+	@Override
+	public MemberVO getMember(String member_id) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MemberVO> mainQuery = cb.createQuery(MemberVO.class);
+		Root<MemberVO> mainQueryroot = mainQuery.from(MemberVO.class);
+		
+		mainQuery.select(mainQueryroot);
+		mainQuery.where(cb.equal(mainQueryroot.get("member_id"), member_id));
+		
+		TypedQuery<MemberVO> tq = entityManager.createQuery(mainQuery);
+		List<MemberVO> list = tq.getResultList();
+		
+		return list.get(0);
+	}
 }

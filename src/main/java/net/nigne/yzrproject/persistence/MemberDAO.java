@@ -1,3 +1,4 @@
+
 package net.nigne.yzrproject.persistence;
 
 import java.util.List;
@@ -18,5 +19,6 @@ public interface MemberDAO {
 	public boolean pwFind(MemberVO vo);
 	public String idSearch(String member_name, String email);
 	public MemberVO idSearchPost(String member_name, String email);
+	public MemberVO getMember(String member_id);
 	
 }

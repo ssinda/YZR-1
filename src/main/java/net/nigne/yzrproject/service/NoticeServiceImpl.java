@@ -20,5 +20,11 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<NoticeVO> getNotice() {
 		return dao.getNotice();
 	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public List<NoticeVO> getEvent() {
+		return dao.getEvent();
+	}
 
 }

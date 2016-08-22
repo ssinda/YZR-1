@@ -20,7 +20,7 @@ th{
 	background-color: ivory;
 }
 </style>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<div>
 		<label style="font-size: 15pt;">분실물 문의</label><br>
 		분실물을 등록해주시면 확인 후 신속하게 답변 드리겠습니다.<br>
@@ -83,7 +83,7 @@ th{
 				</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th style="vertical-align: top; padding-top: 20px;">내용</th>
 				<td colspan="3">
 					<textarea id="lost_content" name="lost_content" rows="5" cols="100"></textarea>
 				</td>

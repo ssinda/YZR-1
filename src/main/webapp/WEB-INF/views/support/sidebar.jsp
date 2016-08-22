@@ -106,7 +106,7 @@ section {
 	padding-left: 15px;
 }
 </style>
-<div id="wrap_content" style="min-height: 100%; position: relative;">
+<div id="wrap_content" style="min-height: 100%; position: absolute; left: 250px;">
 	<nav class="navbar navbar-defalt sidebar" role="navigation">
 		<div class="container-fluid">
 			<!-- Collect the nav links, forms, and other content for toggling -->
