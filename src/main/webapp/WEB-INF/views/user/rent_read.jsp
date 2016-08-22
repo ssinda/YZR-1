@@ -47,8 +47,8 @@ th{
 			</td>
 		</tr>
 		<tr>
-			<th>내용</th>
-			<td style="height: 200px;">
+			<th style="vertical-align: text-top;">내용</th>
+			<td style="height: 200px;vertical-align: text-top;">
 			${rentvo.rent_content }
 				</textarea>
 			</td>

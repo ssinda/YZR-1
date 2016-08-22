@@ -46,8 +46,8 @@ th{
 			</td>
 		</tr>
 		<tr >
-			<th>내용</th>
-			<td colspan="3" style="height:200px;" >
+			<th  style="vertical-align: text-top;;">내용</th>
+			<td colspan="3" style="height:200px; vertical-align: text-top;"  >
 				${lostvo.lost_content }
 			</td>
 		</tr>
