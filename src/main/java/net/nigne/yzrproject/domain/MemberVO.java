@@ -9,7 +9,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="member")
 public class MemberVO {
-	
 	@Id
 	@Column(name="member_id")
 	String member_id;
@@ -43,12 +42,6 @@ public class MemberVO {
 	
 	@Column(name="grade")
 	String grade;
-	
-	@Column(name="question")
-	String question;
-	
-	@Column(name="answer")
-	String answer;
 
 	public String getMember_id() {
 		return member_id;
@@ -137,21 +130,4 @@ public class MemberVO {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-
-	public String getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-	
 }

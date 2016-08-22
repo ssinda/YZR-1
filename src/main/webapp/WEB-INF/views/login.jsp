@@ -129,4 +129,5 @@ a:hover {
 		}
 	}
 </script>
+<% session.setAttribute("error", null);%>
 <%@include file="./include/footer.jsp"%>

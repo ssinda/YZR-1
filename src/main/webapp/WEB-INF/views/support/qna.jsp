@@ -20,7 +20,7 @@ th{
 	background-color: ivory;
 }
 </style>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<div>
 		<label style="font-size: 15pt;">1:1 문의</label><br>
 		자주찾는 질문에서 원하는 답변을 찾지 못하셨군요.<br>
@@ -48,7 +48,7 @@ th{
 				<th style="border-top: 0px;">문의 유형</th>
 				<td colspan="3" style="border-top: 0px;">
 					<form role="form">
-						<label class="radio-inline"><input type="radio" name="qnatype" value="문의">문의</label>
+						<label class="radio-inline"><input type="radio" name="qnatype" checked="checked" value="문의">문의</label>
 						<label class="radio-inline"><input type="radio" name="qnatype" value="칭찬">칭찬</label>
 						<label class="radio-inline"><input type="radio" name="qnatype" value="불만">불만</label>
 						<label class="radio-inline"><input type="radio" name="qnatype" value="제안">제안</label>
@@ -62,7 +62,7 @@ th{
 				</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th style="vertical-align: top; padding-top: 20px;">내용</th>
 				<td colspan="3">
 					<textarea id="content" name="content" rows="5" cols="100"></textarea>
 				</td>

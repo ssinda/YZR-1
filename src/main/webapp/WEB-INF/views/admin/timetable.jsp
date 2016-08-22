@@ -13,8 +13,8 @@ th, td{
 		<% response.sendRedirect("/login");%> 
 	</script>
 </c:if>
-<div class="content" style="margin-left: 250px;">
-	<h2>공지 목록</h2>
+<div class="content" style="margin-left: 120px; width: 890px;">
+	<h2>영화관 목록</h2><br>
 	<table class="table">
 		<thead>
 			<tr>
@@ -22,21 +22,83 @@ th, td{
 				<th>영화관 이름</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${ theaterlist }" var="list">
-				<tr>
-					<td>${ list.theater_id }</td>
-					<td><a href="/admin/timetable/read/${ list.theater_id }">${ list.theater_name }</a></td>
-				</tr>
-			</c:forEach>
+		<tbody id="theater_list">
 		</tbody>
 	</table>
-	<div id="notice_page" style="text-align: center;"></div>
-	<div class="form-inline">
-		<select class="form-control" id="keyword" name=""keyword"">
-			<option value="theater_name" selected="selected">영화관</option>
-		</select> <input type="text" class="form-control" id="search" name="search">
-		<input type="submit" class="btn btn-default" value="검색" onclick="getNoticeList(1);">
-	</div>
+	<div id="timetable_page" style="text-align: center;"></div>
 </div>
+<script>
+	var currentPage = 1;
+	var startPage = 1;
+	var endPage = 1;
+	var totalPage;
+	   
+	function setTheaterList(data){
+		var result;
+		$("#theater_list").html("");
+		$(data).each(function(){
+			result += "<tr>"
+			+ "<td>"
+			+ this.theater_id
+			+ "</td>"
+			+ "<td>"
+			+ "<a href='/admin/timetable/read/" + this.theater_id + "'>"
+			+ this.theater_name
+			+ "</a>"
+			+ "</td>"
+			+ "</tr>";
+		});		
+		$("#theater_list").html(result);
+	}
+	function getTheaterList(page){
+		if(page == null){
+			page = currentPage;
+		}
+		currentPage = page;
+		$.ajax({
+			type : 'get',
+			url : '/admin/timetable/' + page,
+			headers : {
+				"Content-Type" : "application/json",
+			},
+			data : '',
+			dataType : 'json',
+			success : function(result){
+	
+				endPage = result.paging.endPage; 
+	            startPage = result.paging.startPage;
+	            if(totalPage<result.paging.totalPage){
+	            	getTheaterList(result.paging.totalPage);
+	            }
+	            totalPage = result.paging.totalPage;
+	            
+	            setTheaterList(result.theater_list);
+	            setPagePrint(result.paging);
+			}
+		});
+	}
+	getTheaterList(currentPage);
+	
+	function setPagePrint(pm){
+		var str = "<ul class='pagination'>";
+		if(currentPage > pm.endPage && currentPage > 1){
+			getTheaterList(currentPage - 1);
+		}
+		if(pm.prev){
+			str += "<li> <a onclick='getTheaterList("+(pm.startPage-1)+")'>&lt;</a> </li>"
+		}
+		for(var i = pm.startPage; i <= pm.endPage ; i++){
+			if(i == pm.criteria.page){
+				str += "<li class='active'><a href='#'>" + i + "</a></li>"
+			}else{
+				str += "<li><a onclick='getTheaterList("+i+")' style='cursor:pointer'>" + i + "</a></li>"
+			}
+		}
+		if(pm.next){
+			str += "<li> <a onclick='getTheaterList("+(pm.endPage+1)+")'>&gt;</a> </li>"
+		}
+		str += "</ul>"
+		document.getElementById("timetable_page").innerHTML = str;
+	}
+</script>
 <%@include file="../include/footer.jsp"%>

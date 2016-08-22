@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import net.nigne.yzrproject.domain.ActorVO;
+import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.DirectorVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.TheaterVO;
@@ -31,9 +32,9 @@ public class AdminTimetableServiceImpl implements AdminTimetableService {
 	}
 	@Transactional(readOnly=true)
 	@Override
-	public List<TheaterVO> getTheatername() {
+	public List<TheaterVO> getTheatername(Criteria cri) {
 		// TODO Auto-generated method stub
-		return tdao.getTheatername();
+		return tdao.getTheatername(cri);
 	}
 	@Transactional(readOnly=true)
 	@Override
@@ -63,5 +64,11 @@ public class AdminTimetableServiceImpl implements AdminTimetableService {
 		map.put("starttime_list", list);
 		map.put("movie_name", movie_name);
 		return map;
+	}
+	@Transactional(readOnly=true)
+	@Override
+	public Long getTheaterCount() {
+		// TODO Auto-generated method stub
+		return tdao.getTheaterCount();
 	}
 }

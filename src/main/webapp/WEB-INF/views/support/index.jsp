@@ -28,32 +28,40 @@ th, td{
    padding-left: 5px;
 }
 </style>
-<div class="content" style="margin-left: 250px; height: 540px;">
+<div class="content" style="margin-left: 120px; height: 540px;">
 	<div style="width: 890px; float: left;">
 		<div style="width: 33%; height: 270px; float: left; background-color: red; text-align: center;">
 			<span class="glyphicon glyphicon-search" style="margin-top: 70px;"></span><br><br>
 			<span style="font-weight: bold; font-size: 15pt; color: white;">자주찾는 질문 빠른검색</span><br><br>
 			<div style="padding-left: 30px; padding-right: 30px;">
-				<input type="text" style="float: left; height: 30px; padding-left: 5px; border-bottom: 0px; border-left: 0px; border-top: 0px; border-color: gray;" placeholder="검색어를 입력해 주세요.">
-				<div style="background-color: white; color: gray; font-size: 10pt; font-weight: bold; padding-top: 5px; height: 30px; cursor: pointer;" onclick="">검색</div>
+				<form id="faqfrm" method="post" action="/support/faq">
+					<input type="text" id="search" name="search" style="float: left; height: 30px; padding-left: 5px; border-bottom: 0px; border-left: 0px; border-top: 0px; border-color: gray;" placeholder="검색어를 입력해 주세요.">
+					<div style="background-color: white; color: gray; font-size: 10pt; font-weight: bold; padding-top: 5px; height: 30px; cursor: pointer;" onclick="faqPage();">검색</div>
+				</form>
 			</div>
 		</div>
 		<div style="width: 33%; height: 270px; float: left; border-left: 0px; background-color: ivory; text-align: center;">
 			 <span class="glyphicon glyphicon-list-alt" style="margin-top: 70px;"></span><br><br>
 			<span style="font-weight: bold; font-size: 15pt; color: black;">예매내역 확인</span><br><br>
-			<a href="/support/lost"><input type="button" class="btn btn-danger" value="문의하기"></a>
+			<a href="/user/reservation"><input type="button" class="btn btn-danger" value="문의하기"></a>
 		</div>
 		<div style="width: 33%; height: 270px; float: left; border-left: 0px; background-color: ivory; text-align: center;">
 			 <span class="glyphicon glyphicon-edit" style="margin-top: 70px;"></span><br><br>
 			<span style="font-weight: bold; font-size: 15pt; color: black;">나의 문의내역 확인</span><br><br>
-			<a href="/support/rent"><input type="button" class="btn btn-danger" value="문의하기"></a>
+			<a href="/user/qna"><input type="button" class="btn btn-danger" value="문의하기"></a>
 		</div>
 	</div>
 	<div style="width: 890px; float: left;">
 		<div style="width: 33%; height: 270px; float: left; background-color: ivory; text-align: center;">
 			<span class="glyphicon glyphicon-eye-open" style="margin-top: 70px;"></span><br><br>
 			<span style="font-weight: bold; font-size: 15pt; color: black;">아이디/비밀번호 찾기</span><br><br>
-			<a href="#"><input type="button" class="btn btn-danger" value="문의하기"></a>
+			<c:choose>
+				<c:when test="${ member_id == null }">
+					<a href="/login"><input type="button" class="btn btn-danger" value="문의하기"></a>
+				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div style="width: 66%; height: 270px; margin-left: 33%; border-left: 0px; padding-left: 20px; background-color: ivory;">
 			<ul class="list-group">
@@ -68,4 +76,9 @@ th, td{
 		</div>
 	</div>
 </div>
+<script>
+	function faqPage(){
+		$("#faqfrm").submit();
+	}
+</script>
 <%@include file="../include/footer.jsp"%>
