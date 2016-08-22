@@ -1,6 +1,7 @@
 package net.nigne.yzrproject.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -55,34 +56,38 @@ public class YzrController {
    @Autowired
    private UserCouponService userCouponService;
 
+   
    @RequestMapping(value = "", method = RequestMethod.GET)
    public ModelAndView homeA(Locale locale, Model model) throws Exception {
 
       return new ModelAndView("redirect:/index");
    
    }
+   @RequestMapping(value = "/map", method = RequestMethod.GET)
+   public ModelAndView homeB(Locale locale, Model model) throws Exception {
+
+      return new ModelAndView("map");
+   
+   }
    @RequestMapping(value = "/user", method = RequestMethod.GET)
    public String userPage(Model model, HttpServletRequest request) throws Exception {
 		
-	   HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		String member_id = (String)session.getAttribute("member_id");
 		
-		MemberVO vo = userInfoService.getMemberInfo(member_id);
-		long couponTotal = userCouponService.getCouponTotal(member_id);
-		Map<String,Object> reservation = reservation_service.getReservation(member_id);
-		long reservationTotal = reservation_service.getReservationTotal(member_id);
-		
-		model.addAttribute("userInfo", vo);
-		model.addAttribute("couponTotal", couponTotal);
-		model.addAttribute("reservation", reservation);
-		model.addAttribute("reservationTotal", reservationTotal);
-		return "user/index";
-   }
-   
-   @RequestMapping(value = "/membership", method = RequestMethod.GET)
-   public String membershipPage(Locale locale, Model model) throws Exception {
+		if(member_id == "" || member_id == null){
+			return "login";
+		}else{
+			MemberVO vo = userInfoService.getMemberInfo(member_id);
+			long couponTotal = userCouponService.getNotUseCouponTotal(member_id);
+			
+			model.addAttribute("userInfo", vo);
+			model.addAttribute("couponTotal", couponTotal);
+			model.addAttribute("today", new Date());
+			
+			return "user/index";
+		}
 
-      return "membership";
    }
    
    @RequestMapping(value = "/support", method = RequestMethod.GET)
@@ -223,49 +228,14 @@ public class YzrController {
             model.addAttribute("rec_title", rec_title);
          }   
       }
-      
-      List<NoticeVO> notice_list = notice_service.getNotice();
-      
-      model.addAttribute("notice", notice_list);
-      
-      return "index";
-   }
-   
-   @RequestMapping(value = "/index/{category}", method = RequestMethod.GET)
-   public ResponseEntity<List<String>> event_img(@PathVariable("category") Integer category){
-      ResponseEntity<List<String>> entity = null;
-      
-      try{
-         List<String> list = new ArrayList();
-         
-         if(category.equals(1)){
-            list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-            list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-            list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-            list.add("http://img.naver.net/static/www/u/2013/0731/nmms_224940510.gif");
-         }else if(category.equals(2)){
-            list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-            list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-            list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-            list.add("http://icon.daumcdn.net/w/icon/1606/30/105915014.png");
-         }else if(category.equals(3)){
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://dbscthumb.phinf.naver.net/2315_000_2/20110926125556074_R61MRD5WL.jpg/n1464.jpg?type=m4500_4500_fst");
-         }else if(category.equals(4)){
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-            list.add("https://tv.pstatic.net/ugc?t=470x180&q=http://cafefiles.naver.net/20100528_160/credeliens_1275023106172pGQaS_png/yahoo_ai_credeliens.png");
-         }
-      
-         entity = new ResponseEntity<List<String>>(list, HttpStatus.OK);
-      
-      }catch(Exception e){
-         entity = new ResponseEntity<List<String>>(HttpStatus.BAD_REQUEST);
-      }
-      
-      return entity;
-   }
+ 
+	List<NoticeVO> notice_list = notice_service.getNotice();
+	model.addAttribute("notice", notice_list);
+	
+	List<NoticeVO> event_list = notice_service.getEvent();
+	model.addAttribute("event_list", event_list);
+		
+	return "index";
+	}
+
 }

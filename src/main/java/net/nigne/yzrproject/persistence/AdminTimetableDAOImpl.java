@@ -12,8 +12,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import net.nigne.yzrproject.domain.ActorVO;
+import net.nigne.yzrproject.domain.Criteria;
 import net.nigne.yzrproject.domain.DirectorVO;
 import net.nigne.yzrproject.domain.MovieVO;
+import net.nigne.yzrproject.domain.NoticeVO;
 import net.nigne.yzrproject.domain.PlexVO;
 import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
@@ -25,7 +27,7 @@ public class AdminTimetableDAOImpl implements AdminTimetableDAO {
 	private EntityManager entityManager;
 	
 	@Override
-	public List<TheaterVO> getTheatername() {
+	public List<TheaterVO> getTheatername(Criteria cri) {
 		// TODO Auto-generated method stub
 		List<TheaterVO> list = null;
 		CriteriaBuilder cb=entityManager.getCriteriaBuilder();
@@ -33,7 +35,12 @@ public class AdminTimetableDAOImpl implements AdminTimetableDAO {
 		Root<TheaterVO> root = cq.from(TheaterVO.class);
 		cq.select(root);
 		try{
-			TypedQuery<TheaterVO> tq = entityManager.createQuery(cq);
+			TypedQuery<TheaterVO> tq = null;
+			if(cri==null){
+				tq = entityManager.createQuery(cq);
+			}else{
+				tq = entityManager.createQuery(cq).setFirstResult(cri.getStartPage()).setMaxResults(cri.getArticlePerPage());
+			}
 			list=tq.getResultList();
 			return list;
 		}catch(Exception e){
@@ -117,6 +124,23 @@ public class AdminTimetableDAOImpl implements AdminTimetableDAO {
 			return movie_name;
 		}catch(Exception e){
 			return movie_name;
+		}
+	}
+	@Override
+	public Long getTheaterCount() {
+		// TODO Auto-generated method stub
+		Long theaterTotal = 0L;
+		CriteriaBuilder cb=entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq=cb.createQuery(Long.class);
+		Root<TheaterVO> root = cq.from(TheaterVO.class);
+		cq.select(cb.count(root));
+		
+		try{
+			TypedQuery<Long> tq = entityManager.createQuery(cq);
+			theaterTotal=tq.getSingleResult();
+			return theaterTotal;
+		}catch(Exception e){
+			return theaterTotal;
 		}
 	}
 }

@@ -31,4 +31,19 @@ public class NoticeDAOImpl implements NoticeDAO {
 		return list;
 	}
 
+	@Override
+	public List<NoticeVO> getEvent() {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<NoticeVO> cq = cb.createQuery(NoticeVO.class);
+		Root<NoticeVO> root = cq.from(NoticeVO.class);
+		
+		cq.where(cb.like(root.get("notice_category"), "%¿Ã∫•∆Æ%"));
+		cq.orderBy(cb.desc(root.get("notice_date")));
+		
+		TypedQuery<NoticeVO> tq = entityManager.createQuery(cq);
+		List<NoticeVO> list = tq.getResultList();
+		
+		return list;
+	}
+
 }

@@ -9,7 +9,7 @@
 		<%response.sendRedirect("/login");%>
 	</script>
 </c:if>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<h2>감독 등록</h2><br><br>
 	<form id="directorWritefrm" role="form" action="/admin/director/new" method="post" enctype="multipart/form-data">
 		<label class="col-sm-1">이름</label>
