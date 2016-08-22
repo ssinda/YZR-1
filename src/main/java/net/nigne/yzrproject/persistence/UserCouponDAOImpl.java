@@ -39,14 +39,23 @@ public class UserCouponDAOImpl implements UserCouponDAO {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<CouponVO> root = cq.from(CouponVO.class);
-		//사용자의 쿠폰
-		Predicate p = cb.equal(root.get("member_id"), member_id);
-		//사용하지 않은
-		Predicate p2 = cb.equal(root.get("used"), "n");
 		
-		cq.select(cb.count(root)).where(cb.and(p,p2));
+		cq.select(cb.count(root)).where(cb.equal(root.get("member_id"), member_id));
 
+		TypedQuery<Long> tq = entityManager.createQuery(cq);
+		long couponTotal = tq.getSingleResult();
 		
+		return couponTotal;
+	}
+	@Override
+	public long getNotUseCouponTotal(String member_id) {
+	
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<CouponVO> root = cq.from(CouponVO.class);
+		
+		cq.select(cb.count(root)).where(cb.equal(root.get("member_id"), member_id), cb.equal(root.get("used"), "N"));
+
 		TypedQuery<Long> tq = entityManager.createQuery(cq);
 		long couponTotal = tq.getSingleResult();
 		

@@ -6,4 +6,5 @@ import net.nigne.yzrproject.domain.NoticeVO;
 
 public interface NoticeDAO {
 	public List<NoticeVO> getNotice();
+	public List<NoticeVO> getEvent();
 }
