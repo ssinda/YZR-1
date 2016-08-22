@@ -45,17 +45,14 @@ font {
 }
 </style>
 	<div style="position: relative;">
-		<div style="position: absolute; top: 80px; left: 250px; z-index: 10;">
-			<a href="/index"><img
-				src="http://img.cgv.co.kr/R2014/images/title/h1_cgv.png"
-				width="200px;" height="80px;"></a>
-		</div>
 		<nav class="navbar navbar-default" role="navigation"
 			style="border: 0px;">
 			<div class="container-fluid" style="padding: 0px;">
 				<div class="navbar-header"
 					style="background-color: white; border-bottom: 5px solid red;">
 					<ul class="nav navbar-nav navbar-right" style="margin-right: 0px;">
+						<li><a href="/"><span
+									class="glyphicon glyphicon-home"></span> 홈으로</a></li>
 						<c:if test="${ member_id=='admin' }">
 							<li><a href="/admin/user"><span
 									class="glyphicon glyphicon-cog"></span> 관리자페이지</a></li>
