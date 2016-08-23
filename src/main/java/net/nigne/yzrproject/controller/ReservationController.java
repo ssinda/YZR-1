@@ -27,6 +27,7 @@ import net.nigne.yzrproject.domain.PlexVO;
 import net.nigne.yzrproject.domain.ReservationVO;
 import net.nigne.yzrproject.domain.SeatVO;
 import net.nigne.yzrproject.domain.TempLocal;
+import net.nigne.yzrproject.domain.TempReservationInfo;
 import net.nigne.yzrproject.domain.TempSeatTime;
 import net.nigne.yzrproject.domain.TheaterVO;
 import net.nigne.yzrproject.domain.TimetableVO;
@@ -81,7 +82,7 @@ public class ReservationController {
 	* @throws Exception 
 	*/
 	@RequestMapping(value = "/ticket", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpServletRequest request) throws Exception {
+	public String home(Model model, HttpServletRequest request) throws Exception {
 		
 		HttpSession session= request.getSession();
 		session.setAttribute("menu", "RESERVATION");
@@ -122,7 +123,74 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
-	public String reservation(Locale locale, Model model,
+	public String SelectedTable(Model model, HttpServletRequest request,
+							  @RequestParam("frm_theater_area2") String theater_area,
+							  @RequestParam("frm_theater_id2") String theater_id,
+							  @RequestParam("frm_theater_name2") String theater_name,
+							  @RequestParam("frm_movie_id2") String movie_id,
+							  @RequestParam("frm_movie_title2") String movie_title,
+							  @RequestParam("frm_plex_num2") String plex_num,
+							  @RequestParam("frm_start_time2") String start_time) throws Exception {
+		
+		System.out.println("theater_area====================" + theater_area);
+		System.out.println("theater_id====================" + theater_id);
+		System.out.println("theater_name====================" + theater_name);
+		System.out.println("movie_id====================" + movie_id);
+		System.out.println("movie_title====================" + movie_title);
+		System.out.println("plex_num====================" + plex_num);
+		System.out.println("start_time====================" + start_time);
+		
+		HttpSession session= request.getSession();
+		session.setAttribute("menu", "RESERVATION");
+		String memberId = (String)session.getAttribute("member_id");
+		System.out.println("111111111 = " + memberId);
+		
+		MemberVO member = new MemberVO();
+		List<CouponVO> couponList = new ArrayList<>();
+		
+		List<MovieVO> movieList = movieService.getMovieList("reservation_rate");
+		List<TheaterVO> theaterList = theaterService.getList(theater_area);
+		List<String> localList = theaterService.getLocal();
+		List<Long> localTheaterNum = theaterService.getLocalTheaterNum();
+		if(memberId != null){
+			
+			couponList = couponService.getCouponList(memberId);
+			member = memberService.getMember(memberId);
+		}
+		
+		
+		List<TempLocal> local = new ArrayList<>();
+		
+		for(int i = 0; i < localList.size(); i++) {
+			TempLocal vo = new TempLocal();
+			vo.setLocalCount(localTheaterNum.get(i));
+			vo.setLocalName(localList.get(i));
+			local.add(i,vo);
+			
+		}
+		TempReservationInfo tempInfo = new TempReservationInfo();
+		tempInfo.setMovie_id(movie_id);
+		tempInfo.setMovie_title(movie_title);
+		tempInfo.setPlex_num(plex_num);
+		tempInfo.setStart_time(start_time);
+		tempInfo.setTheater_area(theater_area);
+		tempInfo.setTheater_id(theater_id);
+		tempInfo.setTheater_name(theater_name);
+		tempInfo.setDataFlag(1);
+		System.out.println("123159 = "+tempInfo.getDataFlag());
+
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("theaterList", theaterList);
+		model.addAttribute("localList", local);
+		model.addAttribute("couponList", couponList);
+		model.addAttribute("member", member);
+		model.addAttribute("tempInfo", tempInfo);
+		
+		return "ticket";
+	}
+	
+	@RequestMapping(value = "/reservation", method = RequestMethod.POST)
+	public String reservation(Model model,
 							  @RequestParam("theaterid") String theater_id,
 							  @RequestParam("reservationcode") String resrevationCode) throws Exception {
 		
@@ -195,7 +263,7 @@ public class ReservationController {
 		
 		List<MovieVO> movieList = movieService.getMovieId(movie);
 		List<TheaterVO> theaterList = theaterService .getTheaterId(theater);
-//		List<PlexVO> plexList = 
+
 		
 		String movieId = movieList.get(0).getMovie_id();
 		String theaterId = theaterList.get(0).getTheater_id();
@@ -206,7 +274,7 @@ public class ReservationController {
 			List<PlexVO> plexTypeList = new ArrayList<>();
 			List<TempSeatTime> extraSeatNum = new ArrayList<>();
 			
-			//timetableService.getList(movieId, theaterId, date);
+			
 			int plexNumCount = 0;
 			int timetableNum = 0;
 			

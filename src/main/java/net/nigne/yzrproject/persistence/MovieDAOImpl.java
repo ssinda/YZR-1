@@ -482,8 +482,10 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		if("reservation_rate".equals(order)) {
 			mainQuery.select(mainQueryroot).orderBy(cb.desc(mainQueryroot.get("reservation_rate")));
+			mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
 		} else {
 			mainQuery.select(mainQueryroot).orderBy(cb.asc(mainQueryroot.get("title")));
+			mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
 		}
 		
 		TypedQuery<MovieVO> tq = entityManager.createQuery(mainQuery);

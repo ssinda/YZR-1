@@ -2,13 +2,13 @@
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%  %>
+
 <%@include file="./include/header.jsp" %>
 <div id="wrap_content" style="min-height: 100%; position: relative;">
    <div id="content" style="padding-bottom: 150px; float: left; width:100%">
       <div id="theater_table" style="border:2px solid gray; border-radius:20px; height:400px; background-color:#4B4B4B;">
          <span style="font-weight:bold; color:white; font-size:30px; margin-top:35px; margin-left:110px; float:left;">자주가는 CGV</span>
-         <div id="like_th_place" style="float:left; margin-top:25px; margin-left:20px;">
+            <div id="like_th_place" style="float:left; margin-top:25px; margin-left:20px;">
             <c:forEach items="${like_th}" var="like_th" begin="0" end="4" varStatus="i">
                <div class="th_group" style="text-align:center; line-height:50px;">
                   <span class="th_name" style="color:white; font-weight:bold; font-size:20px;" value="${like_th.theater_id}">
@@ -44,7 +44,9 @@
       </div>
       
       <span id="theater_name" style="font-weight:bold; font-size:36px; float:left; margin-top:30px;"></span>
-      <span id="theater_id" style="display:none;"></span>
+      <input type="hidden" id="frm_theater_name" name="frm_theater_name" value="" />
+      <input type="hidden" id="theater_id" value="" />
+      <input type="hidden" id="frm_theater_area" value="" />
       <div style="border:2px solid #000; width:1140px; margin-top:20px; clear:both;"></div>
       
       <div id="play_date" style="clear:both; margin-top:20px; margin-left:260px;">
@@ -68,7 +70,6 @@
       </div>
       
       <div style="border:1px solid #000; margin-top:25px; clear:both; float:left; width:100%;"></div>
-      
    </div>
 </div>
 
@@ -103,7 +104,7 @@
    function setTheater_list(theater_list){
       var result = "";
       for(var i=0; i<theater_list.length; i++){
-         result += '<li id="th_tt'+i+'" class="th_li" onclick="setTheater_name('+"'"+theater_list[i].theater_name+"'"+","+"'"+theater_list[i].theater_id+"'"+')">'
+         result += '<li id="th_tt'+i+'" class="th_li th_name" onclick="setTheater_name('+"'"+theater_list[i].theater_name+"'"+","+"'"+theater_list[i].theater_id+"'"+","+"'"+theater_list[i].theater_area+"'"+')">'
             + theater_list[i].theater_name
             + '</li>';
       }
@@ -111,17 +112,19 @@
       document.getElementById("theater").innerHTML = result;
    }
    
-   function setTheater_name(theater_name, theater_id){
+   function setTheater_name(theater_name, theater_id, theater_area){
       document.getElementById("theater_name").innerHTML = theater_name;
+      document.getElementById("frm_theater_name").value = theater_name;
       document.getElementById("theater_id").value = theater_id;
-      
+      document.getElementById("frm_theater_area").value = theater_area;
+         
       viewDate();
       $(".date_div").css("color", "black");
       $("#0d").css("color", "red");
       getTimetable(theater_id, $("#month0").val()+"-"+$("#day0").val());
    }
    
-   setTheater_name("CGV강남","T001");
+   setTheater_name("CGV강남","T001","서울");
    
    function setViewDate(){
       var cal_date = "";
@@ -229,9 +232,10 @@
    $(".th_name").click(function(){
       var ti = $(this).attr("value");
       var tn = $(this).text();
+      var tl = $("#frm_theater_area").val();
       $(".th_name").css("color","white");
       $(this).css("color","red");
-      setTheater_name(tn, ti);
+      setTheater_name(tn, ti, tl);
    })
    
    if(day<10){
@@ -272,8 +276,10 @@
             + '<div style="border-top:1px solid #000; margin-top:10px; width:1140px;">'
             + '</div>'
             + '<div id="movie" style="float:left; margin-top:15px; margin-left:20px;">'
-            + '<div id="grade_circle'+a+'" style="margin-top:3px; float:left; border:1px solid white; border-radius:20px; width:25px; height:25px; text-align:center; padding-top:1px; color:white;">'
+            + '<div id="grade_circle'+a+'" style="float:left; border:1px solid white; border-radius:25px; width:30px; height:30px; text-align:center; padding-top:5px; color:white; font-size:10pt;">'
             + '</div>'
+            + '<input type="hidden" id="frm_movie_title" name="frm_movie_title" value="" />'
+            + '<input type="hidden" id="frm_movie_id" name="frm_movie_id" value="" />'
             + '<span id="movie_title'+a+'" style="margin-left:20px; font-size:20px;">'
             + '</span>'
             + '<span id="movie_status'+a+'" style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">'
@@ -288,6 +294,7 @@
             + tt[a][0].plex_number
             + '관 > <span id="seat_cnt'+a+'"></span>'
             + '</span>'
+            + '<input type="hidden" id="frm_plex_num" name="frm_plex_num" value="'+tt[a][0].plex_number+'" />'
             + '</i>'
             + '<br/>'
             + '<div id="time_table'+a+'">'
@@ -307,15 +314,24 @@
       for(var a=0; a<total; a++){
          timetable = "";   
          for(var b=0; b < tt[a].length; b++){
-            timetable += '<li class="time_li">'
-               + '<a href="#">'
+            timetable += '<form id="frm" name="frm" action="/ticket" method="post">' 
+               +'<li class="time_li">'
+               + '<a href="javascript:tt_submit()">'
+               + '<input type="hidden" id="frm_theater_area2" name="frm_theater_area2" value="" />'
+               + '<input type="hidden" id="frm_theater_id2" name="frm_theater_id2" value="" />'
+               + '<input type="hidden" id="frm_theater_name2" name="frm_theater_name2" value="" />'
+               + '<input type="hidden" id="frm_movie_id2" name="frm_movie_id2" />'
+               + '<input type="hidden" id="frm_movie_title2" name="frm_movie_title2" value="" />'
+               + '<input type="hidden" id="frm_plex_num2" name="frm_plex_num2" value="" />'
+               + '<input type="hidden" id="frm_start_time2" name="frm_start_time2" value="'+tt[a][b].start_time+'" />'
                + '<span style="font-size:15px; display:block;">'
                + tt[a][b].start_time.substring(11,16)
                + '</span>'
                + '<span id="pt'+a+b+'">'
                + '</span>'
                + '</a>'
-               + '</li>';
+               + '</li>'
+               + '</form>';
          }
          $("#time_table"+a).html(timetable);
          for(var c=0; c < tt[a].length; c++){
@@ -354,11 +370,13 @@
       for(var i=0; i<movie_info.length; i++){
          $("#movie_title"+i).html(movie_info[i].title);
          $("#grade_circle"+i).html(movie_info[i].rating);
-         if(movie_info[i].rating == "18"){
+         if(movie_info[i].rating == "청불"){
             $("#grade_circle"+i).css("background-color","red");
          }else if(movie_info[i].rating == "15"){
             $("#grade_circle"+i).css("background-color","orange");
          }else if(movie_info[i].rating == "12"){
+            $("#grade_circle"+i).css("background-color","blue");
+         }else if(movie_info[i].rating == "전체"){
             $("#grade_circle"+i).css("background-color","green");
          }
          if(movie_info[i].status == "play"){
@@ -368,6 +386,8 @@
          }
          $("#runtime"+i).html(movie_info[i].runtime + "분");
          $("#open_date"+i).html(movie_info[i].open_date);
+         $("#frm_movie_title").val(movie_info[i].title);
+         $("#frm_movie_id").val(movie_info[i].movie_id);
       }
    }
    
@@ -418,6 +438,17 @@
          $("#plex_type"+i).html(plex[i].plex_type);
          $("#seat_cnt"+i).html("총 "+plex[i].plex_seat_cnt+"석");
       }
+   }
+   
+   function tt_submit(){
+      $("#frm_theater_area2").val($("#frm_theater_area").val());
+      $("#frm_theater_id2").val($("#theater_id").val());
+      $("#frm_theater_name2").val($("#frm_theater_name").val());
+      $("#frm_movie_id2").val($("#frm_movie_id").val());
+      $("#frm_movie_title2").val($("#frm_movie_title").val());
+      $("#frm_plex_num2").val($("#frm_plex_num").val());
+      
+      $("#frm").submit();
    }
 </script>
 
