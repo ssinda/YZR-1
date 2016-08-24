@@ -248,7 +248,7 @@
 			$(result.movieList).each(function(i){
 				if(i<4){
 					movie_list+=  '<div class="movie">'
-								+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
+								+ '<span style="width: 264px; height: 358px; text-align: center;"><a href="/movie/' + this.movie_id + '"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></a></span>'
 							    + '<span style="font-weight: bold; font-size: 16px;">'+ this.title + '</span>'
 								+ '<span>등급 : ' + this.rating + '</span>'
 								+ '<span>장르: ';
