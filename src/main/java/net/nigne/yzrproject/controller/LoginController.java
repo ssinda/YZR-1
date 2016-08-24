@@ -27,7 +27,6 @@ public class LoginController {
 	public ModelAndView login(@RequestParam("member_id") String member_id, @RequestParam("member_pw") String member_pw, HttpServletRequest request) throws Exception {
 		MemberVO vo=service.memberLogin(member_id, member_pw);
 		HttpSession session= request.getSession();
-		System.out.println(vo.getMember_id());
 		if(vo==null){
 			session.setAttribute("error", "loginerror");
 			return new ModelAndView("redirect:/login");

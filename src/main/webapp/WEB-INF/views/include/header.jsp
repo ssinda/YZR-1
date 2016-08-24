@@ -68,7 +68,7 @@ font {
 							</c:otherwise>
 						</c:choose>
 						<c:if test="${ member_id == null }">
-							<li><a href="/membership"><span
+							<li><a href="/member"><span
 									class="glyphicon glyphicon-user"></span> 회원가입</a></li>
 						</c:if>
 						<li><a href="/user"><span
