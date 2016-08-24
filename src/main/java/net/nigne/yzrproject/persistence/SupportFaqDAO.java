@@ -15,5 +15,5 @@ public interface SupportFaqDAO {
 	public List<FaqVO> getFaqList(Criteria cri, String search, String category);
 	public Long getFaqCount(String search, String category);
 	public FaqVO getFaqDetail(int no);
-
+	public void updateView_cnt(int no);
 }

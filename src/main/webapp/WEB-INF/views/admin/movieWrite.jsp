@@ -9,7 +9,7 @@
 		<%response.sendRedirect("/login");%>	
 	</script>
 </c:if>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<h2>영화 등록</h2><br><br>
 	<form id="movieWritefrm" role="form" action="/admin/movie/new" method="post" enctype="multipart/form-data">
 		<label class="col-sm-1">영화ID</label>
@@ -44,9 +44,9 @@
 		<div class="col-md-9" style="margin-bottom: 30px;">
 			<textarea id="story" name="story" rows="10" class="form-control" placeholder="Enter Story"></textarea>
 		</div>
-		<div style="clear: both;">
+		<div style="clear: both; text-align: center;">
 			<input type="file" id="file" name="file" size="60" style="margin-left: 90px;"/>
-			<button type="submit" class="btn btn-primary" style="margin-left: 300px;">등록</button>
+			<button type="submit" class="btn btn-primary">등록</button>
 		</div>
 	</form>
 </div>
