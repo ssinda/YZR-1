@@ -42,7 +42,7 @@
 	}
 	
 </script>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	
 	
 	<h3>회원탈퇴 하시려면 비밀번호를 입력하세요.</h3>

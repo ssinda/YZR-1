@@ -201,7 +201,7 @@ public class MemberController {
 	ModelAndView view=new ModelAndView();
 	String member_id = (String)session.getAttribute("member_id");
 	service.pwUpdate(member_id, newPw);
-	view.setViewName("/index");
+	view.setViewName("redirect:/index");
 	return view;
 	}
 	
