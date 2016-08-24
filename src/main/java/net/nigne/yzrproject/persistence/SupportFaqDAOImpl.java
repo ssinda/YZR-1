@@ -98,4 +98,11 @@ public class SupportFaqDAOImpl implements SupportFaqDAO {
 			return vo;
 		}
 	}
+	@Override
+	public void updateView_cnt(int no) {
+		// TODO Auto-generated method stub
+		FaqVO findvo=entityManager.find(FaqVO.class, no);
+		FaqVO mergevo=entityManager.merge(findvo);
+		mergevo.setView_cnt(findvo.getView_cnt() + 1);
+	}
 }
