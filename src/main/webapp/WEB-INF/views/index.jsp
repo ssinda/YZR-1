@@ -73,28 +73,21 @@
          </div>
       </c:if>
       
-      <c:forEach items="${chart}" var="chart" begin="0" end="2" varStatus="i">
-         <div style="margin-top:20px; float:left; margin-left:92px; margin-right:92spx; ">
-            <div id="m1" style="margin-top:20px;">
-               <div id="rec_movie_title" style="border:2px solid #000; width:250px; height:28px; padding-top:2px; background-color:#ff3636; text-align:center;">
-                  <c:choose>
-                     <c:when test="${member_id !=null}">
-                        <span style="font-weight:bold; font-size:15px;">
-                     </c:when>
-                     <c:otherwise>
-                        <span style="font-weight:bold; font-size:15px;">
-                     </c:otherwise>
-                  </c:choose>
-                     <c:choose>
-                        <c:when test="${ member_id != null }">
-                           <c:set value="${ rec_title }" var="chart_title"></c:set>
-                        </c:when>
-                        <c:otherwise>
-                           <c:set value="${ basic_title }" var="chart_title"></c:set>
-                        </c:otherwise>
-                     </c:choose>
-                     ${chart_title[i.index]}
-                  </span>
+	<c:forEach items="${chart}" var="chart" begin="0" end="2" varStatus="i">
+    	<div style="margin-top:20px; float:left; margin-left:92px; margin-right:92spx; ">
+        	<div id="m1" style="margin-top:20px;">
+            	<div id="rec_movie_title" style="border:2px solid #000; width:250px; height:28px; padding-top:2px; background-color:#ff3636; text-align:center;">
+					<span style="font-weight:bold; font-size:15px;">
+                  	  <c:choose>
+	                      <c:when test="${ member_id != null }">
+	                     	 <c:set value="${ rec_title }" var="chart_title"></c:set>
+	                      </c:when>
+	                      <c:otherwise>
+	                      	<c:set value="${ basic_title }" var="chart_title"></c:set>
+	                      </c:otherwise>
+                      </c:choose>
+                      ${chart_title[i.index]}
+                    </span>
                </div>
                <div id="rec_movie" style="width:250px; height:380px; text-align:left; margin-top:5px;">
                   <a href="/movie/${ chart.movie_id }"><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
@@ -102,7 +95,7 @@
                   관람등급 : ${chart.rating} <br/>
                   예매율 : ${chart.reservation_rate}%<br/>
                   개봉날짜 : ${chart.open_date} <br/>
-                  <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
+                  <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation('${chart.movie_id}','${chart.title}')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
                </div>
             </div>
          </div>
@@ -147,6 +140,27 @@
     function more(){
        location.href = "/event";
     }
+    
+    function goReservation(movie_id, title){
+		var frm = document.createElement("form");
+		frm.action = "/ticket";
+		frm.method = "post";
+		
+		var mi = document.createElement("input");
+		mi.type = "text";
+		mi.name = "movie_id";
+		mi.value = movie_id;
+		frm.appendChild(mi);
+		
+		var mt = document.createElement("input");
+		mt.type = "text";
+		mt.name = "title";
+		mt.value = title;
+		frm.appendChild(mt);
+		
+		frm.submit();
+	}
+    
 </script>
          
 <style>

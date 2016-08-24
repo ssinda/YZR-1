@@ -24,16 +24,17 @@ public class LoginController {
 		return view;
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam("member_id") String member_id, @RequestParam("member_pw") String member_pw, HttpServletRequest request) throws Exception {
+	public ModelAndView login(@RequestParam("member_id") String member_id, @RequestParam("member_pw") String member_pw, HttpSession session) throws Exception {
 		MemberVO vo=service.memberLogin(member_id, member_pw);
-		HttpSession session= request.getSession();
+		ModelAndView view=new ModelAndView();
 		if(vo==null){
-			session.setAttribute("error", "loginerror");
-			return new ModelAndView("redirect:/login");
+			view.addObject("error", "loginerror");
+			view.setViewName("login");
+			return view;
 		}else{
 			session.setAttribute("member_id", vo.getMember_id());
-			session.removeAttribute("error");
-			return new ModelAndView("redirect:/index");
+			view.setViewName("redirect:/index");
+			return view;
 		}
 	}
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

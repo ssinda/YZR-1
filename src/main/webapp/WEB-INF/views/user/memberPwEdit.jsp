@@ -54,7 +54,7 @@
 </style>
 
 <div id="wrap_content" style="min-height:100%; position:relative;" align="center" >
-	<div id="content" style="padding-bottom:150px; width:420px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 		<h2>비밀번호 수정페이지</h2>
 		<br>
 		<form action="/user/member/pwChange" id="pwChange" name="pwChange" method="post" >
