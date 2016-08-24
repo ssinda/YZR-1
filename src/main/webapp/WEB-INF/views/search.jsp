@@ -325,7 +325,7 @@
 					actor_list += '<span>출연영화 : ';					
 					for(var j = 0; j<result.movieActor.length; j++){
 						if(result.movieActor[j].actor_name == this.actor_name){
-							actor_list += '<a href="/movie/'+result.movieActor[j].movie_id+'">'+result.movieActor[j].title + '</a>&nbsp&nbsp';
+							actor_list += '<a href="/movie/'+result.movieActor[j].movie_id+'" style="color: blue;">'+result.movieActor[j].title + '</a>&nbsp&nbsp';
 						}
 					}
 					
@@ -361,7 +361,7 @@
 				director_list += '<span>영화 : ';				
 				for(var j = 0; j<result.movieDirector.length; j++){
 					if(result.movieDirector[j].director_name == this.director_name){
-						director_list += '<a href="/movie/'+result.movieDirector[j].movie_id+'">'+result.movieDirector[j].title + '</a>&nbsp&nbsp';
+						director_list += '<a href="/movie/'+result.movieDirector[j].movie_id+'" style="color: blue;">'+result.movieDirector[j].title + '</a>&nbsp&nbsp';
 					}
 				}	
 	
@@ -547,7 +547,7 @@
 				result += '<span>출연영화 : ';				
 				for(var i = 0; i<am.length; i++){
 					if(am[i].actor_name == this.actor_name){
-						result += '<a href="/movie/'+am[i].movie_id+'">'+am[i].title + '</a>&nbsp&nbsp';
+						result += '<a href="/movie/'+am[i].movie_id+'" style="color: blue;">'+am[i].title + '</a>&nbsp&nbsp';
 					}
 				}
 				
@@ -654,7 +654,7 @@
 				result += '<span>영화 : ';				
 				for(var i = 0; i<am.length; i++){
 					if(am[i].director_name == this.director_name){
-						result += '<a href="/movie/'+am[i].movie_id+'">'+am[i].title + '</a>&nbsp&nbsp';
+						result += '<a href="/movie/'+am[i].movie_id+'" style="color: blue;">'+am[i].title + '</a>&nbsp&nbsp';
 					}
 				}	
 				result+= '</span>'
