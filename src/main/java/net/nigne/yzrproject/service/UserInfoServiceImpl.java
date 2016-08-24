@@ -36,4 +36,25 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return dao.getMemberInfo(member_id);
 	}
 
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public void pwUpdate(String member_id, String newPw) {
+		
+		dao.pwUpdate(member_id, newPw);
+		
+	}
+
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public void userInfoUpdate(String member_id, MemberVO vo) {
+		
+		dao.userInfoUpdate(member_id, vo);
+	}
+
+	@Override
+	public boolean pwFind(MemberVO vo){
+		
+		return dao.pwFind(vo);
+	}
+	
 }

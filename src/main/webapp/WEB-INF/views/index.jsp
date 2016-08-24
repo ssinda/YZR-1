@@ -18,7 +18,7 @@
                      <div class="item active">
                         <i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
                         &nbsp [${notice.getNotice_category()}]
-                        &nbsp <a href=""> ${notice.getNotice_title()} </a>
+                        &nbsp <a href="/support/notice/read/${ notice.no }"> ${notice.getNotice_title()} </a>
                         <span style="float:right;"> ${notice.getNotice_date()} </span>
                      </div>
                   </c:when>
@@ -26,7 +26,7 @@
                      <div class="item">
                         <i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
                         &nbsp [${notice.getNotice_category()}]
-                        &nbsp <a href=""> ${notice.getNotice_title()} </a>
+                        &nbsp <a href="/support/notice/read/${ notice.no }"> ${notice.getNotice_title()} </a>
                         <span style="float:right;"> ${notice.getNotice_date()} </span>
                      </div>
                   </c:otherwise>
@@ -73,6 +73,7 @@
          </div>
       </c:if>
       
+
       <c:forEach items="${chart}" var="chart" begin="0" end="2" varStatus="i">
          <div style="margin-top:20px; float:left; margin-left:92px; margin-right:92spx; ">
             <div id="m1" style="margin-top:20px;">
@@ -99,10 +100,12 @@
                <div id="rec_movie${i.index}" style="width:250px; height:380px; text-align:left; margin-top:5px;">
                   <a href="/movie/${ chart.movie_id }"><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
                   <span style="font-weight:bold; font-size:15px;"> ${chart.title} </span><br/>
+
 		                 관람등급 : <span id="rating_color${i.index}" style="font-weight:bold;">${chart.rating}</span><br/>
 		                 예매율 : ${chart.reservation_rate}% <br/>
 		                 개봉날짜 : ${chart.open_date} <br/>
-                  <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
+                  <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation('${chart.movie_id}','${chart.title}')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
+
                </div>
             </div>
          </div>
@@ -148,6 +151,7 @@
        location.href = "/event";
     }
     
+
     var sp0 = $("#rating_color0");
     var sp1 = $("#rating_color1");
     var sp2 = $("#rating_color2");
@@ -181,6 +185,27 @@
     	sp2.html("청소년 관람불가");
     	sp2.css("color", "red");
     }
+
+    function goReservation(movie_id, title){
+		var frm = document.createElement("form");
+		frm.action = "/ticket";
+		frm.method = "post";
+		
+		var mi = document.createElement("input");
+		mi.type = "text";
+		mi.name = "movie_id";
+		mi.value = movie_id;
+		frm.appendChild(mi);
+		
+		var mt = document.createElement("input");
+		mt.type = "text";
+		mt.name = "title";
+		mt.value = title;
+		frm.appendChild(mt);
+		
+		frm.submit();
+	}
+    
 </script>
          
 <style>
