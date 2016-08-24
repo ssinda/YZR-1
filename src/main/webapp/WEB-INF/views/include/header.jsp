@@ -1,25 +1,19 @@
-<%@page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Header begin -->
 <html lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YZR</title>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap-theme.min.css"></script>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>YZR</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap-theme.min.css"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
 <body>
-	<style>
+<style>
 body {
 	color: #000;
 }
@@ -68,11 +62,13 @@ font {
 							</c:otherwise>
 						</c:choose>
 						<c:if test="${ member_id == null }">
-							<li><a href="/membership"><span
+							<li><a href="/member"><span
 									class="glyphicon glyphicon-user"></span> 회원가입</a></li>
 						</c:if>
-						<li><a href="/user"><span
-								class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
+						<c:if test="${ member_id != null }">
+							<li><a href="/user"><span
+									class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
+						</c:if>
 						<li><a href="/club"><span
 								class="glyphicon glyphicon-star"></span> Club서비스</a></li>
 						<li><a href="/support"><span
