@@ -183,6 +183,8 @@
 				result+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="goReservation(\''+ this.movie_id + '\',\'' + this.title + '\')">예매</button></span>';
 			}else if(this.status == "schedule"){
 				result+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영예정</button></span>';
+			}else if(this.status == "end"){
+				result+= '<span><button class="btn btn-default btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영종료</button></span>';
 			}
 			
 			result+= '</div>';
@@ -268,7 +270,15 @@
 					}
 							
 					movie_list+= '</span>'
-						 	   + '<span>배우 : ';
+						 	   + '<span style="text-overflow:ellipsis; white-space:nowrap; overflow: hidden;" title="';
+					
+					for(var l = 0; l<am.actor.length; l++){
+						if(am.actor[l].movie_id == this.movie_id){
+							movie_list += am.actor[l].actor_name + '&nbsp&nbsp';
+						}
+					}
+					
+					movie_list +='">배우 : ';
 					
 					for(var l = 0; l<am.actor.length; l++){
 						if(am.actor[l].movie_id == this.movie_id){
@@ -281,6 +291,8 @@
 						movie_list+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="goReservation(\''+ this.movie_id +'\',\''+this.title+'\')">예매</button></span>';
 					}else if(this.status == "schedule"){
 						movie_list+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영예정</button></span>';
+					}else if(this.status == "end"){
+						movie_list+= '<span><button class="btn btn-warning btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영종료</button></span>';
 					}
 					
 					movie_list+= '</div>';
@@ -304,13 +316,16 @@
 							+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/actor/' + this.actor_photo + '" style="max-width: 100%; height: 100%;"></span>'
 							+ '<span style="font-weight: bold; font-size: 16px;">'+ this.actor_name + '</span>'
 							+ '<span>나이 : '+ this.actor_age + '</span>'
-							+ '<span>데뷔작 : '+ this.actor_debut + '</span>'
-							+ '<span>소속사 : '+ this.actor_company + '</span>'
-							+ '<span>출연영화 : ';
-					
+							+ '<span>데뷔 : '+ this.actor_debut + '</span>';
+					if(this.actor_company != null || this.actor_company != ""){
+						actor_list += '<span>소속사 : '+ this.actor_company + '</span>';
+					}else{
+						actor_list += '<span>소속사 : '+ 없음 + '</span>';
+					}
+					actor_list += '<span>출연영화 : ';					
 					for(var j = 0; j<result.movieActor.length; j++){
 						if(result.movieActor[j].actor_name == this.actor_name){
-							actor_list += result.movieActor[j].title + '&nbsp&nbsp';
+							actor_list += '<a href="/movie/'+result.movieActor[j].movie_id+'">'+result.movieActor[j].title + '</a>&nbsp&nbsp';
 						}
 					}
 					
@@ -336,13 +351,17 @@
 							   + '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/director/' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
 							   + '<span style="font-weight: bold; font-size: 16px;">'+ this.director_name + '</span>'
 							   + '<span>나이 : '+ this.director_age + '</span>'
-							   + '<span>데뷔작 : '+ this.director_debut + '</span>'
-							   + '<span>소속사 : '+ this.director_company + '</span>'
-							   + '<span>연출 : ';
+							   + '<span>데뷔 : '+ this.director_debut + '</span>';
+				if(this.director_company != null || this.director_company != ""){
+					director_list += '<span>소속사 : '+ this.director_company + '</span>';
+				}else{
+					director_list += '<span>소속사 : '+ 없음 + '</span>';
+				}
 				
+				director_list += '<span>영화 : ';				
 				for(var j = 0; j<result.movieDirector.length; j++){
 					if(result.movieDirector[j].director_name == this.director_name){
-						director_list += result.movieDirector[j].title + '&nbsp&nbsp';
+						director_list += '<a href="/movie/'+result.movieDirector[j].movie_id+'">'+result.movieDirector[j].title + '</a>&nbsp&nbsp';
 					}
 				}	
 	
@@ -397,7 +416,15 @@
 				}
 						
 				result+= '</span>'
-					   + '<span>배우 : ';
+				 	   + '<span style="text-overflow:ellipsis; white-space:nowrap; overflow: hidden;" title="';
+			
+				for(var l = 0; l<am.actor.length; l++){
+					if(am.actor[l].movie_id == this.movie_id){
+						result += am.actor[l].actor_name + '&nbsp&nbsp';
+					}
+				}
+				
+				result +='">배우 : ';
 				
 				for(var l = 0; l<am.actor.length; l++){
 					if(am.actor[l].movie_id == this.movie_id){
@@ -411,6 +438,8 @@
 					result+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="goReservation(\''+ this.movie_id +'\',\''+this.title+'\')">예매</button></span>';
 				}else if(this.status == "schedule"){
 					result+= '<span><button class="btn btn-primary btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영예정</button></span>';
+				}else if(this.status == "end"){
+					result+= '<span><button class="btn btn-warning btn-sm" style="width: 262px; border-radius: 5px; border: 0; cursor: default; letter-spacing: 25px;">&nbsp상영종료</button></span>';
 				}
 				
 				result+= '</div>';
@@ -509,13 +538,16 @@
 						+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/actor/' + this.actor_photo + '" style="width: 100%; height: 100%;"></span>'
 						+ '<span style="font-weight: bold; font-size: 16px;">'+ this.actor_name + '</span>'
 						+ '<span>나이 : '+ this.actor_age + '</span>'
-						+ '<span>데뷔작 : '+ this.actor_debut + '</span>'
-						+ '<span>소속사 : '+ this.actor_company + '</span>'
-						+ '<span>출연영화 : ';
-				
+						+ '<span>데뷔 : '+ this.actor_debut + '</span>';
+				if(this.actor_company != null || this.actor_company != ""){
+					result += '<span>소속사 : '+ this.actor_company + '</span>';
+				}else{
+					result += '<span>소속사 : '+ 없음 + '</span>';
+						}
+				result += '<span>출연영화 : ';				
 				for(var i = 0; i<am.length; i++){
 					if(am[i].actor_name == this.actor_name){
-						result += am[i].title + '&nbsp&nbsp';
+						result += '<a href="/movie/'+am[i].movie_id+'">'+am[i].title + '</a>&nbsp&nbsp';
 					}
 				}
 				
@@ -613,13 +645,16 @@
 						+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/director/' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
 						+ '<span style="font-weight: bold; font-size: 16px;">'+ this.director_name + '</span>'
 						+ '<span>나이 : '+ this.director_age + '</span>'
-						+ '<span>데뷔작 : '+ this.director_debut + '</span>'
-						+ '<span>소속사 : '+ this.director_company + '</span>'
-						+ '<span>연출 : ';
-				
+						+ '<span>데뷔 : '+ this.director_debut + '</span>';
+				if(this.director_company != null || this.director_company != ""){
+					result += '<span>소속사 : '+ this.director_company + '</span>';
+				}else{
+					result += '<span>소속사 : '+ 없음 + '</span>';
+						}
+				result += '<span>영화 : ';				
 				for(var i = 0; i<am.length; i++){
 					if(am[i].director_name == this.director_name){
-						result += am[i].title + '&nbsp&nbsp';
+						result += '<a href="/movie/'+am[i].movie_id+'">'+am[i].title + '</a>&nbsp&nbsp';
 					}
 				}	
 				result+= '</span>'
