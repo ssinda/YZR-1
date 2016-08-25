@@ -142,7 +142,6 @@ public class AdminMovieController {
 	public ResponseEntity<String> statusMovie(@PathVariable("movie_id") String movie_id, @PathVariable("status") String status) throws Exception{
 
 		ResponseEntity<String> entity = null;
-		
 		try{
 			service.statusMovie(movie_id, status);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);

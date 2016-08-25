@@ -1,6 +1,5 @@
 package net.nigne.yzrproject.domain;
 
-import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="member")
 public class MemberVO {
+	
 	@Id
 	@Column(name="member_id")
 	String member_id;
@@ -23,7 +23,7 @@ public class MemberVO {
 	String gender;
 	
 	@Column(name="birthday")
-	Timestamp birthday;
+	String birthday;
 	
 	@Column(name="address")
 	String address;
@@ -42,6 +42,12 @@ public class MemberVO {
 	
 	@Column(name="grade")
 	String grade;
+	
+	@Column(name="question")
+	String question;
+	
+	@Column(name="answer")
+	String answer;
 
 	public String getMember_id() {
 		return member_id;
@@ -75,11 +81,11 @@ public class MemberVO {
 		this.gender = gender;
 	}
 
-	public Timestamp getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Timestamp birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
@@ -130,4 +136,21 @@ public class MemberVO {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	
 }

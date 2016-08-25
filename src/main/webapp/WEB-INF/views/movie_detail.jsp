@@ -50,7 +50,7 @@
 			<br/>
 			<span style="margin-left: 20px; margin-bottom: 10px;">배우 : 
 				<c:forEach	items="${actorlist}" var="actorlist">
-					${actorlist.actor_name }   
+					${actorlist.actor_name } &nbsp;  
 				</c:forEach>
 			</span>
 		</div>
@@ -68,13 +68,16 @@
 			<span style="margin-left: 20px; margin-bottom: 10px;"> 공식 사이트 : ${movievo.site } </span>
 		</div>
 		<div style="margin-left: 430px;  margin-top: 40px;" >
-			<button type="button" class="btn btn-danger" onclick="SetFocus()">예매하러 가기</button>
+			<c:if test="${movievo.status == 'play' }">
+				<button type="button" class="btn btn-danger" onclick="goReservation('${movievo.movie_id}', '${movievo.title}')">예매하러 가기</button>
+			</c:if>
+			
 			<button type="button" class="btn btn-danger" onclick="SetFocus()">평점/후기</button>
-			<button type="button" class="btn btn-danger" onclick="">상영시간표</button>
+			<button type="button" class="btn btn-danger" onclick="timetable()">상영시간표</button>
 		</div>
 		</b>
 		<hr style="border: 1; border-top: 1px solid black; margin-top : 40px;">
-			<div style="width: 1100px; height: 450px; margin-top: 20px; margin-left: 30px;">
+			<div style="width: 1100px; margin-top: 20px; margin-left: 30px; padding-bottom: 100px;">
 				${movievo.story }
 			</div>
 		</div>
@@ -96,10 +99,17 @@
 			</table>
 		</div>
 		<div align="right">
-			<button type="button" class="btn btn-info btn-3x" data-toggle="modal"
-				data-target="#myModal">평점</button>
+			<c:choose>	
+				<c:when test="${member_id == null || member_id == '' }">
+					<button type="button" class="btn btn-info btn-3x" onclick="gpa_login()">평점</button>
+				</c:when>
+				<c:otherwise>
+					<button type="button" class="btn btn-info btn-3x" data-toggle="modal" data-target="#myModal">평점</button>
+				</c:otherwise>
+			</c:choose>		
+					
 			<button type="button" class="btn btn-info btn-3x"
-				onclick="review_write('${movievo.movie_id}')">후기작성</button>
+					onclick="review_write('${movievo.movie_id}')">후기작성</button>
 		</div>
 		<h1>후기 목록</h1>
 		<table class="table table-border" >
@@ -241,6 +251,32 @@
 	</div>
 </div>
 <script>
+
+function goReservation(movie_id, title){
+	var frm = document.createElement("form");
+	frm.action = "/ticket";
+	frm.method = "post";
+	
+	var mi = document.createElement("input");
+	mi.type = "text";
+	mi.name = "movie_id";
+	mi.value = movie_id;
+	frm.appendChild(mi);
+	
+	var mt = document.createElement("input");
+	mt.type = "text";
+	mt.name = "title";
+	mt.value = title;
+	frm.appendChild(mt);
+	
+	frm.submit();
+}
+
+function timetable(){
+	location.href="/timetable";
+}
+
+
 var member_id = "${member_id}";
 
 function review_read(no){
@@ -248,7 +284,9 @@ function review_read(no){
 
 }
 
-
+function gpa_login(){
+	location.href="/login";
+}
 function review_write(id) {
 	if(member_id ==null || member_id == ""){
 		location.href="/login";
@@ -299,7 +337,18 @@ function updategpa() {
 			dataType : 'text',
 			success : function(result) {
 				if (result == "SUCCESS") {
+					$("input:radio[name='acting']").removeAttr('checked');
+					$("input:radio[name='direction']").removeAttr('checked');
+					$("input:radio[name='beauty']").removeAttr('checked');
+					$("input:radio[name='ost']").removeAttr('checked');
+					$("input:radio[name='story']").removeAttr('checked');
+					$("input:radio[name='gender']").removeAttr('checked');
+					$("input:radio[name='age']").removeAttr('checked');
+
+
+					
 					getList();
+
 				}
 			}
 		});

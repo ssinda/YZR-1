@@ -21,7 +21,7 @@
 	</div>
 	<div>
 		<table class="table" style="margin-top: 30px;">
-			<tr style="background-color: red">
+			<tr style="background-color: red; color: white;">
 				<th style="text-align: center;">번호</th>
 				<th style="text-align: center;">대관장소</th>
 				<th width="60%" style="text-align: center;">문의 내용</th>
@@ -77,32 +77,48 @@ var endPage = 1;
 var totalPage; 
 
 function faq(){
-	location.href="/support/faq"
+	location.href="/support/faq";
 }
 function rent_read(no){
 	location.href = "/user/rent/read/" + no;
 }
+function rent(){
+	location.href = "/support/rent";
+}
+
 getRentList(1);
 function setRentList(data){
 	var result = "<tr>";
+	if(data.length >0){
 		$(data).each(function(){
+			var place = this.rent_place.split(" ", 3);
 			result += "<td style='text-align: center;'>" 
 			+this.no
 			+"</td>"
 			+"<td  style='text-align: center;'>"
-			+this.rent_place
+			+place[2]
 			+"</td>"
 			+"<td>"
-			+"<a href='javascript:review_read("+this.no+")'style='text-decoration:none;'>"+this.rent_content+"</a>"
+			+this.rent_content
 			+"</td>"
 			+"<td  style='text-align: center;'>"
 			+this.rent_date
 			+"</td>"
-			+"<td  style='text-align: center;'>"
-			+this.complete
-			+"</td>"
+			+"<td  style='text-align: center;'>";
+			if(this.complete == 'N'){
+				result+= "<font style='font-weight: bold; color: red;'>처리중</font>"
+			}else{
+				result+="<font style='font-weight: bold; color: blue;'>완료</font>"
+			};
+			result+="</td>"
 			+"</tr>"
 		});
+	}else{
+		result+='<td colspan="4" style="text-align: center; font-size:20px;">'
+		+'문의 내역이 없습니다.'
+		+'</td>'
+		+'</tr>'
+	}
 	document.getElementById("rent_table").innerHTML = result;
 }
 

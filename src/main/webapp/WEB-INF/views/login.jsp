@@ -92,9 +92,9 @@ a:hover {
 					</form>
 				</div>
 				<div style="text-align: center; margin-top: 10px; margin-bottom: 100px;">
-					<a href="#" class="new-account">회원가입</a> / 
-					<a href="#" class="find-id">아이디찾기</a> / 
-					<a href="#" class="find-pw">비밀번호찾기</a>
+					<a href="/member" class="new-account">회원가입</a> / 
+					<a href="/user/idSearch" class="find-id">아이디찾기</a> / 
+					<a href="/user/pwSearch" class="find-pw">비밀번호찾기</a>
 				</div>
 			</div>
 		</div>
@@ -129,4 +129,5 @@ a:hover {
 		}
 	}
 </script>
+<% session.setAttribute("error", null);%>
 <%@include file="./include/footer.jsp"%>

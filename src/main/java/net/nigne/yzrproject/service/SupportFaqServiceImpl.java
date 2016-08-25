@@ -38,10 +38,11 @@ public class SupportFaqServiceImpl implements SupportFaqService {
 		// TODO Auto-generated method stub
 		return dao.getFaqCount(search, category);
 	}
-	@Transactional(readOnly=true)
+	@Transactional(rollbackFor={Exception.class})
 	@Override
 	public FaqVO getFaqDetail(int no) {
 		// TODO Auto-generated method stub
+		dao.updateView_cnt(no);
 		return dao.getFaqDetail(no);
 	}
 }

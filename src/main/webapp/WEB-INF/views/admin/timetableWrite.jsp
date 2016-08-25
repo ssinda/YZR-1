@@ -64,8 +64,8 @@
 				</c:forEach>
 			</select>
 		</div>
-		<div style="clear: both; margin-left: 300px;">
-			<button type="submit" class="btn btn-primary">등록</button>
+		<div style="clear: both; text-align: center;">
+			<button type="submit" class="btn btn-primary" style="margin-top: 50px;">등록</button>
 		</div>
 	</form>
 </div>

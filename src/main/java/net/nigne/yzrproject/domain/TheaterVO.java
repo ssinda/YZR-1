@@ -31,6 +31,13 @@ public class TheaterVO {
 	@Column(name="ypoint")
 	String ypoint;
 	
+	public TheaterVO(String theater_id, String theater_name){
+		this.theater_id = theater_id;
+		this.theater_name = theater_name;
+	}
+	
+	public TheaterVO(){}
+	
 	public String getTheater_id() {
 		return theater_id;
 	}

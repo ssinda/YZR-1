@@ -44,9 +44,9 @@
 		<div class="col-md-9" style="margin-bottom: 30px;">
 			<textarea id="story" name="story" rows="10" class="form-control" placeholder="Enter Story"></textarea>
 		</div>
-		<div style="clear: both;">
+		<div style="clear: both; text-align: center;">
 			<input type="file" id="file" name="file" size="60" style="margin-left: 90px;"/>
-			<button type="submit" class="btn btn-primary" style="margin-left: 300px;">등록</button>
+			<button type="submit" class="btn btn-primary">등록</button>
 		</div>
 	</form>
 </div>

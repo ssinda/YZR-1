@@ -1,11 +1,5 @@
-/** 
-*
-*/
 package net.nigne.yzrproject.persistence;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import net.nigne.yzrproject.domain.CouponVO;
 import net.nigne.yzrproject.domain.Criteria;
-import net.nigne.yzrproject.domain.NoticeVO;
 
 /** 
 * @FileName : UserCouponDAOImpl.java 
@@ -42,12 +35,27 @@ public class UserCouponDAOImpl implements UserCouponDAO {
 	*/
 	@Override
 	public long getCouponTotal(String member_id) {
+	
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<CouponVO> root = cq.from(CouponVO.class);
-
-		cq.select(cb.count(root)).where(cb.equal(root.get("member_id"), member_id));
 		
+		cq.select(cb.count(root)).where(cb.equal(root.get("member_id"), member_id));
+
+		TypedQuery<Long> tq = entityManager.createQuery(cq);
+		long couponTotal = tq.getSingleResult();
+		
+		return couponTotal;
+	}
+	@Override
+	public long getNotUseCouponTotal(String member_id) {
+	
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<CouponVO> root = cq.from(CouponVO.class);
+		
+		cq.select(cb.count(root)).where(cb.equal(root.get("member_id"), member_id), cb.equal(root.get("used"), "N"));
+
 		TypedQuery<Long> tq = entityManager.createQuery(cq);
 		long couponTotal = tq.getSingleResult();
 		
