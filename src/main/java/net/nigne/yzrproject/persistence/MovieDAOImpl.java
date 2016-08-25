@@ -507,6 +507,7 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		return list;
 	}
+
 	
 
 }

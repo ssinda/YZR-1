@@ -74,7 +74,7 @@
 		</div>
 		</b>
 		<hr style="border: 1; border-top: 1px solid black; margin-top : 40px;">
-			<div style="width: 1100px; height: 450px; margin-top: 20px; margin-left: 30px;">
+			<div style="width: 1100px; min-height: 450px; margin-top: 20px; margin-left: 30px;">
 				${movievo.story }
 			</div>
 		</div>
@@ -97,7 +97,7 @@
 		</div>
 		<div align="right">
 			<c:choose>	
-				<c:when test="${member_id == null || member_id == '' }">
+				<c:when test="${member_id == null || member_id == ''}">
 					<button type="button" class="btn btn-info btn-3x" onclick="gpa_login()">평점</button>
 				</c:when>
 				<c:otherwise>
@@ -256,7 +256,6 @@ function timetable(){
 	location.href="/timetable";
 }
 
-
 var member_id = "${member_id}";
 
 function review_read(no){
@@ -324,9 +323,6 @@ function updategpa() {
 					$("input:radio[name='story']").removeAttr('checked');
 					$("input:radio[name='gender']").removeAttr('checked');
 					$("input:radio[name='age']").removeAttr('checked');
-
-
-					
 					getList();
 
 				}
