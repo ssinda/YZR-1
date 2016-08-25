@@ -848,6 +848,12 @@
 										<div>${local_list.localName} (${local_list.localCount})</div>
 									</li>
 								</c:when>
+								
+								<c:when test="${local_list.localName == '서울' && tempInfo.theater_area == ''}">
+									<li class="localName theater_state select_theater_state" style="float: none; display: inline-block; list-style: none;"  onclick="theater_local('${local_list.localName}')" >
+										<div>${local_list.localName} (${local_list.localCount})</div>
+									</li>
+								</c:when>
 	
 								<c:otherwise>
 									<li class="localName theater_state" style="float: none; display: inline-block; list-style: none;"  onclick="theater_local('${local_list.localName}')" >
@@ -867,7 +873,9 @@
 			<div id="content1-3" class="content1">
 				<div style="text-align: center; font-size: 15pt;" id = "year"></div><br>
 				<div style="margin-top: -20px; text-align: center; font-size: 30pt;" id = "month"></div><br>
-				<div id="calender_date"></div>
+				<div id="calender_date">
+				
+				</div>
 				
 			</div>
 			<div id="content1-4" class="content1">
@@ -1268,7 +1276,7 @@
 		function setTheaterList(data) {
 			var result = "";
 			
-			if(dataFlag == 0){
+			if(dataFlag == 0 || dataFlag == 2){
 				$(data).each(function() {
 					result += "<div onclick='theater_select(" + '"' + this.theater_name + '", ' + '"' + this.theater_id + '"' 
 							+ ")'><li style='float: none; display: inline-block;'>" + this.theater_name + "</li></div>";
@@ -1293,7 +1301,7 @@
 			document.getElementById("theater_detail").innerHTML = result;
 		}
 		
-		if(dataFlag == 0){
+		if(dataFlag == 0 || dataFlag == 2){
 			getTheaterList("서울");
 			
 		} else {
@@ -1455,52 +1463,46 @@
 					
 					var totalSeatNum = this.plex_seat_cnt;
 						$(time).each(function() {
+
+							if(dataFlag == 0 || dataFlag == 2){
 							
-							if(this.plex_number == number){
-								
-								if(dataFlag == 0){
-								
+								result += '<div id="time" onclick="timetable(' + "'" + this.start_time.substring(11,16) + "',  " 
+										+ "'" + this.plex_number + "'," + "'" + totalSeatNum + "'" +');"><span class="timetable_time">' 
+										+ this.start_time.substring(11,16) + '</span><div class="timetable_seat">';
+										
+								timetableTime = this.start_time;
+								$(extraSeatNum).each(function() {
+									if(timetableTime == this.startTime){
+										result += this.extraSeatCount +'석</div></div>';
+									}
+								});
+							} else {
+								var compareStartTime = startTime.substring(11,16);
+
+								if(compareStartTime == this.start_time.substring(11,16)){
 									result += '<div id="time" onclick="timetable(' + "'" + this.start_time.substring(11,16) + "',  " 
-											+ "'" + this.plex_number + "'," + "'" + totalSeatNum + "'" +');"><span class="timetable_time">' 
+											+ "'" + this.plex_number + "'," + "'" + totalSeatNum + "'" +');"><span class="timetable_time select">' 
 											+ this.start_time.substring(11,16) + '</span><div class="timetable_seat">';
-											
+							
 									timetableTime = this.start_time;
 									$(extraSeatNum).each(function() {
-										if(timetableTime == this.startTime && number == this.plexNumber){
+										if(timetableTime == this.startTime){
 											result += this.extraSeatCount +'석</div></div>';
 										}
 									});
+									timetable(this.start_time.substring(11,16), this.plex_number, totalSeatNum)
 								} else {
-									var compareStartTime = startTime.substring(11,16);
-
-									if(compareStartTime == this.start_time.substring(11,16) && plexNum == this.plex_number){
-										result += '<div id="time" onclick="timetable(' + "'" + this.start_time.substring(11,16) + "',  " 
-												+ "'" + this.plex_number + "'," + "'" + totalSeatNum + "'" +');"><span class="timetable_time select">' 
-												+ this.start_time.substring(11,16) + '</span><div class="timetable_seat">';
-								
-										timetableTime = this.start_time;
-										$(extraSeatNum).each(function() {
-											if(timetableTime == this.startTime && number == this.plexNumber){
-												result += this.extraSeatCount +'석</div></div>';
-											}
-										});
-										timetable(this.start_time.substring(11,16), this.plex_number, totalSeatNum)
-									} else {
-										result += '<div id="time" onclick="timetable(' + "'" + this.start_time.substring(11,16) + "',  " 
-												+ "'" + this.plex_number + "'," + "'" + totalSeatNum + "'" +');"><span class="timetable_time">' 
-												+ this.start_time.substring(11,16) + '</span><div class="timetable_seat">';
-								
-										timetableTime = this.start_time;
-										$(extraSeatNum).each(function() {
-											if(timetableTime == this.startTime && number == this.plexNumber){
-												result += this.extraSeatCount +'석</div></div>';
-											}
-										});
-									}
-									
+									result += '<div id="time" onclick="timetable(' + "'" + this.start_time.substring(11,16) + "',  " 
+											+ "'" + this.plex_number + "'," + "'" + totalSeatNum + "'" +');"><span class="timetable_time">' 
+											+ this.start_time.substring(11,16) + '</span><div class="timetable_seat">';
+							
+									timetableTime = this.start_time;
+									$(extraSeatNum).each(function() {
+										if(timetableTime == this.startTime){
+											result += this.extraSeatCount +'석</div></div>';
+										}
+									});
 								}
-										
-										
 							}
 							
 							document.getElementById("timetable").innerHTML = result;

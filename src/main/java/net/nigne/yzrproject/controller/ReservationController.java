@@ -87,8 +87,7 @@ public class ReservationController {
 		HttpSession session= request.getSession();
 		session.setAttribute("menu", "RESERVATION");
 		String memberId = (String)session.getAttribute("member_id");
-		System.out.println("111111111 = " + memberId);
-		
+				
 		MemberVO member = new MemberVO();
 		List<CouponVO> couponList = new ArrayList<>();
 		
@@ -132,18 +131,9 @@ public class ReservationController {
 							  @RequestParam("frm_plex_num2") String plex_num,
 							  @RequestParam("frm_start_time2") String start_time) throws Exception {
 		
-		System.out.println("theater_area====================" + theater_area);
-		System.out.println("theater_id====================" + theater_id);
-		System.out.println("theater_name====================" + theater_name);
-		System.out.println("movie_id====================" + movie_id);
-		System.out.println("movie_title====================" + movie_title);
-		System.out.println("plex_num====================" + plex_num);
-		System.out.println("start_time====================" + start_time);
-		
 		HttpSession session= request.getSession();
 		session.setAttribute("menu", "RESERVATION");
 		String memberId = (String)session.getAttribute("member_id");
-		System.out.println("111111111 = " + memberId);
 		
 		MemberVO member = new MemberVO();
 		List<CouponVO> couponList = new ArrayList<>();
@@ -177,7 +167,54 @@ public class ReservationController {
 		tempInfo.setTheater_id(theater_id);
 		tempInfo.setTheater_name(theater_name);
 		tempInfo.setDataFlag(1);
-		System.out.println("123159 = "+tempInfo.getDataFlag());
+		
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("theaterList", theaterList);
+		model.addAttribute("localList", local);
+		model.addAttribute("couponList", couponList);
+		model.addAttribute("member", member);
+		model.addAttribute("tempInfo", tempInfo);
+		
+		return "ticket";
+	}
+	
+	@RequestMapping(value = "/ticket", method = RequestMethod.POST, params={"movie_id", "title"})
+	public String SelectedMovie(Model model, HttpServletRequest request,
+							  @RequestParam("movie_id") String movie_id,
+							  @RequestParam("title") String movie_title
+							 ) throws Exception {
+				
+		HttpSession session= request.getSession();
+		session.setAttribute("menu", "RESERVATION");
+		String memberId = (String)session.getAttribute("member_id");
+		
+		MemberVO member = new MemberVO();
+		List<CouponVO> couponList = new ArrayList<>();
+		
+		List<MovieVO> movieList = movieService.getMovieList("reservation_rate");
+		List<TheaterVO> theaterList = theaterService.getList("서울");
+		List<String> localList = theaterService.getLocal();
+		List<Long> localTheaterNum = theaterService.getLocalTheaterNum();
+		if(memberId != null){
+			
+			couponList = couponService.getCouponList(memberId);
+			member = memberService.getMember(memberId);
+		}
+		
+		
+		List<TempLocal> local = new ArrayList<>();
+		
+		for(int i = 0; i < localList.size(); i++) {
+			TempLocal vo = new TempLocal();
+			vo.setLocalCount(localTheaterNum.get(i));
+			vo.setLocalName(localList.get(i));
+			local.add(i,vo);
+			
+		}
+		TempReservationInfo tempInfo = new TempReservationInfo();
+		tempInfo.setMovie_id(movie_id);
+		tempInfo.setMovie_title(movie_title);
+		tempInfo.setDataFlag(2);
 
 		model.addAttribute("movieList", movieList);
 		model.addAttribute("theaterList", theaterList);
@@ -188,6 +225,8 @@ public class ReservationController {
 		
 		return "ticket";
 	}
+	
+	
 	
 	@RequestMapping(value = "/reservation", method = RequestMethod.POST)
 	public String reservation(Model model,
@@ -210,7 +249,6 @@ public class ReservationController {
 			@PathVariable("page") String page
 			) {
 		ResponseEntity<Map<String, Object>> entity = null;
-		System.out.println(page);
 		
 		try{
 			List<MovieVO> list = movieService.getMovieList(page);
@@ -234,7 +272,6 @@ public class ReservationController {
 			@PathVariable("page") String page
 			) {
 		ResponseEntity<Map<String, Object>> entity = null;
-		System.out.println(page);
 		
 		try{
 			List<TheaterVO> list = theaterService.getList(page);
@@ -329,7 +366,6 @@ public class ReservationController {
 			@PathVariable("startTime") String startTime
 			) {
 		ResponseEntity<Map<String, Object>> entity = null;
-		System.out.println(plexNum);
 		
 		try{
 			List<SeatVO> list = seatService.getList(plexNum, startTime);
@@ -530,10 +566,7 @@ public class ReservationController {
 		
 		int couponNumber = Integer.parseInt(couponNo);
 		try{
-			System.out.println("되냐?");
 			couponService.couponUsed(couponNumber);
-			System.out.println("안되냐?");
-			
 
 			//브라우저로 전송한다
 			entity = new ResponseEntity<>(HttpStatus.OK);

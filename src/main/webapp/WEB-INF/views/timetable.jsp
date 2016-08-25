@@ -273,13 +273,15 @@
       
       for(var a=0; a<total; a++){
          plex += '<div class="movie_time" style="float:left; margin-top:15px;">'
+           + '<input type="hidden" id="frm_plex_num" name="frm_plex_num" value="'+tt[a][0].plex_number+'" />'
+            + '<input type="hidden" id="frm_movie_title" name="frm_movie_title" value="" />'
+            + '<input type="hidden" id="frm_movie_id" name="frm_movie_id" value="" />'
             + '<div style="border-top:1px solid #000; margin-top:10px; width:1140px;">'
             + '</div>'
             + '<div id="movie" style="float:left; margin-top:15px; margin-left:20px;">'
             + '<div id="grade_circle'+a+'" style="float:left; border:1px solid white; border-radius:25px; width:30px; height:30px; text-align:center; padding-top:5px; color:white; font-size:10pt;">'
             + '</div>'
-            + '<input type="hidden" id="frm_movie_title" name="frm_movie_title" value="" />'
-            + '<input type="hidden" id="frm_movie_id" name="frm_movie_id" value="" />'
+            
             + '<span id="movie_title'+a+'" style="margin-left:20px; font-size:20px;">'
             + '</span>'
             + '<span id="movie_status'+a+'" style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">'
@@ -294,7 +296,6 @@
             + tt[a][0].plex_number
             + '관 > <span id="seat_cnt'+a+'"></span>'
             + '</span>'
-            + '<input type="hidden" id="frm_plex_num" name="frm_plex_num" value="'+tt[a][0].plex_number+'" />'
             + '</i>'
             + '<br/>'
             + '<div id="time_table'+a+'">'
@@ -314,24 +315,23 @@
       for(var a=0; a<total; a++){
          timetable = "";   
          for(var b=0; b < tt[a].length; b++){
-            timetable += '<form id="frm" name="frm" action="/ticket" method="post">' 
-               +'<li class="time_li">'
-               + '<a href="javascript:tt_submit()">'
-               + '<input type="hidden" id="frm_theater_area2" name="frm_theater_area2" value="" />'
-               + '<input type="hidden" id="frm_theater_id2" name="frm_theater_id2" value="" />'
-               + '<input type="hidden" id="frm_theater_name2" name="frm_theater_name2" value="" />'
-               + '<input type="hidden" id="frm_movie_id2" name="frm_movie_id2" />'
-               + '<input type="hidden" id="frm_movie_title2" name="frm_movie_title2" value="" />'
-               + '<input type="hidden" id="frm_plex_num2" name="frm_plex_num2" value="" />'
-               + '<input type="hidden" id="frm_start_time2" name="frm_start_time2" value="'+tt[a][b].start_time+'" />'
-               + '<span style="font-size:15px; display:block;">'
+            timetable += '<li class="time_li">'
+        
+               + '<form class="frm" name="frm" action="/ticket" method="post">'
+               + '<input type="hidden" class="frm_theater_area2" name="frm_theater_area2" value="" />'
+               + '<input type="hidden" class="frm_theater_id2" name="frm_theater_id2" value="" />'
+               + '<input type="hidden" class="frm_theater_name2" name="frm_theater_name2" value="" />'
+               + '<input type="hidden" class="frm_movie_id2" name="frm_movie_id2" value="" />'
+               + '<input type="hidden" class="frm_movie_title2" name="frm_movie_title2" value="" />'
+               + '<input type="hidden" class="frm_plex_num2" name="frm_plex_num2" value="" />'
+               + '<input type="hidden" class="frm_start_time2" name="frm_start_time2" value="'+tt[a][b].start_time+'" />'
+               + '</form>'
+               + '<span class="time" style="font-size:15px; display:block;">'
                + tt[a][b].start_time.substring(11,16)
                + '</span>'
                + '<span id="pt'+a+b+'">'
                + '</span>'
-               + '</a>'
-               + '</li>'
-               + '</form>';
+               + '</li>';
          }
          $("#time_table"+a).html(timetable);
          for(var c=0; c < tt[a].length; c++){
@@ -367,6 +367,9 @@
    }
    
    function setMovieInfo(movie_info){
+      var mt = null;
+      var fmt = null;
+      var fmi = null;
       for(var i=0; i<movie_info.length; i++){
          $("#movie_title"+i).html(movie_info[i].title);
          $("#grade_circle"+i).html(movie_info[i].rating);
@@ -386,8 +389,14 @@
          }
          $("#runtime"+i).html(movie_info[i].runtime + "분");
          $("#open_date"+i).html(movie_info[i].open_date);
-         $("#frm_movie_title").val(movie_info[i].title);
-         $("#frm_movie_id").val(movie_info[i].movie_id);
+         mt = $("#movie_title"+i).parents("div .movie_time");
+
+         fmt = $(mt).find("#frm_movie_title");
+         fmi = $(mt).find("#frm_movie_id");
+         
+         fmt.val(movie_info[i].title);
+         fmi.val(movie_info[i].movie_id);
+
       }
    }
    
@@ -439,17 +448,42 @@
          $("#seat_cnt"+i).html("총 "+plex[i].plex_seat_cnt+"석");
       }
    }
-   
-   function tt_submit(){
-      $("#frm_theater_area2").val($("#frm_theater_area").val());
-      $("#frm_theater_id2").val($("#theater_id").val());
-      $("#frm_theater_name2").val($("#frm_theater_name").val());
-      $("#frm_movie_id2").val($("#frm_movie_id").val());
-      $("#frm_movie_title2").val($("#frm_movie_title").val());
-      $("#frm_plex_num2").val($("#frm_plex_num").val());
+
+   function tt_submit(aa){
+     var asd = $(aa).parents("div .movie_time");
+
+      var frm_plex_num = $(asd).find("#frm_plex_num").val();
+      var frm_movie_title = $(asd).find("#frm_movie_title").val();
+      var frm_movie_id = $(asd).find("#frm_movie_id").val();
+
+      var time_li = aa.closest("li");
+
+      var frm_plex_num2 = $(time_li).find(".frm_plex_num2");
+      var frm_movie_id2 = $(time_li).find(".frm_movie_id2");
+      var frm_movie_title2 = $(time_li).find(".frm_movie_title2");
+      var frm_theater_area2 = $(time_li).find(".frm_theater_area2");
+      var frm_theater_id2 = $(time_li).find(".frm_theater_id2");
+      var frm_theater_name2 = $(time_li).find(".frm_theater_name2");
+      var frm_start_time2 = $(time_li).find(".frm_start_time2");
+      var frm= $(time_li).find(".frm");
+      frm_theater_area2.val($("#frm_theater_area").val());
+      frm_theater_id2.val($("#theater_id").val());
+      frm_theater_name2.val($("#frm_theater_name").val());
       
-      $("#frm").submit();
+      frm_movie_id2.val(frm_movie_id);
+      frm_movie_title2.val(frm_movie_title);
+      frm_plex_num2.val(frm_plex_num);
+
+     
+      frm.submit();
+      
+
    }
+
+ 
+   $("body").on("click", ".time_li", function(e){
+         tt_submit(e.target);
+      });
 </script>
 
 <style>
