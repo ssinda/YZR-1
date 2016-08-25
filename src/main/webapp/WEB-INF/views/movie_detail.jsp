@@ -50,7 +50,7 @@
 			<br/>
 			<span style="margin-left: 20px; margin-bottom: 10px;">배우 : 
 				<c:forEach	items="${actorlist}" var="actorlist">
-					${actorlist.actor_name }   
+					${actorlist.actor_name } &nbsp;  
 				</c:forEach>
 			</span>
 		</div>
@@ -77,7 +77,7 @@
 		</div>
 		</b>
 		<hr style="border: 1; border-top: 1px solid black; margin-top : 40px;">
-			<div style="width: 1100px; height: 450px; margin-top: 20px; margin-left: 30px;">
+			<div style="width: 1100px; margin-top: 20px; margin-left: 30px; padding-bottom: 100px;">
 				${movievo.story }
 			</div>
 		</div>

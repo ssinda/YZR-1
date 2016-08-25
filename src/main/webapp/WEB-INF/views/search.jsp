@@ -248,7 +248,7 @@
 			$(result.movieList).each(function(i){
 				if(i<4){
 					movie_list+=  '<div class="movie">'
-								+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
+								+ '<span style="width: 264px; height: 358px; text-align: center;"><a href="/movie/' + this.movie_id + '"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></a></span>'
 							    + '<span style="font-weight: bold; font-size: 16px;">'+ this.title + '</span>'
 								+ '<span>등급 : ' + this.rating + '</span>'
 								+ '<span>장르: ';
@@ -313,7 +313,7 @@
 			$(result.actorList).each(function(i){
 				if(i<3){
 					actor_list+=  '<div class="actor">'
-							+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.actor_photo + '" style="max-width: 100%; height: 100%;"></span>'
+							+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/actor/' + this.actor_photo + '" style="max-width: 100%; height: 100%;"></span>'
 							+ '<span style="font-weight: bold; font-size: 16px;">'+ this.actor_name + '</span>'
 							+ '<span>나이 : '+ this.actor_age + '</span>'
 							+ '<span>데뷔 : '+ this.actor_debut + '</span>';
@@ -322,11 +322,10 @@
 					}else{
 						actor_list += '<span>소속사 : '+ 없음 + '</span>';
 					}
-					actor_list += '<span>출연영화 : ';
-					
+					actor_list += '<span>출연영화 : ';					
 					for(var j = 0; j<result.movieActor.length; j++){
 						if(result.movieActor[j].actor_name == this.actor_name){
-							actor_list += '<a href="/movie/'+result.movieActor[j].movie_id+'">'+result.movieActor[j].title + '</a>&nbsp&nbsp';
+							actor_list += '<a href="/movie/'+result.movieActor[j].movie_id+'" style="color: blue;">'+result.movieActor[j].title + '</a>&nbsp&nbsp';
 						}
 					}
 					
@@ -348,8 +347,8 @@
 		if(result.directorList.length > 0){
 		$(result.directorList).each(function(i){
 			if(i<3){
-				director_list+=  '<div class="director">'
-							   + '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
+				director_list+=  '<div class="director" style="margin-bottom: 50px;">'
+							   + '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/director/' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
 							   + '<span style="font-weight: bold; font-size: 16px;">'+ this.director_name + '</span>'
 							   + '<span>나이 : '+ this.director_age + '</span>'
 							   + '<span>데뷔 : '+ this.director_debut + '</span>';
@@ -359,11 +358,10 @@
 					director_list += '<span>소속사 : '+ 없음 + '</span>';
 				}
 				
-				director_list += '<span>영화 : ';
-				
+				director_list += '<span>영화 : ';				
 				for(var j = 0; j<result.movieDirector.length; j++){
 					if(result.movieDirector[j].director_name == this.director_name){
-						director_list += '<a href="/movie/'+result.movieDirector[j].movie_id+'">'+result.movieDirector[j].title + '</a>&nbsp&nbsp';
+						director_list += '<a href="/movie/'+result.movieDirector[j].movie_id+'" style="color: blue;">'+result.movieDirector[j].title + '</a>&nbsp&nbsp';
 					}
 				}	
 	
@@ -537,7 +535,7 @@
 			$(al).each(function(){
 				
 				result+=  '<div class="actor">'
-						+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.actor_photo + '" style="width: 100%; height: 100%;"></span>'
+						+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/actor/' + this.actor_photo + '" style="width: 100%; height: 100%;"></span>'
 						+ '<span style="font-weight: bold; font-size: 16px;">'+ this.actor_name + '</span>'
 						+ '<span>나이 : '+ this.actor_age + '</span>'
 						+ '<span>데뷔 : '+ this.actor_debut + '</span>';
@@ -546,11 +544,10 @@
 				}else{
 					result += '<span>소속사 : '+ 없음 + '</span>';
 						}
-				result += '<span>출연영화 : ';
-				
+				result += '<span>출연영화 : ';				
 				for(var i = 0; i<am.length; i++){
 					if(am[i].actor_name == this.actor_name){
-						result += '<a href="/movie/'+am[i].movie_id+'">'+am[i].title + '</a>&nbsp&nbsp';
+						result += '<a href="/movie/'+am[i].movie_id+'" style="color: blue;">'+am[i].title + '</a>&nbsp&nbsp';
 					}
 				}
 				
@@ -644,8 +641,8 @@
 		if(dl.length>0){
 			$(dl).each(function(ix){
 				
-				result+=  '<div class="director">'
-						+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
+				result+=  '<div class="director" style="margin-bottom: 50px;">'
+						+ '<span style="height: 100px; width: 72px; margin-right: 10px;"><img src="/resources/images/director/' + this.director_photo + '" style="width: 100%; height: 100%;"></span>'
 						+ '<span style="font-weight: bold; font-size: 16px;">'+ this.director_name + '</span>'
 						+ '<span>나이 : '+ this.director_age + '</span>'
 						+ '<span>데뷔 : '+ this.director_debut + '</span>';
@@ -654,11 +651,10 @@
 				}else{
 					result += '<span>소속사 : '+ 없음 + '</span>';
 						}
-				result += '<span>영화 : ';
-				
+				result += '<span>영화 : ';				
 				for(var i = 0; i<am.length; i++){
 					if(am[i].director_name == this.director_name){
-						result += '<a href="/movie/'+am[i].movie_id+'">'+am[i].title + '</a>&nbsp&nbsp';
+						result += '<a href="/movie/'+am[i].movie_id+'" style="color: blue;">'+am[i].title + '</a>&nbsp&nbsp';
 					}
 				}	
 				result+= '</span>'
