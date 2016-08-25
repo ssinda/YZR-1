@@ -6,6 +6,13 @@
 <style>
 	th{background-color:#bf4040; color:white;}	
 	th,td{text-align:center;}
+	.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+		vertical-align:middle;
+	}
+	
+	.table{
+		border:1px solid lightgray;
+	}
 </style>
 
 <script type="text/javascript">
