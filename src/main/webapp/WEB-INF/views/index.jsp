@@ -18,7 +18,7 @@
                      <div class="item active">
                         <i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
                         &nbsp [${notice.getNotice_category()}]
-                        &nbsp <a href=""> ${notice.getNotice_title()} </a>
+                        &nbsp <a href="/support/notice/read/${ notice.no }"> ${notice.getNotice_title()} </a>
                         <span style="float:right;"> ${notice.getNotice_date()} </span>
                      </div>
                   </c:when>
@@ -26,7 +26,7 @@
                      <div class="item">
                         <i class="fa fa-bullhorn" aria-hidden="true" style="font-weight:bold; font-size:15px;"> &nbsp공지사항 </i>
                         &nbsp [${notice.getNotice_category()}]
-                        &nbsp <a href=""> ${notice.getNotice_title()} </a>
+                        &nbsp <a href="/support/notice/read/${ notice.no }"> ${notice.getNotice_title()} </a>
                         <span style="float:right;"> ${notice.getNotice_date()} </span>
                      </div>
                   </c:otherwise>
@@ -66,17 +66,18 @@
          <div id="rec_movie" style="width:250px; height:380px; text-align:left; margin-top:5px;">
             <a href="/movie/${ chart.movie_id }"><img src="/resources/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
             <span style="font-weight:bold; font-size:15px;"> ${basic_title}  </span><br/>
-            관람등급 : <br/>
-            예매율 : <br/>
-            개봉날짜 : <br/>
-            <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
+            관람등급 : <span id="rating_color${i.index}" style="font-weight:bold;">${chart.rating}</span><br/>
+            예매율 : ${chart.reservation_rate}%<br/>
+            개봉날짜 : ${chart.open_date} <br/>
+	           <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
          </div>
       </c:if>
       
+
       <c:forEach items="${chart}" var="chart" begin="0" end="2" varStatus="i">
          <div style="margin-top:20px; float:left; margin-left:92px; margin-right:92spx; ">
             <div id="m1" style="margin-top:20px;">
-               <div id="rec_movie_title" style="border:2px solid #000; width:250px; height:28px; padding-top:2px; background-color:#ff3636; text-align:center;">
+               <div id="rec_movie_title${i.index}" style="border:2px solid #000; width:250px; height:28px; padding-top:2px; background-color:#ff3636; text-align:center;">
                   <c:choose>
                      <c:when test="${member_id !=null}">
                         <span style="font-weight:bold; font-size:15px;">
@@ -96,13 +97,15 @@
                      ${chart_title[i.index]}
                   </span>
                </div>
-               <div id="rec_movie" style="width:250px; height:380px; text-align:left; margin-top:5px;">
+               <div id="rec_movie${i.index}" style="width:250px; height:380px; text-align:left; margin-top:5px;">
                   <a href="/movie/${ chart.movie_id }"><img src="/resources/images/poster/${chart.poster}" style="width:249px; height:300px;"/></a>
                   <span style="font-weight:bold; font-size:15px;"> ${chart.title} </span><br/>
-                  관람등급 : ${chart.rating} <br/>
-                  예매율 : ${chart.reservation_rate}%<br/>
-                  개봉날짜 : ${chart.open_date} <br/>
-                  <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
+
+		                 관람등급 : <span id="rating_color${i.index}" style="font-weight:bold;">${chart.rating}</span><br/>
+		                 예매율 : ${chart.reservation_rate}% <br/>
+		                 개봉날짜 : ${chart.open_date} <br/>
+                  <input type="button" id="res_btn" name="res_btn" class="btn btn-danger btn-sm" onclick="goReservation('${chart.movie_id}','${chart.title}')" value="예매" style="width:250px; display:inline-block; margin-top:7px;"/>
+
                </div>
             </div>
          </div>
@@ -147,6 +150,62 @@
     function more(){
        location.href = "/event";
     }
+    
+
+    var sp0 = $("#rating_color0");
+    var sp1 = $("#rating_color1");
+    var sp2 = $("#rating_color2");
+    
+    if(sp0.text() == "12" || sp0.text() == "15"){
+    	sp0.html(sp0.text()+"세 관람가");
+    }else if(sp0.text() == "전체"){
+    	sp0.html(sp0.text()+" 관람가");
+    	sp0.css("color", "blue");
+    }else if(sp0.text() == "청불"){
+    	sp0.html("청소년 관람불가");
+    	sp0.css("color", "red");
+    }
+    
+    if(sp1.text() == "12" || sp1.text() == "15"){
+    	sp1.html(sp1.text()+"세 관람가");
+    }else if(sp1.text() == "전체"){
+    	sp1.html(sp1.text()+" 관람가");
+    	sp1.css("color", "blue");
+    }else if(sp1.text() == "청불"){
+    	sp1.html("청소년 관람불가");
+    	sp1.css("color", "red");
+    }
+    
+    if(sp2.text() == "12" || sp2.text() == "15"){
+    	sp2.html(sp2.text()+"세 관람가");
+    }else if(sp2.text() == "전체"){
+    	sp2.html(sp2.text()+" 관람가");
+    	sp2.css("color", "blue");
+    }else if(sp2.text() == "청불"){
+    	sp2.html("청소년 관람불가");
+    	sp2.css("color", "red");
+    }
+
+    function goReservation(movie_id, title){
+		var frm = document.createElement("form");
+		frm.action = "/ticket";
+		frm.method = "post";
+		
+		var mi = document.createElement("input");
+		mi.type = "text";
+		mi.name = "movie_id";
+		mi.value = movie_id;
+		frm.appendChild(mi);
+		
+		var mt = document.createElement("input");
+		mt.type = "text";
+		mt.name = "title";
+		mt.value = title;
+		frm.appendChild(mt);
+		
+		frm.submit();
+	}
+    
 </script>
          
 <style>

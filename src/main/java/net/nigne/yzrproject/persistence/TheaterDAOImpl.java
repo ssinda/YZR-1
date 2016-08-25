@@ -61,7 +61,7 @@ public class TheaterDAOImpl implements TheaterDAO {
 		Root<TheaterVO> mainQueryroot = mainQuery.from(TheaterVO.class);
 		
 		while(codeNum()>=code){
-			mainQuery.select(cb.count(mainQueryroot));
+			mainQuery.select(cb.count(mainQueryroot)).orderBy(cb.asc(mainQueryroot.get("area_code")));
 			mainQuery.where(cb.equal(mainQueryroot.get("area_code"), code));
 			
 			TypedQuery<Long> tq = entityManager.createQuery(mainQuery);
@@ -74,16 +74,16 @@ public class TheaterDAOImpl implements TheaterDAO {
 	}
 
 	@Override
-	public List<String> getLocal() {
+	public List<TheaterVO> getLocal() {
 		// TODO Auto-generated method stub
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> mainQuery = cb.createQuery(String.class);
+		CriteriaQuery<TheaterVO> mainQuery = cb.createQuery(TheaterVO.class);
 		Root<TheaterVO> mainQueryroot = mainQuery.from(TheaterVO.class);
 		
-		mainQuery.select(mainQueryroot.get("theater_area")).distinct(true);
+		mainQuery.multiselect(mainQueryroot.get("theater_area"), mainQueryroot.get("area_code")).distinct(true).orderBy(cb.asc(mainQueryroot.get("area_code")));
 		
-		TypedQuery<String> tq = entityManager.createQuery(mainQuery);
-		List<String> list = tq.getResultList();
+		TypedQuery<TheaterVO> tq = entityManager.createQuery(mainQuery);
+		List<TheaterVO> list = tq.getResultList();
 		
 		return list;
 	}

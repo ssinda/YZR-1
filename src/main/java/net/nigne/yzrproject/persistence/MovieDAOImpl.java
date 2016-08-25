@@ -87,7 +87,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(0).setMaxResults(1);
 			genre_movie = movie_tq.getResultList();
@@ -169,7 +169,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(1).setMaxResults(1);
 			actor_movie = movie_tq.getResultList();
@@ -206,7 +206,7 @@ public class MovieDAOImpl implements MovieDAO {
 			if(actor_movie.isEmpty()){
 				for(int a=0; a<actor_list.size(); a++){
 					actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
-					actorSubQuery.where(cb.equal(actorSubQueryRoot.get("movie_genre"), actor_list.get(a)));
+					actorSubQuery.where(cb.equal(actorSubQueryRoot.get("actor_name"), actor_list.get(a)));
 					
 					movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
 					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
@@ -252,7 +252,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(2).setMaxResults(1);
 			director_movie = movie_tq.getResultList();
@@ -290,7 +290,7 @@ public class MovieDAOImpl implements MovieDAO {
 			if(director_movie.isEmpty()){
 				for(int d=0; d<director_list.size(); d++){
 					directorSubQuery.select(directorSubQueryRoot.get("movie_id"));
-					directorSubQuery.where(cb.equal(directorSubQueryRoot.get("movie_genre"), director_list.get(d)));
+					directorSubQuery.where(cb.equal(directorSubQueryRoot.get("director_name"), director_list.get(d)));
 					
 					movieQuery.where(cb.and(movieRoot.get("movie_id").in(directorSubQuery), cb.equal(movieRoot.get("status"), "play")));
 					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
@@ -482,8 +482,10 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		if("reservation_rate".equals(order)) {
 			mainQuery.select(mainQueryroot).orderBy(cb.desc(mainQueryroot.get("reservation_rate")));
+			mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
 		} else {
 			mainQuery.select(mainQueryroot).orderBy(cb.asc(mainQueryroot.get("title")));
+			mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
 		}
 		
 		TypedQuery<MovieVO> tq = entityManager.createQuery(mainQuery);

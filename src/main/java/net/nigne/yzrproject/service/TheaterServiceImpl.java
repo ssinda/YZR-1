@@ -35,7 +35,7 @@ public class TheaterServiceImpl implements TheaterService {
 	}
 
 	@Override
-	public List<String> getLocal() {
+	public List<TheaterVO> getLocal() {
 		// TODO Auto-generated method stub
 		return dao.getLocal();
 	}
