@@ -3,14 +3,12 @@ package net.nigne.yzrproject.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -93,7 +91,7 @@ public class ReservationController {
 		
 		List<MovieVO> movieList = movieService.getMovieList("reservation_rate");
 		List<TheaterVO> theaterList = theaterService.getList("서울");
-		List<String> localList = theaterService.getLocal();
+		List<TheaterVO> localList = theaterService.getLocal();
 		List<Long> localTheaterNum = theaterService.getLocalTheaterNum();
 		if(memberId != null){
 			
@@ -107,7 +105,7 @@ public class ReservationController {
 		for(int i = 0; i < localList.size(); i++) {
 			TempLocal vo = new TempLocal();
 			vo.setLocalCount(localTheaterNum.get(i));
-			vo.setLocalName(localList.get(i));
+			vo.setLocalName(localList.get(i).getTheater_area());
 			local.add(i,vo);
 			
 		}
@@ -140,7 +138,7 @@ public class ReservationController {
 		
 		List<MovieVO> movieList = movieService.getMovieList("reservation_rate");
 		List<TheaterVO> theaterList = theaterService.getList(theater_area);
-		List<String> localList = theaterService.getLocal();
+		List<TheaterVO> localList = theaterService.getLocal();
 		List<Long> localTheaterNum = theaterService.getLocalTheaterNum();
 		if(memberId != null){
 			
@@ -154,7 +152,7 @@ public class ReservationController {
 		for(int i = 0; i < localList.size(); i++) {
 			TempLocal vo = new TempLocal();
 			vo.setLocalCount(localTheaterNum.get(i));
-			vo.setLocalName(localList.get(i));
+			vo.setLocalName(localList.get(i).getTheater_area());
 			local.add(i,vo);
 			
 		}
@@ -193,7 +191,7 @@ public class ReservationController {
 		
 		List<MovieVO> movieList = movieService.getMovieList("reservation_rate");
 		List<TheaterVO> theaterList = theaterService.getList("서울");
-		List<String> localList = theaterService.getLocal();
+		List<TheaterVO> localList = theaterService.getLocal();
 		List<Long> localTheaterNum = theaterService.getLocalTheaterNum();
 		if(memberId != null){
 			
@@ -207,7 +205,7 @@ public class ReservationController {
 		for(int i = 0; i < localList.size(); i++) {
 			TempLocal vo = new TempLocal();
 			vo.setLocalCount(localTheaterNum.get(i));
-			vo.setLocalName(localList.get(i));
+			vo.setLocalName(localList.get(i).getTheater_area());
 			local.add(i,vo);
 			
 		}
