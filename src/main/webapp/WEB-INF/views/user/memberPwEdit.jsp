@@ -43,10 +43,18 @@
 	
 <style>
 	th{background-color:#bf4040; color:white;}
+	
+	.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+		vertical-align:middle;
+	}
+	
+	.table{
+		border:1px solid lightgray;
+	}
 </style>
 
 <div id="wrap_content" style="min-height:100%; position:relative;" align="center" >
-	<div id="content" style="padding-bottom:150px; width:420px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 		<h2>비밀번호 수정페이지</h2>
 		<br>
 		<form action="/user/member/pwChange" id="pwChange" name="pwChange" method="post" >
