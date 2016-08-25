@@ -70,7 +70,6 @@
       </div>
       
       <div style="border:1px solid #000; margin-top:25px; clear:both; float:left; width:100%;"></div>
-<<<<<<< HEAD
       
       <form class="frm" name="frm" action="/ticket" method="post">
       	 <input type="hidden" id="frm_theater_areas" name="frm_theater_area2" value="" />
@@ -81,8 +80,6 @@
          <input type="hidden" id="frm_plex_nums" name="frm_plex_num2" value="" />
          <input type="hidden" id="frm_start_times" name="frm_start_time2" value="" />
       </form>
-=======
->>>>>>> JNH
    </div>
 </div>
 

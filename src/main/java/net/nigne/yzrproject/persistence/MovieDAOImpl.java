@@ -87,7 +87,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(0).setMaxResults(1);
 			genre_movie = movie_tq.getResultList();
@@ -169,7 +169,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(1).setMaxResults(1);
 			actor_movie = movie_tq.getResultList();
@@ -252,7 +252,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(2).setMaxResults(1);
 			director_movie = movie_tq.getResultList();
