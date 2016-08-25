@@ -83,7 +83,7 @@ th{
 				</td>
 			</tr>
 			<tr>
-				<th style="vertical-align: top; padding-top: 20px;">내용</th>
+				<th style="vertical-align: top; padding-top: 10px;">내용</th>
 				<td colspan="3">
 					<textarea id="lost_content" name="lost_content" rows="5" cols="100"></textarea>
 				</td>

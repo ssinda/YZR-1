@@ -9,7 +9,7 @@
 		<%response.sendRedirect("/login");%>
 	</script>
 </c:if>
-<div class="content" style="margin-left: 250px;">
+<div class="content" style="margin-left: 120px; width: 890px;">
 	<h2>상영시간 등록</h2><br><br>
 	<form id="timetableWritefrm" role="form" action="/admin/timetable/new" method="post">
 		<label class="col-sm-2">영화 타이틀</label>
@@ -64,8 +64,8 @@
 				</c:forEach>
 			</select>
 		</div>
-		<div style="clear: both; margin-left: 300px;">
-			<button type="submit" class="btn btn-primary">등록</button>
+		<div style="clear: both; text-align: center;">
+			<button type="submit" class="btn btn-primary" style="margin-top: 50px;">등록</button>
 		</div>
 	</form>
 </div>

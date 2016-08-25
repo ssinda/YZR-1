@@ -36,6 +36,11 @@ public class TheaterVO {
 		this.theater_name = theater_name;
 	}
 	
+	public TheaterVO(String theater_area, int area_code){
+		this.theater_area = theater_area;
+		this.area_code = area_code;
+	}
+	
 	public TheaterVO(){}
 	
 	public String getTheater_id() {

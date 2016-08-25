@@ -50,7 +50,7 @@
 			<br/>
 			<span style="margin-left: 20px; margin-bottom: 10px;">배우 : 
 				<c:forEach	items="${actorlist}" var="actorlist">
-					${actorlist.actor_name }   
+					${actorlist.actor_name } &nbsp;  
 				</c:forEach>
 			</span>
 		</div>
@@ -68,13 +68,16 @@
 			<span style="margin-left: 20px; margin-bottom: 10px;"> 공식 사이트 : ${movievo.site } </span>
 		</div>
 		<div style="margin-left: 430px;  margin-top: 40px;" >
-			<button type="button" class="btn btn-danger" onclick="reservation()">예매하러 가기</button>
+			<c:if test="${movievo.status == 'play' }">
+				<button type="button" class="btn btn-danger" onclick="goReservation('${movievo.movie_id}', '${movievo.title}')">예매하러 가기</button>
+			</c:if>
+			
 			<button type="button" class="btn btn-danger" onclick="SetFocus()">평점/후기</button>
 			<button type="button" class="btn btn-danger" onclick="timetable()">상영시간표</button>
 		</div>
 		</b>
 		<hr style="border: 1; border-top: 1px solid black; margin-top : 40px;">
-			<div style="width: 1100px; height: 450px; margin-top: 20px; margin-left: 30px;">
+			<div style="width: 1100px; margin-top: 20px; margin-left: 30px; padding-bottom: 100px;">
 				${movievo.story }
 			</div>
 		</div>
@@ -249,9 +252,26 @@
 </div>
 <script>
 
-function reservation(){
-	location.href="/ticket";
+function goReservation(movie_id, title){
+	var frm = document.createElement("form");
+	frm.action = "/ticket";
+	frm.method = "post";
+	
+	var mi = document.createElement("input");
+	mi.type = "text";
+	mi.name = "movie_id";
+	mi.value = movie_id;
+	frm.appendChild(mi);
+	
+	var mt = document.createElement("input");
+	mt.type = "text";
+	mt.name = "title";
+	mt.value = title;
+	frm.appendChild(mt);
+	
+	frm.submit();
 }
+
 function timetable(){
 	location.href="/timetable";
 }
