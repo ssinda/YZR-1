@@ -92,7 +92,7 @@
 		initialize(theater_name, address, xpoint, ypoint);
 	}
 	
-	setTheater_name("CGV강남","서울","0","0");
+	setTheater_name("CGV강남","서울","127.0262446","37.5017831");
 	
 	$(".th_name").click(function(){
 		var ti = $(this).attr("value");
@@ -126,9 +126,9 @@
 			content : contentString,
 			maxWidth : markerMaxWidth
 		});
-		
-		google.maps.event.addListener(marker, 'click', function() {
 		infowindow.open(map, marker);
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.open(map, marker);
 		});
 	}
 	
