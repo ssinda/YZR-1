@@ -286,7 +286,7 @@
       var plex = "";
       
       for(var a=0; a<total; a++){
-         plex += '<div class="movie_time" style="float:left; margin-top:15px;">'
+         plex += '<div id="movie_time'+a+'" style="float:left; margin-top:15px;">'
             + '<div style="border-top:1px solid #000; margin-top:10px; width:1140px;">'
             + '</div>'
             + '<div id="movie'+a+'" style="float:left; margin-top:15px; margin-left:20px;">'
@@ -376,7 +376,10 @@
             	  $(".cnone"+a+c).css("display","none");
             	  $(".cnone"+a+(c+1)).css("border-left","1px solid #BDBDBD");
               }
-           	
+           	  
+              if($("#pt"+a+(tt[a].length-1)).text() == "마감"){
+                  $("#movie_time"+a).css("display","none");
+              }
            }
       }
    }
