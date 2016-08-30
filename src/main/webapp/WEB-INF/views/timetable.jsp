@@ -70,16 +70,6 @@
       </div>
       
       <div style="border:1px solid #000; margin-top:25px; clear:both; float:left; width:100%;"></div>
-      
-      <form class="frm" name="frm" action="/ticket" method="post">
-      	 <input type="hidden" id="frm_theater_areas" name="frm_theater_area2" value="" />
-         <input type="hidden" id="frm_theater_ids" name="frm_theater_id2" value="" />
-         <input type="hidden" id="frm_theater_names" name="frm_theater_name2" value="" />
-         <input type="hidden" id="frm_movie_ids" name="frm_movie_id2" value="" />
-         <input type="hidden" id="frm_movie_titles" name="frm_movie_title2" value="" />
-         <input type="hidden" id="frm_plex_nums" name="frm_plex_num2" value="" />
-         <input type="hidden" id="frm_start_times" name="frm_start_time2" value="" />
-      </form>
    </div>
 </div>
 
@@ -118,23 +108,31 @@
             + theater_list[i].theater_name
             + '</li>';
       }
-      
       document.getElementById("theater").innerHTML = result;
    }
    
-   function setTheater_name(theater_name, theater_id, theater_area){
-      document.getElementById("theater_name").innerHTML = theater_name;
-      document.getElementById("frm_theater_name").value = theater_name;
-      document.getElementById("theater_id").value = theater_id;
-      document.getElementById("frm_theater_area").value = theater_area;
-    	  
-      viewDate();
-      $(".date_div").css("color", "black");
-      $("#0d").css("color", "red");
-      getTimetable(theater_id, $("#month0").val()+"-"+$("#day0").val());
+   if(day<10){
+      $("#theater_name").html("CGV강남");
+       $("#frm_theater_name").val("CGV강남");
+       $("#theater_id").val("T001");
+       $("#frm_theater_area").val("서울");
+       if(month<10){
+    	   getTimetable("T001", "0"+month+"-0"+day);  
+       }else if(month>=10){
+    	   getTimetable("T001", month+"-0"+day);
+       }
+       
+   }else if(day>=10){
+      $("#theater_name").html("CGV강남");
+       $("#frm_theater_name").val("CGV강남");
+       $("#theater_id").val("T001");
+       $("#frm_theater_area").val("서울");
+       if(month<10){
+    	   getTimetable("T001", "0"+month+"-"+day);
+       }else if(month>=10){
+      	   getTimetable("T001", month+"-"+day);
+       }
    }
-   
-   setTheater_name("CGV강남","T001","서울");
    
    function setViewDate(){
       var cal_date = "";
@@ -158,10 +156,11 @@
       
       document.getElementById("date_group").innerHTML = cal_date;
       $("#0d").css("color", "red");
-   }
-   setViewDate();
-   
-   $(document).ready(function(){
+  }
+  
+  setViewDate();   
+  
+  $(document).ready(function(){
       
       for(var a=0; a<5; a++){
          day = date.getDate();
@@ -227,6 +226,17 @@
       return date;
    }
    
+   function setTheater_name(theater_name, theater_id, theater_area){
+      document.getElementById("theater_name").innerHTML = theater_name;
+      document.getElementById("frm_theater_name").value = theater_name;
+      document.getElementById("theater_id").value = theater_id;
+      document.getElementById("frm_theater_area").value = theater_area;
+         
+      $(".date_div").css("color", "black");
+      $("#0d").css("color", "red");
+      
+      getTimetable(theater_id, $("#month0").val()+"-"+$("#day0").val());
+   }
    
    $(".date_div").click(function(){
       var cday = "";
@@ -235,7 +245,7 @@
       $(".date_div").css("color","black");
       $(this).css("color","red");
       var temp = $(this).attr('id').substring(0, 1);
-         cday = month + "-" + $("#day" + temp).val();
+         cday = $("#month"+temp).val() + "-" + $("#day" + temp).val();
          getTimetable(ti, cday);
    })
    
@@ -247,12 +257,6 @@
       $(this).css("color","red");
       setTheater_name(tn, ti, tl);
    })
-   
-   if(day<10){
-      getTimetable("T001", month+"-0"+day);
-   }else if(day>=10){
-      getTimetable("T001", month+"-"+day);
-   }   
    
    function getTimetable(theater_id, cday){
       $.ajax({
@@ -267,7 +271,7 @@
             "day" : cday   
          },
          success : function(tt){
-            setTimetable(tt.tt, tt.total);
+           setTimetable(tt.tt, tt.total);
             getMovieInfo(theater_id, cday);
             getMovieGenre(theater_id, cday);
             getPlexInfo(theater_id, cday);
@@ -313,6 +317,7 @@
             + '</div>';
          $("#movie_place").html(plex);
       }
+
       
       var mor = '<i class="fa fa-sun-o fa-1x" aria-hidden="true" style="color:red"><span style="color:black; font-weight:bold;">조조</span></i>';
       var night = '<i class="fa fa-moon-o fa-1x" aria-hidden="true" style="color:blue"><span style="color:black; font-weight:bold;">심야</span></i>';
@@ -321,42 +326,58 @@
       for(var a=0; a<total; a++){
          timetable = "";   
          for(var b=0; b < tt[a].length; b++){
-            timetable += '<li class="time_li" onclick="ticket_submit()">'
-               + '<span style="font-size:15px; display:block;">'
+            timetable += '<li class="time_li cnone'+a+b+'">'
+        	   + '<form class="frm" name="frm" action="/ticket" method="post">'
+               + '<input type="hidden" class="frm_theater_area2" name="frm_theater_area2" value="" />'
+               + '<input type="hidden" class="frm_theater_id2" name="frm_theater_id2" value="" />'
+               + '<input type="hidden" class="frm_theater_name2" name="frm_theater_name2" value="" />'
+               + '<input type="hidden" class="frm_movie_id2" name="frm_movie_id2" value="" />'
+               + '<input type="hidden" class="frm_movie_title2" name="frm_movie_title2" value="" />'
+               + '<input type="hidden" class="frm_plex_num2" name="frm_plex_num2" value="" />'
+               + '<input type="hidden" class="frm_start_time2" name="frm_start_time2" value="'+tt[a][b].start_time+'" />'
+               + '</form>'
+               + '<a class="time" style="font-size:15px; display:block;">'
                + tt[a][b].start_time.substring(11,16)
-               + '</span>'
-               + '<input type="hidden" class="frm_start_time" value="'+tt[a][b].start_time+'" />'
-               + '<input type="hidden" class="frm_movie_title'+a+'" id="frm_movie_title" value="" />'
-               + '<input type="hidden" class="frm_movie_id'+a+'" id="frm_movie_id" value="" />'
-               + '<input type="hidden" class="frm_plex_num'+a+'" id="frm_plex_num" value="'+tt[a][0].plex_number+'" />'
-               + '<span id="pt'+a+b+'">'
+               + '</a>'
+               + '<span id="pt'+a+b+'" class="cnone'+a+b+'">'
                + '</span>'
                + '</li>';
          }
          $("#time_table"+a).html(timetable);
          
          for(var c=0; c < tt[a].length; c++){
-        	var tempHour = tt[a][c].start_time.substring(11,13); 
-            var today =  tt[a][c].start_time;
-            var min = date.getMinutes();
-            if(min<10){
-            	min = "0"+min;
-            }
-            var tempTime = date.getFullYear() + "-" + month + "-" + $("#day0").val() + " " + date.getHours() + ":" + min;
-            
-            if(tempHour > 06 && tempHour < 10){
-               $("#pt"+a+c).html(mor);
-            }else if(tempHour >= 10 && tempHour < 24){
-               $("#pt"+a+c).html(nor);
-            }else if(tempHour == 00 || (tempHour >= 01 && tempHour <= 06)){
-               $("#pt"+a+c).html(night);
-            }
-            
-            if(today < tempTime){
-            	$("#pt"+a+c).html("마감");
-            }
-         }
-         $(".frm_plex_num"+a).val(tt[a][0].plex_number);
+              var tempHour = tt[a][c].start_time.substring(11,13); 
+              var today =  tt[a][c].start_time;
+              var min = date.getMinutes();
+              var hour = date.getHours();
+              
+              if(hour<10){
+            	  hour = "0"+hour;
+              }
+              if(min<10){
+                 min = "0"+min;
+              }
+              
+              var tempTime = date.getFullYear() + "-" + $("#month0").val() + "-" + $("#day0").val() + " " + hour + ":" + min;
+              
+              if(tempHour > 06 && tempHour < 10){
+                 $("#pt"+a+c).html(mor);
+              }else if(tempHour >= 10 && tempHour < 24){
+                 $("#pt"+a+c).html(nor);
+              }else if(tempHour == 00 || (tempHour >= 01 && tempHour <= 06)){
+                 $("#pt"+a+c).html(night);
+              }
+              
+              if(today < tempTime){
+                 $("#pt"+a+c).html("마감");
+              }
+         
+              if($("#pt"+a+c).text() == "마감"){
+            	  $(".cnone"+a+c).css("display","none");
+            	  $(".cnone"+a+(c+1)).css("border-left","1px solid #BDBDBD");
+              }
+           	
+           }
       }
    }
    
@@ -379,6 +400,9 @@
    }
    
    function setMovieInfo(movie_info){
+      var mt = null;
+      var fmt = null;
+      var fmi = null;
       for(var i=0; i<movie_info.length; i++){
          $("#movie_title"+i).html(movie_info[i].title);
          $("#grade_circle"+i).html(movie_info[i].rating);
@@ -398,8 +422,12 @@
          }
          $("#runtime"+i).html(movie_info[i].runtime + "분");
          $("#open_date"+i).html(movie_info[i].open_date);
-         $("#frm_movie_title"+i).val(movie_info[i].title);
-         $("#frm_movie_id"+i).val(movie_info[i].movie_id);
+         mt = $("#movie_title"+i).parents("div .movie_time");
+         fmt = $(mt).find("#frm_movie_title");
+         fmi = $(mt).find("#frm_movie_id");
+         
+         fmt.val(movie_info[i].title);
+         fmi.val(movie_info[i].movie_id);
       }
    }
    
@@ -451,25 +479,40 @@
          $("#seat_cnt"+i).html("총 "+plex[i].plex_seat_cnt+"석");
       }
    }
-   
-   function ticket_submit(){
-        var a = $("#frm_movie_ids").val($(this).children("#frm_movie_id").attr("value")); //
-		var b = $("#frm_movie_titles").val($(this).children("#frm_movie_title").val()); //
-		var c = $("#frm_plex_nums").val($(this).children("#frm_plex_num").val()); //
-		var d = $("#frm_theater_areas").val($("#frm_theater_area").val());
-		var e = $("#frm_theater_ids").val($("#theater_id").val());
-		var f = $("#frm_theater_names").val($("#frm_theater_name").val());
-		var g = $("#frm_start_times").val($(this).children(".frm_start_time").val()); //
-		
-		
-		alert($("#frm_movie_titles").val());
-		alert($("#frm_plex_nums").val());
-		alert($("#frm_theater_areas").val());
-		alert($("#frm_theater_ids").val());
-		alert($("#frm_theater_names").val());
-		alert($(this).children(".frm_start_time").val());
+
+   function tt_submit(tl){
+     var mt = $(tl).parents("div .movie_time");
+      
+     var frm_plex_num = $(mt).find("#frm_plex_num").val();
+     var frm_movie_title = $(mt).find("#frm_movie_title").val();
+     var frm_movie_id = $(mt).find("#frm_movie_id").val();
+     var time_li = tl.closest("li");
+     var frm_plex_num2 = $(time_li).find(".frm_plex_num2");
+     var frm_movie_id2 = $(time_li).find(".frm_movie_id2");
+     var frm_movie_title2 = $(time_li).find(".frm_movie_title2");
+     var frm_theater_area2 = $(time_li).find(".frm_theater_area2");
+     var frm_theater_id2 = $(time_li).find(".frm_theater_id2");
+     var frm_theater_name2 = $(time_li).find(".frm_theater_name2");
+     var frm_start_time2 = $(time_li).find(".frm_start_time2");
+     var frm= $(time_li).find(".frm");
+     
+     frm_theater_area2.val($("#frm_theater_area").val());
+     frm_theater_id2.val($("#theater_id").val());
+     frm_theater_name2.val($("#frm_theater_name").val());
+     
+     frm_movie_id2.val(frm_movie_id);
+     frm_movie_title2.val(frm_movie_title);
+     frm_plex_num2.val(frm_plex_num);
+
+     frm.submit();
+      
+
    }
-   
+
+ 
+   $("body").on("click", ".time_li", function(e){
+        tt_submit(e.target);
+   });
 </script>
 
 <style>

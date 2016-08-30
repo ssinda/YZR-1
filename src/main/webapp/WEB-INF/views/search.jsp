@@ -173,11 +173,17 @@
 			
 			result+=  '<div class="movie">'
 					+ '<span style="width: 264px; height: 358px; text-align: center;"><a href="/movie/' + this.movie_id + '"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></a></span>'
-					+ '<span style="font-weight: bold; font-size: 16px;"><a href="/movie/' + this.movie_id + '">' + this.title + '</a></span>'
-					+ '<span>등급 : ' + this.rating + '</span>'
-					+ '<span>예매율 : ' + this.reservation_rate + '</span>'
-					+ '<span>개봉일 : ' + this.open_date +'</span>';
-					
+					+ '<span style="font-weight: bold; font-size: 16px;"><a href="/movie/' + this.movie_id + '">' + this.title + '</a></span>';
+			if(this.rating == "청불"){
+				result+= '<span>등급 : <font style="color:red; font-weight:bold;">청소년 관람불가</font></span>';
+			}else if(this.rating == "전체"){
+				result+= '<span>등급 : <font style="color:blue; font-weight:bold;">전체 관람가</font></span>';
+			}else{
+				result+= '<span>등급 : <font style="font-weight:bold;">' + this.rating + '세 관람가</font></span>';
+			}
+		
+			result+= '<span>예매율 : ' + this.reservation_rate + '</span>'
+				   + '<span>개봉일 : ' + this.open_date +'</span>';
 			
 			if(this.status == "play"){
 				result+= '<span><button class="btn btn-danger btn-sm" style="width: 262px; border-radius: 5px; border: 0;" onclick="goReservation(\''+ this.movie_id + '\',\'' + this.title + '\')">예매</button></span>';
@@ -248,10 +254,18 @@
 			$(result.movieList).each(function(i){
 				if(i<4){
 					movie_list+=  '<div class="movie">'
-								+ '<span style="width: 264px; height: 358px; text-align: center;"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></span>'
-							    + '<span style="font-weight: bold; font-size: 16px;">'+ this.title + '</span>'
-								+ '<span>등급 : ' + this.rating + '</span>'
-								+ '<span>장르: ';
+								+ '<span style="width: 264px; height: 358px; text-align: center;"><a href="/movie/' + this.movie_id + '"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></a></span>'
+							    + '<span style="font-weight: bold; font-size: 16px;">'+ this.title + '</span>';
+				    
+				    if(this.rating == "청불"){
+				    	movie_list+= '<span>등급 : <font style="color:red; font-weight:bold;">청소년 관람불가</font></span>';
+					}else if(this.rating == "전체"){
+						movie_list+= '<span>등급 : <font style="color:blue; font-weight:bold;">전체 관람가</font></span>';
+					}else{
+						movie_list+= '<span>등급 : <font style="font-weight:bold;">' + this.rating + '세 관람가</font></span>';
+					}
+					
+				    movie_list+= '<span>장르: ';
 							
 					for(var j = 0; j<am.genre.length; j++){
 						if(am.genre[j].movie_id == this.movie_id){
@@ -396,8 +410,15 @@
 				result+=  '<div class="movie">'
 						+ '<span style="width: 264px; height: 358px; text-align: center;"><a href="/movie/' + this.movie_id + '"><img src="/resources/images/poster/'+ this.poster +'" style="width: 100%; height: 100%;"></a></span>'
 						+ '<span style="font-weight: bold; font-size: 16px;">' + this.title + '</span>'
-						+ '<span>등급 : ' + this.rating + '</span>'
-						+ '<span>장르: ';
+				if(this.rating == "청불"){
+					result+= '<span>등급 : <font style="color:red; font-weight:bold;">청소년 관람불가</font></span>';
+				}else if(this.rating == "전체"){
+					result+= '<span>등급 : <font style="color:blue; font-weight:bold;">전체 관람가</font></span>';
+				}else{
+					result+= '<span>등급 : <font style="font-weight:bold;">' + this.rating + '세 관람가</font></span>';
+				}
+				
+				result+= '<span>장르: ';
 						
 				for(var j = 0; j<am.genre.length; j++){
 					if(am.genre[j].movie_id == this.movie_id){

@@ -129,6 +129,8 @@ public class MemberDAOImpl implements MemberDAO {
 		mergevo.setMember_name(vo.getMember_name());
 		mergevo.setEmail(vo.getEmail());
 		mergevo.setTel(vo.getTel());
+		mergevo.setQuestion(vo.getQuestion());
+		mergevo.setAnswer(vo.getAnswer());
 	}
 	
 	//아이디찾기

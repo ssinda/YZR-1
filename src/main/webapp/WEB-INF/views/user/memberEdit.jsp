@@ -13,71 +13,57 @@
 	function index(){
 		location.href="/index";
 	}
-	function pwEdit(){
-		location.href="/user/member/memberPwEdit";
-	}
 	
 	function userUpdate(){
-		var frm = document.createElement("form");
-		frm.setAttribute("action","/user/member/edit");
-		frm.setAttribute("method","post");
 		
-		var member_name = document.createElement("input");
-		member_name.setAttribute("type","text");
-		member_name.setAttribute("id","member_name");
-		member_name.setAttribute("name","member_name");
-		member_name.setAttribute("value", $("#member_name").val());
-		frm.appendChild(member_name);
+		var form = document.getElementById("form");
 		
-		var address = document.createElement("input");
-		address.setAttribute("type","text");
-		address.setAttribute("id","address");
-		address.setAttribute("name","address");
-		address.setAttribute("value", $("#address").val());
-		frm.appendChild(address);
-		
-		var email = document.createElement("input");
-		email.setAttribute("type","text");
-		email.setAttribute("id","email");
-		email.setAttribute("name","email");
-		email.setAttribute("value", $("#email").val());
-		frm.appendChild(email);
-		
-		var tel = document.createElement("input");
-		tel.setAttribute("type","text");
-		tel.setAttribute("id","tel");
-		tel.setAttribute("name","tel");
-		tel.setAttribute("value", $("#tel").val());
-		frm.appendChild(tel);
 		alert("success");
-		frm.submit();
+		form.submit();
 	}
+	
+	$(document).ready(function() { 
+		document.getElementById("checkQuestion").innerHTML="${vo.getQuestion()}";
+	});
+	
 </script>
 
 <style>
-	th{background-color:#bf4040; color:white; width:100px;}
+	th{
+		background-color:#bf4040; 
+		color:white; 
+		width:100px;
+		padding-top:50%;
+	}
 	h2{text-align:center;}
+	
+	.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+		vertical-align:middle;
+	}
+	
+	.table{
+		border:1px solid lightgray;
+	}
 </style>
 
 <div id="wrap_content" align="center">
-	<div id="content" style="width:480px;" >
+	<div id="content" style="width:800px;" >
 		<h2>회원정보 수정페이지</h2>
 		<br>
-		
-		<table class="table" style="width:400px;">
+		<form id="form" name="form" action="/user/member/edit" method="post">
+			<table class="table" style="width:500px;">
 				<tr>
-					<th>아이디</th>
+					<th style="width:150px;" >아이디</th>
 					<td>${vo.getMember_id()}</td>
 				</tr>
-					
+				<tr>
+					<th>이름</th><td>${vo.getMember_name()}</td>
+				</tr>
 				<tr>
 					<th>성별</th><td>${vo.getGender()}</td>
 				</tr>	
 				<tr>
 					<th>생년월일</th><td>${vo.getBirthday()}</td>
-				</tr>
-				<tr>
-					<th>닉네임</th><td><input type="text" id="member_name" name="member_name" class="form-control" value="${vo.getMember_name()}"  ></td>
 				</tr>	
 				<tr>
 					<th >집주소</th><td><input type="text" id="address" name="address" class="form-control" value="${vo.getAddress()}"  ></td>
@@ -88,8 +74,26 @@
 				<tr>
 					<th>연락처</th><td><input type="text" id="tel" name="tel" class="form-control" value="${vo.getTel()}"  ></td>
 				</tr>
+				<tr>
+					<th>비밀번호찾기 질문</th>
+					<td>
+						<select id="question" name="question" class="form-control">
+							<option id="checkQuestion" ></option>
+							<option value="아버지 또는 어머니 성함은?">아버지 또는 어머니 성함은?</option>
+							<option value="가장 감명깊게 읽은 책 제목은?">가장 감명깊게 읽은 책 제목은?</option>
+							<option value="가장 친한친구의 이름은?">가장 친한친구의 이름은?</option>
+							<option value="내가 다닌 고등학교는?">내가 다닌 고등학교는?</option>
+							<option value="좋아하는 스포츠는?">좋아하는 스포츠는?</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호찾기 답변</th>
+					<td><input type="text" id="answer" name="answer" class="form-control" value="${vo.getAnswer()}"></td>
+					<td id="checkAnswer"></td>
+				</tr>
 			</table>
-		
+		</form>
 		
 		<input type="button" onclick="userUpdate()" class="btn btn-danger" value="수정완료">
 		<input type="button" onclick="index()" class="btn btn-danger" value="취소">

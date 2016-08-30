@@ -87,7 +87,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(0).setMaxResults(1);
 			genre_movie = movie_tq.getResultList();
@@ -153,6 +153,8 @@ public class MovieDAOImpl implements MovieDAO {
 		subQuery.select(subQueryRoot.get("movie_id"));
 		subQuery.where(cb.equal(subQueryRoot.get("member_id"), member_id));
 		
+		// 抗寇贸府 备埃
+		
 		CriteriaQuery<String> resQuery = cb.createQuery(String.class);
 		Root<ReservationVO> resRootQuery = resQuery.from(ReservationVO.class);
 		resQuery.select(resRootQuery.get("movie_id"));
@@ -161,15 +163,14 @@ public class MovieDAOImpl implements MovieDAO {
 		TypedQuery<String> restq = entityManager.createQuery(resQuery);
 		List<String> res_movie_id = restq.getResultList();
 		
-		// 抗寇贸府 备埃
-		
 		List<MovieVO> actor_movie = null;
+		
 		if(res_movie_id.isEmpty()){
 			CriteriaQuery<MovieVO> Query = cb.createQuery(MovieVO.class);
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(1).setMaxResults(1);
 			actor_movie = movie_tq.getResultList();
@@ -252,7 +253,7 @@ public class MovieDAOImpl implements MovieDAO {
 			Root<MovieVO> Root = Query.from(MovieVO.class);
 			
 			Query.where(cb.equal(Root.get("status"), "play"));
-			Query.orderBy(cb.desc(Root.get("open_date")));
+			Query.orderBy(cb.desc(Root.get("open_date")), cb.desc(Root.get("movie_id")));
 			
 			TypedQuery<MovieVO> movie_tq = entityManager.createQuery(Query).setFirstResult(2).setMaxResults(1);
 			director_movie = movie_tq.getResultList();
@@ -482,8 +483,10 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		if("reservation_rate".equals(order)) {
 			mainQuery.select(mainQueryroot).orderBy(cb.desc(mainQueryroot.get("reservation_rate")));
+			mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
 		} else {
 			mainQuery.select(mainQueryroot).orderBy(cb.asc(mainQueryroot.get("title")));
+			mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
 		}
 		
 		TypedQuery<MovieVO> tq = entityManager.createQuery(mainQuery);
@@ -507,6 +510,7 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		return list;
 	}
+
 	
 
 }

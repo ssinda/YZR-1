@@ -27,16 +27,18 @@ public class MemberController {
 	
 							 //회원가입 POST방식
 	@RequestMapping(value = "/member", method = RequestMethod.POST) 
-	public ModelAndView member(MemberVO vo, HttpServletRequest request, @RequestParam("email1") String email1, @RequestParam("email2") String email2) throws Exception {
-		vo.setGrade("normal"); 
+	public ModelAndView member(MemberVO vo, 
+								@RequestParam("email1") String email1, 
+								@RequestParam("email2") String email2,
+								@RequestParam("year") String year,
+								@RequestParam("month") String month,
+								@RequestParam("day") String day) throws Exception {
+		vo.setGrade("브론즈"); 
 		vo.setEmail(email1 + "@" + email2);
+		vo.setBirthday(year+month+day);
 		service.insert(vo); 
 		ModelAndView view = new ModelAndView();
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("member_id", vo.getMember_id());
-		session.removeAttribute("error");
-		view = new ModelAndView("redirect:/index");
 		view.addObject("vo", vo);
 		view.setViewName("user/memberConfirm"); 
 		return view;

@@ -4,6 +4,18 @@
 <%@include file="../include/header.jsp"%>
 <%@include file="./sidebar.jsp"%>
 
+<style>
+
+	.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+		vertical-align:middle;
+	}
+	
+	.table{
+		border:1px solid lightgray;
+	}
+
+</style>
+
 <div style="width:400px margin:0 auto;" >
 	<h1>비밀번호찾기 --> 변경</h1>
 	<form action="/user/pwFindAndEdit" id="pwFindAndEdit" name="pwFindAndEdit" method="post">
