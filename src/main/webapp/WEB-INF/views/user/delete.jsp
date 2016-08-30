@@ -10,6 +10,15 @@
 		<%response.sendRedirect("/login");%>
 	</script>
 </c:if>
+<style>
+	.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+		vertical-align:middle;
+	}
+	
+	.table{
+		border:1px solid lightgray;
+	}
+</style>
 <script>
 	
 	function memberDelete(){

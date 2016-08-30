@@ -3,11 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../include/header.jsp"%>
 <%@include file="./sidebar.jsp"%>
-<c:if test="${ member_id == null }">
-	<script>
-		<%response.sendRedirect("/login");%>
-	</script>
-</c:if>
+
 <script>
 	function edit(){
 		
@@ -23,16 +19,25 @@
 <style>
 	th{background-color:#bf4040; color:white;}
 	td{text-align:center;}
+	
+	.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+		vertical-align:middle;
+	}
+	
+	.table{
+		border:1px solid lightgray;
+	}
+	
 </style>
 
 <div id="wrap_content" style="min-height:100%; position:relative;" align="center" >
-	<div id="content" style="padding-bottom:150px; width:320px;">
-		<h1>회원가입을 축하합니다</h1>
+	<div id="content" style="padding-bottom:150px; width:480px;">
+		<h2>회원가입을 축하합니다</h2>
 		<br>
 		
 		<table class="table" style="width:400px;">
 			<tr>
-				<th>아이디</th><td>${vo.getMember_id()}</td>
+				<th style="width:150px;">아이디</th><td>${vo.getMember_id()}</td>
 			</tr>
 			<tr>
 				<th>이름</th><td>${vo.getMember_name()}</td>
@@ -56,7 +61,6 @@
 		<form action="/user/member/edit" id="f" name="f" method="post">
 			<input id="user_id" name="user_id" type="hidden" value="${vo.getMember_id()}" >
 		</form>
-		<input type="button" onclick="edit()" class="btn btn-danger" value="회원정보수정">
 		<input type="button" onclick="index()" class="btn btn-danger" value="메인페이지로 이동">
 	</div>	
 </div>
