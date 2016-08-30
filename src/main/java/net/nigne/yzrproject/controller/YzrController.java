@@ -114,7 +114,7 @@ public class YzrController {
       if(member_id == "" || member_id == null){
          // 기본추천영화
          List<MovieVO> rec_basic = movie_service.basicMovie();
-         List<String> basic_title = new ArrayList();
+         List<String> basic_title = new ArrayList<String>();
          
          if(!rec_basic.isEmpty()){
             basic_title.add("No.1");
