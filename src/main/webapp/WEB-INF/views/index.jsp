@@ -142,7 +142,6 @@
 </div>
 
 <script type="text/javascript">
-
     $(document).ready(function() {
         $('#notice').carousel('cycle');
     });
@@ -209,6 +208,7 @@
 </script>
          
 <style>
+   
    #event_li{
       color:red;
       text-decoration: none;
