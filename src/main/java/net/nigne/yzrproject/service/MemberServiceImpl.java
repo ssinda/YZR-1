@@ -1,4 +1,3 @@
-
 package net.nigne.yzrproject.service;
 
 import java.util.List;
@@ -92,4 +91,13 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return dao.getMember(member_id);
 	}
+	
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public void pointUpdate(String memberId, int point) {
+		// TODO Auto-generated method stub
+		dao.pointUpdate(memberId, point);
+		
+	}
 }
+
