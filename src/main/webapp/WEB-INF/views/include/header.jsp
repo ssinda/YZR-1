@@ -64,7 +64,7 @@
 						</c:if>
 						<c:if test="${ member_id != null }">
 							<li><a href="/user"><span
-									class="glyphicon glyphicon-home"></span> 마이페이지</a></li>
+									class="glyphicon glyphicon-th"></span> 마이페이지</a></li>
 						</c:if>
 						<li><a href="/club"><span
 								class="glyphicon glyphicon-star"></span> Club서비스</a></li>
