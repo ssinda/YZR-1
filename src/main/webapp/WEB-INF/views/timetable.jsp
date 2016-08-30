@@ -31,9 +31,9 @@
             <li class="lo_li" onclick="getTheater_list('경기')">경기</li>
             <li class="lo_li" onclick="getTheater_list('인천')">인천</li>
             <li class="lo_li" onclick="getTheater_list('강원')">강원</li>
-            <li class="lo_li" onclick="getTheater_list('대전/충청')">대전/충청</li>
-            <li class="lo_li" onclick="getTheater_list('광주/전라')">광주/전라</li>
-            <li class="lo_li" onclick="getTheater_list('대구/울산/부산')">대구/울산/부산</li>
+            <li class="lo_li" onclick="getTheater_list('대전|충청')">대전/충청</li>
+            <li class="lo_li" onclick="getTheater_list('광주|전라')">광주/전라</li>
+            <li class="lo_li" onclick="getTheater_list('대구|울산|부산')">대구/울산/부산</li>
             <li class="lo_li" onclick="getTheater_list('경상')">경상</li>
             <li class="lo_li" onclick="getTheater_list('제주')">제주</li>
          </ul>
@@ -70,6 +70,16 @@
       </div>
       
       <div style="border:1px solid #000; margin-top:25px; clear:both; float:left; width:100%;"></div>
+      
+      <form class="frm" name="frm" action="/ticket" method="post">
+      	 <input type="hidden" id="frm_theater_areas" name="frm_theater_area2" value="" />
+         <input type="hidden" id="frm_theater_ids" name="frm_theater_id2" value="" />
+         <input type="hidden" id="frm_theater_names" name="frm_theater_name2" value="" />
+         <input type="hidden" id="frm_movie_ids" name="frm_movie_id2" value="" />
+         <input type="hidden" id="frm_movie_titles" name="frm_movie_title2" value="" />
+         <input type="hidden" id="frm_plex_nums" name="frm_plex_num2" value="" />
+         <input type="hidden" id="frm_start_times" name="frm_start_time2" value="" />
+      </form>
    </div>
 </div>
 
@@ -117,7 +127,7 @@
       document.getElementById("frm_theater_name").value = theater_name;
       document.getElementById("theater_id").value = theater_id;
       document.getElementById("frm_theater_area").value = theater_area;
-         
+
       viewDate();
       $(".date_div").css("color", "black");
       $("#0d").css("color", "red");
@@ -281,7 +291,6 @@
             + '<div id="movie" style="float:left; margin-top:15px; margin-left:20px;">'
             + '<div id="grade_circle'+a+'" style="float:left; border:1px solid white; border-radius:25px; width:30px; height:30px; text-align:center; padding-top:5px; color:white; font-size:10pt;">'
             + '</div>'
-            
             + '<span id="movie_title'+a+'" style="margin-left:20px; font-size:20px;">'
             + '</span>'
             + '<span id="movie_status'+a+'" style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">'
@@ -296,6 +305,7 @@
             + tt[a][0].plex_number
             + '관 > <span id="seat_cnt'+a+'"></span>'
             + '</span>'
+            + '<input type="hidden" class="frm_plex_num'+a+'" name="frm_plex_num" value="" />'
             + '</i>'
             + '<br/>'
             + '<div id="time_table'+a+'">'
@@ -303,9 +313,6 @@
             + '</div>'
             + '</div>';
          $("#movie_place").html(plex);
-         
-               
-         
       }
       
       var mor = '<i class="fa fa-sun-o fa-1x" aria-hidden="true" style="color:red"><span style="color:black; font-weight:bold;">조조</span></i>';
@@ -315,6 +322,7 @@
       for(var a=0; a<total; a++){
          timetable = "";   
          for(var b=0; b < tt[a].length; b++){
+
             timetable += '<li class="time_li">'
         
                + '<form class="frm" name="frm" action="/ticket" method="post">'
@@ -329,22 +337,38 @@
                + '<span class="time" style="font-size:15px; display:block;">'
                + tt[a][b].start_time.substring(11,16)
                + '</span>'
+               + '<input type="hidden" class="frm_start_time" value="'+tt[a][b].start_time+'" />'
+               + '<input type="hidden" class="frm_movie_title'+a+'" id="frm_movie_title" value="" />'
+               + '<input type="hidden" class="frm_movie_id'+a+'" id="frm_movie_id" value="" />'
+               + '<input type="hidden" class="frm_plex_num'+a+'" id="frm_plex_num" value="'+tt[a][0].plex_number+'" />'
                + '<span id="pt'+a+b+'">'
                + '</span>'
                + '</li>';
          }
          $("#time_table"+a).html(timetable);
+         
          for(var c=0; c < tt[a].length; c++){
-            var tempHour = tt[a][c].start_time.substring(11,13); 
+        	var tempHour = tt[a][c].start_time.substring(11,13); 
+            var today =  tt[a][c].start_time;
+            var min = date.getMinutes();
+            if(min<10){
+            	min = "0"+min;
+            }
+            var tempTime = date.getFullYear() + "-" + month + "-" + $("#day0").val() + " " + date.getHours() + ":" + min;
             
             if(tempHour > 06 && tempHour < 10){
                $("#pt"+a+c).html(mor);
             }else if(tempHour >= 10 && tempHour < 24){
                $("#pt"+a+c).html(nor);
-            }else if(tempHour == 24 || (tempHour >= 01 && tempHour <= 06)){
+            }else if(tempHour == 00 || (tempHour >= 01 && tempHour <= 06)){
                $("#pt"+a+c).html(night);
             }
+            
+            if(today < tempTime){
+            	$("#pt"+a+c).html("마감");
+            }
          }
+         $(".frm_plex_num"+a).val(tt[a][0].plex_number);
       }
    }
    
@@ -389,6 +413,7 @@
          }
          $("#runtime"+i).html(movie_info[i].runtime + "분");
          $("#open_date"+i).html(movie_info[i].open_date);
+         
          mt = $("#movie_title"+i).parents("div .movie_time");
 
          fmt = $(mt).find("#frm_movie_title");
