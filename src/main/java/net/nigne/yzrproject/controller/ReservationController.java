@@ -1,6 +1,7 @@
 package net.nigne.yzrproject.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,7 +110,7 @@ public class ReservationController {
 			local.add(i,vo);
 			
 		}
-
+		model.addAttribute("today", new Date());
 		model.addAttribute("movieList", movieList);
 		model.addAttribute("theaterList", theaterList);
 		model.addAttribute("localList", local);
@@ -312,6 +313,7 @@ public class ReservationController {
 			
 			int plexNumCount = 0;
 			int timetableNum = 0;
+			String startTime = "";
 			
 			String plexNum[] = new String[plexNumList.size()];
 
@@ -319,12 +321,16 @@ public class ReservationController {
 				plexNum[plexNumCount] = plexNumList.get(plexNumCount);
 				plexTypeList.addAll(plexService.getList(plexNum[plexNumCount], theaterId));
 				timetableList.addAll(timetableService.getList(movieId, theaterId, date, plexNum[plexNumCount]));
+				System.out.println("1111 = "+seatService.getExtraSeatTime(theaterId, plexNum[plexNumCount], date));
+				System.out.println("2222 = " + timetableList.get(0).getStart_time());
+				System.out.println("3333 = " + timetableList.get(1).getStart_time());
+				//System.out.println("4444 = " + timetableList.get(2).getStart_time());
 				
-				for(int i = 0; seatService.getExtraSeatTime(theaterId, plexNum[plexNumCount]) > i; i++) {
+				for(int i = 0; seatService.getExtraSeatTime(theaterId, plexNum[plexNumCount], date) > i; i++) {
 										
 					TempSeatTime vo = new TempSeatTime();
 					
-					String startTime = timetableList.get(i).getStart_time();
+					startTime = timetableList.get(i).getStart_time();
 					
 					vo.setExtraSeatCount(seatService.getExtraSeatNum(theaterId, plexNum[plexNumCount], startTime));
 					
@@ -353,25 +359,31 @@ public class ReservationController {
 			
 		} catch(Exception e){
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			e.printStackTrace();
 		}
 		
 		return entity;
 	}
 	
-	@RequestMapping(value = "/ticket/plex/{plexNum}/{startTime}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ticket/plex/{theaterId}/{plexNum}/{startTime}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> PlexPage(
+			@PathVariable("theaterId") String theaterId,
 			@PathVariable("plexNum") String plexNum,
 			@PathVariable("startTime") String startTime
 			) {
 		ResponseEntity<Map<String, Object>> entity = null;
 		
 		try{
-			List<SeatVO> list = seatService.getList(plexNum, startTime);
-			List<SeatVO> getIndex = seatService.getIndex(plexNum, startTime);
+			
+			seatService.getTempReservationTimeoverCancel();
+			
+			List<SeatVO> list = seatService.getList(theaterId, plexNum, startTime);
+			List<SeatVO> index = seatService.getIndex(theaterId, plexNum, startTime);
+			
 			
 			Map<String, Object> map = new HashMap<>();
 			map.put("l", list);
-			map.put("i", getIndex);
+			map.put("i", index);
 			
 
 			//브라우저로 전송한다
@@ -412,8 +424,54 @@ public class ReservationController {
 				seatService.updateReservation(SeatNo);
 			}
 
-			List<SeatVO> list = seatService.getList(plexNum, startTime);
-			List<SeatVO> getIndex = seatService.getIndex(plexNum, startTime);
+			List<SeatVO> list = seatService.getList(theaterId, plexNum, startTime);
+			List<SeatVO> getIndex = seatService.getIndex(theaterId, plexNum, startTime);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("l", list);
+			map.put("i", getIndex);
+			
+			entity = new ResponseEntity<>(map, HttpStatus.OK);
+			
+		} catch(Exception e){
+			
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value = "/ticket/{theaterId}/{plexNum}/tempseat/{startTime}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> TempSeatPage(
+			@PathVariable("theaterId") String theaterId,
+			@PathVariable("plexNum") String plexNum,
+			@PathVariable("startTime") String startTime,
+			@RequestParam(value="seat1",required=false) String seat1,
+			@RequestParam(value="seat2",required=false) String seat2,
+			@RequestParam(value="seat3",required=false) String seat3,
+			@RequestParam(value="seat4",required=false) String seat4,
+			@RequestParam(value="seat5",required=false) String seat5,
+			@RequestParam(value="seat6",required=false) String seat6,
+			@RequestParam(value="seat7",required=false) String seat7,
+			@RequestParam(value="seat8",required=false) String seat8
+			) {
+
+		
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		try{
+			List<Integer> getPrimary = seatService.getPrimary(theaterId, plexNum, seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8);
+			
+			int SeatNo = 0;
+			
+			for(int i = 0; i < getPrimary.size(); i++){
+				SeatNo = getPrimary.get(i);
+				System.out.println(i + "번째 = " + SeatNo);
+				seatService.updateTempReservation(SeatNo);
+			}
+
+			List<SeatVO> list = seatService.getList(theaterId, plexNum, startTime);
+			List<SeatVO> getIndex = seatService.getIndex(theaterId, plexNum, startTime);
 			
 			Map<String, Object> map = new HashMap<>();
 			map.put("l", list);
@@ -457,8 +515,8 @@ public class ReservationController {
 				seatService.reservationCancel(SeatNo);
 			}
 
-			List<SeatVO> list = seatService.getList(plexNum, startTime);
-			List<SeatVO> getIndex = seatService.getIndex(plexNum, startTime);
+			List<SeatVO> list = seatService.getList(theaterId, plexNum, startTime);
+			List<SeatVO> getIndex = seatService.getIndex(theaterId, plexNum, startTime);
 			
 			Map<String, Object> map = new HashMap<>();
 			map.put("l", list);

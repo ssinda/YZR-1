@@ -35,6 +35,7 @@ import net.nigne.yzrproject.domain.GenreVO;
 import net.nigne.yzrproject.domain.GpaVO;
 import net.nigne.yzrproject.domain.MovieVO;
 import net.nigne.yzrproject.domain.ReservationVO;
+import net.nigne.yzrproject.domain.SeatVO;
 
 @Repository
 public class MovieDAOImpl implements MovieDAO {
@@ -509,6 +510,57 @@ public class MovieDAOImpl implements MovieDAO {
 		List<MovieVO> list = tq.getResultList();
 		
 		return list;
+	}
+
+
+	@Override
+	public void addViewer(String movieId, int viewer) {
+		// TODO Auto-generated method stub
+		MovieVO movieVO = entityManager.find(MovieVO.class, movieId);
+		
+		MovieVO mergeVO = entityManager.merge(movieVO);
+		mergeVO.setMoviegoers_cnt(viewer);
+	}
+
+	@Override
+	public long getMovieCnt() {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> mainQuery = cb.createQuery(Long.class);
+		Root<MovieVO> mainQueryroot = mainQuery.from(MovieVO.class);
+		
+		
+		mainQuery.select(cb.count(mainQueryroot));
+		mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
+		
+		
+		TypedQuery<Long> tq = entityManager.createQuery(mainQuery);
+
+		return tq.getSingleResult();
+	}
+
+	@Override
+	public List<MovieVO> getPlayMovieList() {
+		// TODO Auto-generated method stub
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MovieVO> mainQuery = cb.createQuery(MovieVO.class);
+		Root<MovieVO> mainQueryroot = mainQuery.from(MovieVO.class);
+		
+		
+		mainQuery.select(mainQueryroot).orderBy(cb.desc(mainQueryroot.get("movie_id")));
+		mainQuery.where(cb.equal(mainQueryroot.get("status"), "play"));
+		
+		
+		TypedQuery<MovieVO> tq = entityManager.createQuery(mainQuery);
+		List<MovieVO> list = tq.getResultList();
+		
+		return list;
+	}
+
+	@Override
+	public void updateReservationRate(MovieVO vo, float reservationRate) {
+		// TODO Auto-generated method stub
+		MovieVO mergeVO = entityManager.merge(vo);
+		mergeVO.setReservation_rate(reservationRate);
 	}
 
 	
