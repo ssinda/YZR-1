@@ -1,4 +1,3 @@
-
 package net.nigne.yzrproject.persistence;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import net.nigne.yzrproject.domain.LostVO;
 import net.nigne.yzrproject.domain.MemberVO;
 import net.nigne.yzrproject.domain.NoticeVO;
+import net.nigne.yzrproject.domain.SeatVO;
 
 @Repository // 이것은 왜?
 public class MemberDAOImpl implements MemberDAO {
@@ -208,5 +208,38 @@ public class MemberDAOImpl implements MemberDAO {
 		return list.get(0);
 	}
 
+	@Override
+	public void pointUpdate(String memberId, int point) {
+		// TODO Auto-generated method stub
+		
+		String grade = grade(point);
+															//primarykey
+		MemberVO memberVO = entityManager.find(MemberVO.class, memberId);
+		
+		MemberVO mergeVO = entityManager.merge(memberVO);
+		mergeVO.setPoint(point);
+		mergeVO.setGrade(grade);
+	}
+	
+	private String grade(int point) {
+
+		String grade = "";
+		
+		if(point>=5000) {
+			grade = "다이아";
+		} else if(point>=4000) {
+			grade = "플래티넘";
+		} else if(point>=3000) {
+			grade = "골드";
+		} else if(point>=2000) {
+			grade = "실버";
+		} else if(point>=1000) {
+			grade = "브론즈";
+		} else {
+			grade = "노멀";
+		}
+		
+		return grade;
+	}
 
 }

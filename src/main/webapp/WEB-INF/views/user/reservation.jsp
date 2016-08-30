@@ -90,7 +90,7 @@
 								+ '<div style="height: 140px; line-height: 140px; width: 288px; text-align: center; float: left;">';
 						
 						if(this.start_time > "${today}"){
-							result += '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger" onclick="deleteReservation(\'' + this.reservation_code+ '\')">예매취소</button></span>';
+							result += '<span style="display: inline-block; margin-top: 48px;"><button class="btn btn-danger" onclick="deleteReservation(\'' + this.reservation_code+ '\','+this.ticket_cnt+','+this.pay+',\''+this.movie_id+'\')">예매취소</button></span>';
 						}
 						
 						result += '</div>';
@@ -174,8 +174,8 @@
 	
 	getReservationList();
 	
-	function deleteReservation(reservation_code){
-		alert(reservation_code);
+	function deleteReservation(reservation_code, seatCnt, pay, movieId){
+		var seat_cnt = -seatCnt
 		$.ajax({
 			type : 'delete',
 			url : '/user/reservation/'+reservation_code,
@@ -186,10 +186,45 @@
 			success : function(result){
 				if(result == "SUCCESS"){
 					getReservationList(currentPage);
+					movieViewSubstr(movieId, seat_cnt);
+					pointSubstr(pay/100);
 				}
 			}
 		});
 		
+	}
+	
+	function pointSubstr (point) {
+		var minusPoint = -point;
+		var memberId = '${member_id}';
+		$.ajax({
+			type:'get',
+			url:'/member/point/' + minusPoint,
+			headers: {
+				"Content-Type" : "application/json",
+			},
+			dataType:'json',
+			data : '',
+			success : function(result){
+				
+			}
+		});	
+	}
+	
+	function movieViewSubstr(movieId, seatCnt) {
+		
+		$.ajax({
+			type:'get',
+			url:'/movie/viewAdder/' + movieId + '/' + seatCnt,
+			headers: {
+				"Content-Type" : "application/json",
+			},
+			dataType:'json',
+			data : '',
+			success : function(result){
+				
+			}
+		});	
 	}
 
 </script>
