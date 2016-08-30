@@ -6,8 +6,10 @@ import net.nigne.yzrproject.domain.SeatVO;
 
 public interface SeatDAO {
 	
-	public List<SeatVO> getList(String plexNum, String startTime);
-	public List<SeatVO> getIndex(String plexNum, String startTime);
+	public List<SeatVO> getList(String theaterId, String plexNum, String startTime);
+	public List<SeatVO> getIndex(String theaterId, String plexNum, String startTime);
+	
+	public void updateTempReservation(int SeatNo);
 	public void updateReservation(int SeatNo);
 	
 	public void reservationCancel(int SeatNo);
@@ -18,5 +20,6 @@ public interface SeatDAO {
 									  String seat4, String seat5, String seat6, String seat7, String seat8);
 	
 	public Long getExtraSeatNum(String theaterId, String plexNum, String startTime);
-	public Long getExtraSeatTime(String theaterId, String plexNum);
+	public Long getExtraSeatTime(String theaterId, String plexNum, String date);
+	public List<SeatVO> getTempReservationSeatNo();
 }

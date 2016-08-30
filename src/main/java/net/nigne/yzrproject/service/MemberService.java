@@ -18,5 +18,6 @@ public interface MemberService {
 	public boolean pwFind(MemberVO vo);
 	public String idSearch(String member_name, String email);
 	public MemberVO getMember(String member_id);
+	public void pointUpdate(String memberId, int point);
 	
 }
