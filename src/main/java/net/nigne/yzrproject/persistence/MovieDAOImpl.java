@@ -207,19 +207,19 @@ public class MovieDAOImpl implements MovieDAO {
 			actor_movie = mtq.getResultList();
 			
 			if(actor_movie.isEmpty() || res_movie_id.contains(actor_movie.get(0).getMovie_id())){
-				Loop1: for(int a=0; a<actor_list.size(); a++){
-					actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
-					actorSubQuery.where(cb.equal(actorSubQueryRoot.get("actor_name"), actor_list.get(a)));
-					
-					movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
-					movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
-					mtq = entityManager.createQuery(movieQuery);
-					actor_movie = mtq.getResultList();
-					for(int a2=0; a2<actor_movie.size(); a2++){
-						if(!actor_movie.isEmpty() && !res_movie_id.contains(actor_movie.get(a2).getMovie_id())){
-							break Loop1;
+				Loop1:  for(int a=0; a<actor_list.size(); a++){
+						actorSubQuery.select(actorSubQueryRoot.get("movie_id"));
+						actorSubQuery.where(cb.equal(actorSubQueryRoot.get("actor_name"), actor_list.get(a)));
+						
+						movieQuery.where(cb.and(movieRoot.get("movie_id").in(actorSubQuery), cb.equal(movieRoot.get("status"), "play")));
+						movieQuery.orderBy(cb.desc(movieRoot.get("open_date")));
+						mtq = entityManager.createQuery(movieQuery);
+						actor_movie = mtq.getResultList();
+						for(int a2=0; a2<actor_movie.size(); a2++){
+							if(!actor_movie.isEmpty() && !res_movie_id.contains(actor_movie.get(a2).getMovie_id())){
+								break Loop1;
+							}
 						}
-					}
 				}
 			}
 		}
