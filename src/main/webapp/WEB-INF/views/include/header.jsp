@@ -36,6 +36,7 @@
 }
 </style>
 	<div style="position: relative;">
+		<a href="/index"><img src="/resources/images/yzr.png" height="70px" width="200px;" style="position: absolute; left: 500px; top: 95px; z-index: 100"/></a>
 		<nav class="navbar navbar-default" role="navigation"
 			style="border: 0px;">
 			<div class="container-fluid" style="padding: 0px;">

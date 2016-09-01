@@ -1661,6 +1661,9 @@
 					$("#year"+i).css("display","block");
 					$("#year"+i).css("margin-top","25px");
 					$("#month"+i).css("display","block");
+					$("#year").css("display","none");
+					$("#month").css("display","none");
+					
 				}
 				
 				if($("#day"+i).val() == '토'){
