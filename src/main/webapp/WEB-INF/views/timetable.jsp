@@ -253,8 +253,6 @@
       var ti = $(this).attr("value");
       var tn = $(this).text();
       var tl = $("#frm_theater_area").val();
-      $(".th_name").css("color","white");
-      $(this).css("color","red");
       setTheater_name(tn, ti, tl);
    })
    
@@ -286,23 +284,14 @@
       var plex = "";
       
       for(var a=0; a<total; a++){
-<<<<<<< HEAD
-         plex += '<div id="movie_time'+a+'" style="float:left; margin-top:15px;">'
-=======
          plex += '<div id="movie_time'+a+'" class="movie_time" style="float:left; margin-top:15px;">'
->>>>>>> refs/heads/SDS
             + '<div style="border-top:1px solid #000; margin-top:10px; width:1140px;">'
             + '</div>'
             + '<div id="movie'+a+'" style="float:left; margin-top:15px; margin-left:20px;">'
             + '<div id="grade_circle'+a+'" style="float:left; border:1px solid white; border-radius:25px; width:30px; height:30px; text-align:center; padding-top:5px; color:white; font-size:10pt;">'
             + '</div>'
-<<<<<<< HEAD
-            + '<input type="hidden" class="frm_movie_title'+a+'" name="frm_movie_title" value="" />'
-            + '<input type="hidden" class="frm_movie_id'+a+'" name="frm_movie_id" value="" />'
-=======
             + '<input type="hidden" class="frm_movie_title" name="frm_movie_title" value="" />'
             + '<input type="hidden" class="frm_movie_id" name="frm_movie_id" value="" />'
->>>>>>> refs/heads/SDS
             + '<span id="movie_title'+a+'" style="margin-left:20px; font-size:20px;">'
             + '</span>'
             + '<span id="movie_status'+a+'" style="margin-left:10px; border:2px solid #6799FF; border-radius:3px; color:#6799FF; font-weight:bold; font-size:13px;">'
@@ -596,6 +585,7 @@
       cursor:pointer;
       color:red;
    }
+   
 </style>
 <% session.setAttribute("menu", null);%>
 <%@include file="./include/footer.jsp" %>

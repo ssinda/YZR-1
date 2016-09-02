@@ -522,7 +522,7 @@ public class MovieDAOImpl implements MovieDAO {
 		MovieVO movieVO = entityManager.find(MovieVO.class, movieId);
 		
 		MovieVO mergeVO = entityManager.merge(movieVO);
-		mergeVO.setMoviegoers_cnt(viewer);
+		mergeVO.setReservation_cnt(viewer);
 	}
 
 	@Override

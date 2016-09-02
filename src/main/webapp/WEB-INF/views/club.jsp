@@ -4,6 +4,11 @@
 <%@include file="./include/header.jsp"%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<c:if test="${ member_id == null }">
+	<script>
+		<%response.sendRedirect("/login");%>
+	</script>
+</c:if>
 <div id="wrap_content" style="min-height: 100%; position: relative;">
 	<div id="content">
 		<div style="margin-left: 10px;">
@@ -48,10 +53,10 @@
 							<span>
 								<c:choose>
 									<c:when test="${membervo.club == '액션'}">
-										<button class="btn btn-danger" style="margin-left: 220px; margin-top20px; width: 100px; height:40px;">탈퇴하기</button>
+										<button class="btn btn-danger" style="margin-left: 250px; margin-top20px; width: 100px; height:40px;">탈퇴하기</button>
 									</c:when>
 									<c:otherwise>
-										<button class="btn btn-info" style="margin-left: 220px; margin-top20px; width: 100px; height:40px;">가입하기</button>
+										<button class="btn btn-info" style="margin-left: 250px; margin-top20px; width: 100px; height:40px;">가입하기</button>
 									</c:otherwise>
 								</c:choose>
 							</span>
@@ -74,10 +79,10 @@
 							<span>
 								<c:choose>
 									<c:when test="${membervo.club == 'VIP'}">
-										<button class="btn btn-danger" style="margin-left: 220px; margin-top20px; width: 100px; height:40px;">탈퇴하기</button>
+										<button class="btn btn-danger" style="margin-left: 265px; margin-top20px; width: 100px; height:40px;">탈퇴하기</button>
 									</c:when>
 									<c:otherwise>
-										<button class="btn btn-info" style="margin-left: 220px; margin-top20px; width: 100px; height:40px;">가입하기</button>
+										<button class="btn btn-info" style="margin-left: 265px; margin-top20px; width: 100px; height:40px;">가입하기</button>
 									</c:otherwise>
 								</c:choose>
 							</span>
